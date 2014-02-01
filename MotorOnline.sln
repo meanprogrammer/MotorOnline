@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorOnline", "MotorOnline\MotorOnline.csproj", "{CF820E3C-0112-4D07-B39E-72EB5103118C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorOnline.Web", "MotorOnline.Web\MotorOnline.Web.csproj", "{CF820E3C-0112-4D07-B39E-72EB5103118C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorOnline.Helpers", "MotorOnline.Helpers\MotorOnline.Helpers.csproj", "{6CF36386-3237-4AE2-839D-7787D6677A82}"
 EndProject
