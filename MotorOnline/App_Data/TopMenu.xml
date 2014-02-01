@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item Text="Home" NavigateUrl="DefaultView.aspx" />
+  <item Text="Apply Online" NavigateUrl="TransactionView.aspx"  />
+  <item Text="All Transactions" NavigateUrl="AllTransactionsView.aspx"  />
+  <item Text="FAQ" NavigateUrl="#"  />
+  <item Text="Contact Us" NavigateUrl="#"  />
+</items>
+
