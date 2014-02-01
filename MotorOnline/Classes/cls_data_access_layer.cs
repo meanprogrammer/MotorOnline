@@ -233,6 +233,34 @@ namespace MotorOnline
             return go_dah.uf_execute_non_query() > 0;
         }
 
+        public User AuthenticateUser(string username, string password) {
+            go_dah.uf_set_stored_procedure("sp_authenticateuser", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@Username", username);
+            go_dah.uf_set_stored_procedure_param("@Password", password);
+
+            IDataReader reader = go_dah.uf_execute_reader();
+            User user = null;
+            using (reader) {
+                int userIdIdx = reader.GetOrdinal("UserID");
+                int usernameIdx = reader.GetOrdinal("Username");
+                //int userIdIdx = reader.GetOrdinal("Password");
+                int firsnameIdx = reader.GetOrdinal("FirstName");
+                int miIdx = reader.GetOrdinal("MI");
+                int lastnameIdx = reader.GetOrdinal("LastName");
+                int lastactivityIdx = reader.GetOrdinal("LastActivityDate");
+                while (reader.Read())
+                {
+                    user = new User();
+                    user.UserID = reader.GetInt32(userIdIdx);
+                    user.Username = reader.GetString(usernameIdx);
+                    user.FirstName = reader.IsDBNull(firsnameIdx) ? string.Empty : reader.GetString(firsnameIdx);
+                    user.LastName = reader.IsDBNull(lastactivityIdx) ? string.Empty : reader.GetString(lastnameIdx);
+                    user.MI = reader.IsDBNull(miIdx) ? string.Empty : reader.GetString(miIdx);
+                }
+            }
+            return user;
+        }
+
         public bool SaveTransaction(Transaction transaction) {
             int result = 0;
             int perilResult = 0;

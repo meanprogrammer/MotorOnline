@@ -47,7 +47,7 @@
             <tr>
                 <td align="right" colspan="2">
                     <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="MotorOnlineLogin"
-                        ClientIDMode="Static" Font-Size="Medium" />
+                        ClientIDMode="Static" Font-Size="Medium" onclick="LoginButton_Click" />
                 </td>
             </tr>
         </table>

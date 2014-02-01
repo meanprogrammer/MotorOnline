@@ -101,6 +101,8 @@
     <Content Include="js\perils.js" />
     <Content Include="js\transaction.js" />
     <Content Include="js\transactionsearch.js" />
+    <Content Include="SessionExpiredView.aspx" />
+    <Content Include="SignoutView.aspx" />
     <Content Include="TransactionView.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -166,6 +168,20 @@
     </Compile>
     <Compile Include="Root.Master.designer.cs">
       <DependentUpon>Root.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SessionExpiredView.aspx.cs">
+      <DependentUpon>SessionExpiredView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SessionExpiredView.aspx.designer.cs">
+      <DependentUpon>SessionExpiredView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SignoutView.aspx.cs">
+      <DependentUpon>SignoutView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SignoutView.aspx.designer.cs">
+      <DependentUpon>SignoutView.aspx</DependentUpon>
     </Compile>
     <Compile Include="TransactionView.aspx.cs">
       <DependentUpon>TransactionView.aspx</DependentUpon>

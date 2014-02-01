@@ -23,9 +23,17 @@ namespace MotorOnline
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            //User u = new User();
-            //u.Username = "vdudan";
-            //u.Password = "";
+            User u = new User();
+            u.Username = "vdudan";
+            u.Password = "pass1234";
+            u.FirstName = "valiant";
+            u.LastName = "dudan";
+            u.MI = "a";
+            u.RoleID = 0;
+            u.LastActivityDate = DateTime.Now;
+
+            cls_data_access_layer da = new cls_data_access_layer();
+            da.SaveUser(u);
         }
     }
 }

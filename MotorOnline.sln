@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorOnline.Library", "Moto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorOnline.Data", "MotorOnline.Data\MotorOnline.Data.csproj", "{4FB62129-E753-4E7D-BE63-8E0B77319088}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorOnline.Business", "MotorOnline.Business\MotorOnline.Business.csproj", "{28DC1639-3D45-4852-925C-7DD73FD548FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{4FB62129-E753-4E7D-BE63-8E0B77319088}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FB62129-E753-4E7D-BE63-8E0B77319088}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FB62129-E753-4E7D-BE63-8E0B77319088}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28DC1639-3D45-4852-925C-7DD73FD548FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28DC1639-3D45-4852-925C-7DD73FD548FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28DC1639-3D45-4852-925C-7DD73FD548FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28DC1639-3D45-4852-925C-7DD73FD548FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
