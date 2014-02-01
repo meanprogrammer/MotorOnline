@@ -83,24 +83,24 @@ function searchtransactions() {
         },
         success: function (result) {
             var obj = JSON.parse(result);
-            html = '<table border="1" cellpadding="8"><tr>';
+            html = '<table border="1" cellpadding="4"><tr>';
             html += '<th></th>';
-            html += '<th>Crediting Branch</th>';
+            html += '<th>Branch</th>';
             html += '<th>Par No</th>';
             html += '<th>Policy No</th>';
             html += '<th>Subline</th>';
             html += '<th>Date Created</th>';
-            html += '<th>Policy Period From</th>';
-            html += '<th>Policy Period To</th>';
-//            html += '<th>LastName</th>';
-//            html += '<th>FirstName</th>';
-//            html += '<th>MiddleName</th>';
+            html += '<th>Period From</th>';
+            html += '<th>Period To</th>';
             html += '<th>Type Of Cover</th>';
             html += '<th>Car Company</th>';
             html += '<th>Motor Type</th>';
             html += '<th>Chassis No</th>';
             html += '<th>Engine No</th>';
             html += '<th>Plate No</th>';
+            html += '<th>LastName</th>';
+            html += '<th>FirstName</th>';
+            html += '<th>MiddleName</th>';
             html += '</tr>';
             if (obj != null) {
                 $.each(obj, function (key, value) {
@@ -113,15 +113,15 @@ function searchtransactions() {
                     html += '<td>' + value.DateCreatedText + '</td>';
                     html += '<td>' + value.PolicyPeriodFromText + '</td>';
                     html += '<td>' + value.PolicyPeriodToText + '</td>';
-//                    html += '<td>' + value.LastName + '</td>';
-//                    html += '<td>' + value.FirstName + '</td>';
-//                    html += '<td>' + value.MiddleName + '</td>';
                     html += '<td>' + value.TypeOfCover + '</td>';
                     html += '<td>' + value.CarCompany + '</td>';
                     html += '<td>' + value.MotorType + '</td>';
                     html += '<td>' + value.ChassisNo + '</td>';
                     html += '<td>' + value.EngineNo + '</td>';
                     html += '<td>' + value.PlateNo + '</td>';
+                    html += '<td>' + value.LastName + '</td>';
+                    html += '<td>' + value.FirstName + '</td>';
+                    html += '<td>' + value.MiddleName + '</td>';
                     html += '</tr>';
                 });
             }

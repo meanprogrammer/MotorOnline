@@ -1009,7 +1009,8 @@ namespace MotorOnline.Web
                     t.ParNo = reader.IsDBNull(parNoIdx) ? string.Empty : reader.GetString(parNoIdx);
                     t.PolicyNo = reader.IsDBNull(policyNoIdx) ? string.Empty : reader.GetString(policyNoIdx);
                     t.CreditingBranch = reader.IsDBNull(creditingBranchNameIdx) ? string.Empty : reader.GetString(creditingBranchNameIdx);
-                    t.Subline = reader.IsDBNull(sublineNameIdx) ? string.Empty : reader.GetString(sublineNameIdx);
+                    t.SublineText = reader.IsDBNull(sublineNameIdx) ? string.Empty : reader.GetString(sublineNameIdx);
+                    t.Subline = reader.IsDBNull(sublineIdx) ? string.Empty : reader.GetString(sublineIdx);
                     t.DateCreated = reader.IsDBNull(dateCreatedIdx) ? DateTime.MinValue : reader.GetDateTime(dateCreatedIdx);
                     t.PolicyPeriodFrom = reader.IsDBNull(policyPeriodFromIdx) ? DateTime.MinValue : reader.GetDateTime(policyPeriodFromIdx);
                     t.PolicyPeriodTo = reader.IsDBNull(policyPeriodToIdx) ? DateTime.MinValue : reader.GetDateTime(policyPeriodToIdx);

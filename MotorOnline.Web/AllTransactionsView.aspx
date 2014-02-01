@@ -5,7 +5,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">
-<table border="0" cellpadding="4">
+<table border="0" cellpadding="2">
     <tr>
         <td colspan="6"><strong style="font-size:large;">Search</strong></td>
         <td>&nbsp;</td>
@@ -41,24 +41,16 @@
         <td colspan="5">
             <select id="mortgagee" name="mortgagee"></select></td>
         <td>
-            &nbsp;</td>
+            Car Company</td>
         <td>
-            &nbsp;</td>
+            <select id="carcompany" name="carcompany"></select></td>
     </tr>
     <tr>
         <td>Intermediary</td>
         <td colspan="5">
             <select id="intermediary" name="intermediary"></select></td>
         <td>
-            &nbsp;</td>
-        <td>
-            &nbsp;</td>
-    </tr>
-    <tr>
-        <td>Car Company</td>
-        <td>
-            <select id="carcompany" name="carcompany"></select></td>
-        <td>Motor Type</td>
+            Motor Type</td>
         <td>
             <select id="motortype" name="motortype">
                 <option value="0">--SELECT--</option>
@@ -66,13 +58,21 @@
                 <option value="MEDIUM">MEDIUM</option>
                 <option value="HEAVY">HEAVY</option>
             </select></td>
+    </tr>
+    <tr>
         <td>Chassis No</td>
         <td>
             <input id="chassisno" type="text" /></td>
-        <td>
-            Engine No</td>
+        <td>Engine No</td>
         <td>
             <input id="engineno" type="text" /></td>
+        <td>&nbsp;</td>
+        <td>
+            &nbsp;</td>
+        <td>
+            &nbsp;</td>
+        <td>
+            &nbsp;</td>
     </tr>
     <tr>
         <td>&nbsp;</td>

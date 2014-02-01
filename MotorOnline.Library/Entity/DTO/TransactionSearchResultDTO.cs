@@ -29,5 +29,6 @@ namespace MotorOnline.Library.Entity
         public string DateCreatedText { get { return this.DateCreated.ToString("MM/dd/yyyy"); } }
         public string PolicyPeriodFromText { get { return this.PolicyPeriodFrom.ToString("MM/dd/yyyy"); } }
         public string PolicyPeriodToText { get { return this.PolicyPeriodTo.ToString("MM/dd/yyyy"); } }
+        public string SublineText { get; set; }
     }
 }

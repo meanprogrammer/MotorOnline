@@ -19,8 +19,7 @@
             $("#welcome").button()
               .click(function () {
                   alert("no actions yet.");
-              })
-                  .next()
+              }).next()
                         .button({
                             text: false,
                             icons: {
@@ -54,7 +53,6 @@
     <div id="container">
         <div class="mainheader headerPane">
         <div class="loginControl">
-            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
             <div>
                 <button id="welcome">
                     Run last action</button>
