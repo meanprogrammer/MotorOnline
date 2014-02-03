@@ -14,8 +14,20 @@ namespace MotorOnline.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (AuthenticationHelper.HasAuthenticatedUser()) {
-                User user = AuthenticationHelper.GetCurrentLoggedUser();
+            //To avoid login for now
+            User user = new User()
+            {
+                FirstName = "Valiant",
+                LastName = "Dudan",
+                MI = "A",
+                Username = "meanprogrammer"
+            };
+
+            Session.Add(string.Format("user_{0}", Session.SessionID), user);
+
+            if (AuthenticationHelper.HasAuthenticatedUser())
+            {
+                //User user = AuthenticationHelper.GetCurrentLoggedUser();
                 if (user != null)
                 {
                     JavaScriptSerializer serializer = new JavaScriptSerializer();

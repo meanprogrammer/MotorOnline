@@ -970,7 +970,8 @@ namespace MotorOnline.Web
             {
                 sql.AppendFormat(" WHERE {0}", whereClause);
             }
-            
+
+            sql.Append(" ORDER BY t.dateCreated DESC ");
 
             go_dah.uf_set_sql_statement(sql.ToString(), ref go_sqlConnection);
             IDataReader reader = go_dah.uf_execute_reader();

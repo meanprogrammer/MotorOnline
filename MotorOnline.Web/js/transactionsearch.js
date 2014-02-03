@@ -7,7 +7,8 @@ function initialize() {
         buttonImage: "images/Calendar-icon.png",
         buttonImageOnly: true
     });
-
+    $('#resetbutton,#searchbutton').button();
+    showloader();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -26,14 +27,16 @@ function initialize() {
             buildfilter('typeofcover', typeofcovers);
             var carcompany = obj["carcompanies"];
             buildfilter('carcompany', carcompany);
+            hideloader();
         },
         error: function () {
-
+            hideloader();
         }
     });
 
     $('#searchbutton').click(searchtransactions);
     $('#resetbutton').click(resetsearch);
+    
 }
 
 function buildfilter(element, list) {
@@ -45,6 +48,7 @@ function buildfilter(element, list) {
 }
 
 function searchtransactions() {
+    showloader();
     var creditingbranch = $('#creditingbranch').val();
     var parno = $('#parno').val();
     var policyno = $('#policyno').val();
@@ -128,9 +132,10 @@ function searchtransactions() {
 
 
             $('#searchresult').html(html);
+            hideloader();
         },
         error: function () {
-
+            hideloader();
         }
     });
 }
@@ -152,4 +157,15 @@ function resetsearch() {
     $('#engineno').val('');
 
     $('#searchresult').html('');
+}
+
+
+function showloader() {
+    $('#progressbox').css('display', 'block');
+    $('#progressbox').dialog({ modal: true, resizable: false, draggable: false, dialogClass: 'notitledialog', width: 300, height: 80 });
+}
+
+function hideloader() {
+    $('#progressbox').dialog('close');
+    $('#progressbox').css('display', 'none');
 }

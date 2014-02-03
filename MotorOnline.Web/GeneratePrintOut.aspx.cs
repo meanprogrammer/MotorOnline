@@ -59,40 +59,40 @@ namespace MotorOnline.Web
 
             //6th row
             t.AddCell(PdfHelper.CreateCellWithText("CTPL", 0, fonttype: 1));
-            double ctplvalue = trans.Perils.Where(x => x.PerilID == 187).FirstOrDefault().NewPolicyPremium;
+            double ctplvalue = GetNewPolicyPremium(trans, 187);
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(ctplvalue), 0));
             t.AddCell(PdfHelper.CreateCellWithText(" ", 0, 2));
 
             //7th row
             t.AddCell(PdfHelper.CreateCellWithText("OWNDAMAGE/THEFT", 0, fonttype: 1));
-            double owndvalue = trans.Perils.Where(x => x.PerilID == 274).FirstOrDefault().NewPolicyPremium;
+            double owndvalue = GetNewPolicyPremium(trans, 274);
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(owndvalue), 0));
             t.AddCell(PdfHelper.CreateCellWithText(" ", 0, 2));
 
             //8th row
             t.AddCell(PdfHelper.CreateCellWithText("ACTS OF NATURE ", 0, fonttype: 1));
-            double aonvalue = trans.Perils.Where(x => x.PerilID == 182).FirstOrDefault().NewPolicyPremium;
+            double aonvalue = GetNewPolicyPremium(trans, 182);
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency( aonvalue), 0));
             t.AddCell(PdfHelper.CreateCellWithText("GROSS PREMIUM", 0, fonttype: 1));
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency( trans.Computations.GrossComputationDetails.BasicPremium), 0));
         
             //9th row
             t.AddCell(PdfHelper.CreateCellWithText("STRIKERIOT&COMOTN ", 0, fonttype: 1));
-            double scvalue = trans.Perils.Where(x => x.PerilID == 191).FirstOrDefault().NewPolicyPremium;
+            double scvalue = GetNewPolicyPremium(trans, 191); //trans.Perils.Where(x => x.PerilID == 191).FirstOrDefault().NewPolicyPremium;
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency( scvalue), 0));
             t.AddCell(PdfHelper.CreateCellWithText("DOC Stamps", 0, fonttype: 1));
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency( trans.Computations.GrossComputationDetails.DocumentaryStamps), 0));
 
             //10th row
             t.AddCell(PdfHelper.CreateCellWithText("VTPL-BODILY INJURED", 0, fonttype: 1));
-            double vtplvalue = trans.Perils.Where(x => x.PerilID == 194).FirstOrDefault().NewPolicyPremium;
+            double vtplvalue = GetNewPolicyPremium(trans, 194); //trans.Perils.Where(x => x.PerilID == 194).FirstOrDefault().NewPolicyPremium;
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency( vtplvalue), 0));
             t.AddCell(PdfHelper.CreateCellWithText("VALUE ADDED TAX", 0, fonttype: 1));
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(trans.Computations.GrossComputationDetails.ValueAddedTax), 0));
 
             //11th row
             t.AddCell(PdfHelper.CreateCellWithText("VTPL PROPERTY DAMAGE", 0, fonttype: 1));
-            double vtpl2value = trans.Perils.Where(x => x.PerilID == 195).FirstOrDefault().NewPolicyPremium;
+            double vtpl2value = GetNewPolicyPremium(trans, 195); //trans.Perils.Where(x => x.PerilID == 195).FirstOrDefault().NewPolicyPremium;
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(vtpl2value), 0));
             t.AddCell(PdfHelper.CreateCellWithText("LOCAL TAX", 0, fonttype: 1));
             t.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(trans.Computations.GrossComputationDetails.LocalGovernmentTax), 0));
@@ -121,7 +121,7 @@ namespace MotorOnline.Web
             innerTable.AddCell(PdfHelper.CreateCellWithText("Type of Cover:", 0, fonttype: 1));
             innerTable.AddCell(PdfHelper.CreateCellWithText(GetCoverType(trans.CarDetail.TypeOfCover), 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText("CTPL", 0, indent: 10f));
-            double ctpllimitsivalue = trans.Perils.Where(x => x.PerilID == 187).FirstOrDefault().NewLimitSI;
+            double ctpllimitsivalue = GetNewLimitSI(trans, 187); //trans.Perils.Where(x => x.PerilID == 187).FirstOrDefault().NewLimitSI;
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(ctpllimitsivalue), 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(ctplvalue), 1));
             
@@ -129,7 +129,7 @@ namespace MotorOnline.Web
             innerTable.AddCell(PdfHelper.CreateCellWithText("Car Company:", 0, fonttype: 1));
             innerTable.AddCell(PdfHelper.CreateCellWithText(trans.CarDetail.CarCompanyText, 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText("OWNDAMAGE/THEFT", 0, indent: 10f));
-            double ownlimitsivalue = trans.Perils.Where(x => x.PerilID == 274).FirstOrDefault().NewLimitSI;
+            double ownlimitsivalue = GetNewLimitSI(trans, 274); //trans.Perils.Where(x => x.PerilID == 274).FirstOrDefault().NewLimitSI;
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(ownlimitsivalue), 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(owndvalue), 1));
             
@@ -160,7 +160,7 @@ namespace MotorOnline.Web
             innerTable.AddCell(PdfHelper.CreateCellWithText("Engine No.:", 0, fonttype: 1));
             innerTable.AddCell(PdfHelper.CreateCellWithText(trans.CarDetail.EngineNo, 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText("ACTS OF NATURE", 0, indent: 10f));
-            double aonlimitsivalue = trans.Perils.Where(x => x.PerilID == 182).FirstOrDefault().NewLimitSI;
+            double aonlimitsivalue = GetNewLimitSI(trans, 182); //trans.Perils.Where(x => x.PerilID == 182).FirstOrDefault().NewLimitSI;
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(aonlimitsivalue), 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(aonvalue), 1));
             
@@ -168,7 +168,7 @@ namespace MotorOnline.Web
             innerTable.AddCell(PdfHelper.CreateCellWithText("Chassis No.:", 0, fonttype: 1));
             innerTable.AddCell(PdfHelper.CreateCellWithText(trans.CarDetail.ChassisNo, 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText("VTPL-BODILY INJURY", 0, indent: 10f));
-            double vtpllimitsivalue = trans.Perils.Where(x => x.PerilID == 194).FirstOrDefault().NewLimitSI;
+            double vtpllimitsivalue = GetNewLimitSI(trans, 194); //trans.Perils.Where(x => x.PerilID == 194).FirstOrDefault().NewLimitSI;
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(vtpllimitsivalue), 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(vtplvalue), 1));
 
@@ -176,7 +176,7 @@ namespace MotorOnline.Web
             innerTable.AddCell(PdfHelper.CreateCellWithText("Color:", 0, fonttype: 1));
             innerTable.AddCell(PdfHelper.CreateCellWithText(trans.CarDetail.Color, 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText("VTPL-PROPERTY DAMAGE", 0, indent: 10f));
-            double vtpl2limitsivalue = trans.Perils.Where(x => x.PerilID == 195).FirstOrDefault().NewLimitSI;
+            double vtpl2limitsivalue = GetNewLimitSI(trans, 195); //trans.Perils.Where(x => x.PerilID == 195).FirstOrDefault().NewLimitSI;
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(vtpl2limitsivalue), 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText(" ", 1));
 
@@ -184,7 +184,7 @@ namespace MotorOnline.Web
             innerTable.AddCell(PdfHelper.CreateCellWithText("Accessories:", 0, fonttype: 1));
             innerTable.AddCell(PdfHelper.CreateCellWithText(trans.CarDetail.Accessories, 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText("AUTO PA (PER SEAT)", 0, indent: 10f));
-            double autopalimitsivalue = trans.Perils.Where(x => x.PerilID == 184).FirstOrDefault().NewLimitSI;
+            double autopalimitsivalue = GetNewLimitSI(trans, 184); //trans.Perils.Where(x => x.PerilID == 184).FirstOrDefault().NewLimitSI;
             innerTable.AddCell(PdfHelper.CreateCellWithText(FormatToPhilippneCurrency(autopalimitsivalue), 0));
             innerTable.AddCell(PdfHelper.CreateCellWithText(" ", 1));
 
@@ -263,6 +263,62 @@ namespace MotorOnline.Web
 
             Response.ContentType = "application/pdf";
             Response.BinaryWrite(bytes);
+        }
+
+        //private static double GetAONValue(Transaction trans)
+        //{
+        //    var v = trans.Perils.Where(x => x.PerilID == 182).FirstOrDefault();
+        //    if(v == null){
+        //        return 0;
+        //    } else {
+        //       return v.NewPolicyPremium;
+        //    }
+        //}
+
+        //private static double GetOWNDValue(Transaction trans)
+        //{
+        //    var v = trans.Perils.Where(x => x.PerilID == 274).FirstOrDefault();
+        //    if(v == null){
+        //        return 0;
+        //    } else {
+        //        return v.NewPolicyPremium;
+        //    }
+        //}
+
+        //private static double GetCtplValue(Transaction trans)
+        //{
+        //    var v = trans.Perils.Where(x => x.PerilID == 187).FirstOrDefault();
+        //    if(v == null) {
+        //        return 0;
+        //    } else {
+        //        return v.NewPolicyPremium;
+        //    }
+        //}
+
+        private static double GetNewPolicyPremium(Transaction t, int type)
+        {
+            var v = t.Perils.Where(x => x.PerilID == type).FirstOrDefault();
+            if (v == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return v.NewPolicyPremium;
+            }
+        }
+
+        private static double GetNewLimitSI(Transaction t, int type)
+        {
+            var v = t.Perils.Where(x => x.PerilID == type).FirstOrDefault();
+            if (v == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return v.NewLimitSI;
+            }
         }
 
         private static PdfPTable CreateTransactionDetailsTable(Transaction trans)
