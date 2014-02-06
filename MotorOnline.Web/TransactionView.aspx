@@ -911,6 +911,7 @@
                     <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" />&nbsp;
                     <asp:Button ID="PostButton" runat="server" Text="Post" />&nbsp;
                     <asp:Button ID="AmendButton" runat="server" Text="Amend" />
+                    <input id="endorsebutton" type="button" value="Endorse" />
                 </td>
             </tr>
         </table>

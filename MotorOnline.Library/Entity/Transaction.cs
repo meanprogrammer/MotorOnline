@@ -95,5 +95,28 @@ namespace MotorOnline.Library.Entity
                 return this.CarDetail.EngineSeries.Trim().Replace(" ", "_");
             }
         }
+
+        public bool IsCTPLOnly { 
+            get {
+                return (this.CarDetail.TypeOfCover == 1);
+            } 
+        }
+
+        public bool IsComprehensiveWithCTPL
+        {
+            get
+            {
+                return (this.CarDetail.TypeOfCover == 2);
+            }
+        }
+
+        public bool IsComprehensiveWithOutCTPL
+        {
+            get
+            {
+                return (this.CarDetail.TypeOfCover == 3);
+            }
+        }
+
     }
 }

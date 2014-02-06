@@ -55,7 +55,6 @@ function populatecardetaildisplay(cardetail) {
     $('#lblPlateNo').html(cardetail.PlateNo);
     $('#lblConductionNo').html(cardetail.ConductionNo);
     $('#lblAccessories').html(cardetail.Accessories);
-    alert(cardetail.AuthenticationNo);
     $('#lblAuthenticationNo').html(cardetail.AuthenticationNo);
     $('#lblCOCNo').html(cardetail.COCNo);
 
