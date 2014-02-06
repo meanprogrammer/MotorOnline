@@ -43,9 +43,10 @@
                 return;
             }
 
-            
+
 
             var cardetail = createcardetails();
+            console.log(cardetail);
             populatecardetaildisplay(cardetail);
 
             displayperils();
@@ -245,6 +246,7 @@
                     data: { "action": 'gettransactionbyid', "transactionid": id },
                     success: function (result) {
                         var obj = JSON.parse(result);
+                        console.log(obj);
                         if (obj != null) {
 
                             loadtransaction(obj, id);
@@ -609,7 +611,7 @@
                     <td>
                         <asp:DropDownList ID="TypeOfBodyDropdown" ClientIDMode="Static" runat="server" Width="120px">
                         </asp:DropDownList>
-                        <%-- <span class="required-field">*</span>--%>
+                        <%--                    <asp:Button ID="NewButton" runat="server" Text="New" />&nbsp;--%>
                     </td>
                     <td>
                         Type Of Cover
@@ -719,6 +721,17 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>
+                        Authentication No.</td>
+                    <td>
+                        <asp:TextBox ID="txtAuthenticationNo" ClientIDMode="Static" runat="server"></asp:TextBox>
+                        </td>
+                    <td>
+                        COC No.</td>
+                    <td>
+                        <asp:TextBox ID="txtCOCNo" ClientIDMode="Static" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr>
                     <td align="right" colspan="4">
                         <asp:Button ID="SaveCarDetailsButton" ClientIDMode="Static" runat="server" Text="Save" />
                     </td>
@@ -811,6 +824,18 @@
                 <td class="label-value">
                     <asp:Label ID="lblAccessories" runat="server" ClientIDMode="Static"></asp:Label>
                 </td>
+            </tr>
+            <tr>
+                <td class="label-text">
+                    <strong>Authentication No:</strong></td>
+                <td class="label-value">
+                    <asp:Label ID="lblAuthenticationNo" runat="server" ClientIDMode="Static"></asp:Label>
+                    </td>
+                <td class="label-text">
+                    <strong>COC No:</strong></td>
+                <td class="label-value">
+                    <asp:Label ID="lblCOCNo" runat="server" ClientIDMode="Static"></asp:Label>
+                    </td>
             </tr>
         </table>
         <br />

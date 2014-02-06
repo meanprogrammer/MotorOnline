@@ -113,6 +113,8 @@ namespace MotorOnline.Web
             detail.PlateNo = carDetailsDictionary.GetStringFromJson("PlateNo");
             detail.ConductionNo = carDetailsDictionary.GetStringFromJson("ConductionNo");
             detail.Accessories = carDetailsDictionary.GetStringFromJson("Accessories");
+            detail.AuthenticationNo = carDetailsDictionary.GetStringFromJson("AuthenticationNo");
+            detail.COCNo = carDetailsDictionary.GetStringFromJson("COCNo");
             return detail;
         }
 

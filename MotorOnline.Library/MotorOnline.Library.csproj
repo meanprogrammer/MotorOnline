@@ -55,6 +55,7 @@
     <Compile Include="Entity\TransactionComputation.cs" />
     <Compile Include="Entity\TransactionPeril.cs" />
     <Compile Include="Entity\User.cs" />
+    <Compile Include="Entity\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

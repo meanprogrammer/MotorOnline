@@ -337,6 +337,24 @@ namespace MotorOnline.Web {
         protected global::System.Web.UI.WebControls.TextBox txtAccesories;
         
         /// <summary>
+        /// txtAuthenticationNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAuthenticationNo;
+        
+        /// <summary>
+        /// txtCOCNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCOCNo;
+        
+        /// <summary>
         /// SaveCarDetailsButton control.
         /// </summary>
         /// <remarks>
@@ -452,6 +470,24 @@ namespace MotorOnline.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAccessories;
+        
+        /// <summary>
+        /// lblAuthenticationNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAuthenticationNo;
+        
+        /// <summary>
+        /// lblCOCNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCOCNo;
         
         /// <summary>
         /// lblBasicPremium control.

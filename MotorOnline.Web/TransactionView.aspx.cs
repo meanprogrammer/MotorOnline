@@ -87,7 +87,7 @@ namespace MotorOnline.Web
 
         public void PopulateSublines()
         {
-            uf_populate_ddlb(ao_ddlb: SublineDropdown, adt_source: go_dal.uf_pop_mSublines(), as_empty_option_text: "Select Subline");
+            uf_populate_ddlb(ao_ddlb: SublineDropdown, adt_source: go_dal.PopulateSublines(), as_empty_option_text: "Select Subline");
             SublineDropdown.SelectedIndex = 0;
         }
 
@@ -106,7 +106,7 @@ namespace MotorOnline.Web
 
         public void PopulateCarCompany()
         {
-            uf_populate_ddlb(ao_ddlb: CarCompaniesDropdown, adt_source: go_dal.sp_pop_CarCompanies(), as_empty_option_text: "Select Car Company");
+            uf_populate_ddlb(ao_ddlb: CarCompaniesDropdown, adt_source: go_dal.PopulateCarCompanies(), as_empty_option_text: "Select Car Company");
             CarCompaniesDropdown.SelectedIndex = 0;
         }
 

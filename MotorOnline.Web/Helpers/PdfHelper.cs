@@ -31,7 +31,9 @@ namespace MotorOnline.Web
         public static PdfPCell CreateCellWithText(string text, int alignment = 0, 
             int colspan = 1, int topborder = 0, int bottomborder = 0,
             int leftborder = 0, int rightborder =0, 
-            int fonttype = 0, int fontSize = 7, float indent = 0f) {
+            int fonttype = 0, int fontSize = 7, float indent = 0f,
+            float paddingTop = 0, float paddingRight = 0, float paddingBottom = 0,
+            float paddingLeft = 0) {
             return new PdfPCell()
             {
                 Phrase = new iTextSharp.text.Phrase(text, GetFont(fonttype, fontSize)),
@@ -41,7 +43,11 @@ namespace MotorOnline.Web
                 BorderWidthBottom = bottomborder,
                 BorderWidthLeft = leftborder,
                 BorderWidthRight = rightborder,
-                Indent = indent
+                Indent = indent,
+                PaddingTop = paddingTop,
+                PaddingRight = paddingRight,
+                PaddingBottom = paddingBottom,
+                PaddingLeft = paddingLeft
             };
         }
 

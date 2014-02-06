@@ -302,6 +302,7 @@ function loadtransaction(json, id) {
     $('#TypeOfCoverDropdown').val(json.CarDetail.TypeOfCover);
     $('#CarCompaniesDropdown').val(json.CarDetail.CarCompany);
 
+    //TODO: Change this! It sucks!
     //NOTE: This is nested because we wait for the ajax call to finish, 
     //we need the result to continue populating the edit view
     carcompanychangewithcallback(function () {
@@ -342,6 +343,8 @@ function loadtransaction(json, id) {
     $('#txtAccesories').val(json.CarDetail.Accessories);
     $('#YearDropdown').val(json.CarDetail.CarYear);
     $('#TypeOfBodyDropdown').val(json.CarDetail.CarTypeOfBodyID);
+    $('#txtAuthenticationNo').val(json.CarDetail.AuthenticationNo);
+    $('#txtCOCNo').val(json.CarDetail.COCNo);
 
     $('#ddDesignation').val(json.Customer.Designation);
     $('#txtLastName').val(json.Customer.LastName);

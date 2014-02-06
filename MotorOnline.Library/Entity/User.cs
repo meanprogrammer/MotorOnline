@@ -15,5 +15,6 @@ namespace MotorOnline.Library.Entity
         public string MI { get; set; }
         public int RoleID { get; set; }
         public DateTime LastActivityDate { get; set; }
+        public UserRole UserRole { get; set; }
     }
 }

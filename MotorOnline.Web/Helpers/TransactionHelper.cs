@@ -25,7 +25,7 @@ namespace MotorOnline.Web
         public static string GenerateValidParNo() {
             string generatedParNo = string.Empty;
             cls_data_access_layer dal = new cls_data_access_layer();
-            var lastparno = dal.get_lastparno();
+            var lastparno = dal.GetLastParNo();
             return GenerateParNoWithFormat(lastparno);
         }
 
@@ -50,7 +50,7 @@ namespace MotorOnline.Web
         public static string GenerateValidPolicyNo() {
             string generatedPolicyNo = string.Empty;
             cls_data_access_layer dal = new cls_data_access_layer();
-            var lastpolicyno = dal.get_lastpolicyno();
+            var lastpolicyno = dal.GetLastPolicyNo();
             return GeneratePolicyNoWithFormat(lastpolicyno);
         }
 
@@ -61,7 +61,7 @@ namespace MotorOnline.Web
                 string[] parts = lastPolicyNo.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
                 //int idPart = int.Parse(parts[1]);
                 int lastDigitPart = int.Parse(parts[1]);
-
+                string yearPart = DateTime.Now.Year.ToString().Remove(0, 2);
                 if (lastDigitPart == 99)
                 {
                     //idPart++;
@@ -72,7 +72,7 @@ namespace MotorOnline.Web
                     lastDigitPart++;
                 }
 
-                return string.Format("MC-{0}-{1}-{2}", lastDigitPart.ToString("D7"), "00", "00");
+                return string.Format("MC-{0}-{1}-{2}-{3}", yearPart, lastDigitPart.ToString("D7"), "00", "00");
             }
             else
             {

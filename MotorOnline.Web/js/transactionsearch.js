@@ -63,7 +63,8 @@ function searchtransactions() {
     var motortype = $('#motortype').val();
     var chassisno = $('#chassisno').val();
     var engineno = $('#engineno').val();
-
+    var firstname = $('#firstname').val();
+    var lastname = $('#lastname').val();
 
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
@@ -83,7 +84,9 @@ function searchtransactions() {
             carcompany: carcompany,
             motortype: motortype,
             chassisno: chassisno,
-            engineno: engineno
+            engineno: engineno,
+            firstname: firstname,
+            lastname: lastname
         },
         success: function (result) {
             var obj = JSON.parse(result);
@@ -155,7 +158,8 @@ function resetsearch() {
     $('#motortype').val('0');
     $('#chassisno').val('');
     $('#engineno').val('');
-
+    $('#firstname').val('');
+    $('#lastname').val('');
     $('#searchresult').html('');
 }
 

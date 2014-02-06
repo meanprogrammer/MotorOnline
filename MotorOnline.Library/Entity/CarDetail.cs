@@ -24,7 +24,9 @@ namespace MotorOnline.Library.Entity
         public string ChassisNo { get; set; }
         public string PlateNo { get; set; }
         public string Accessories { get; set; }
-  
+        public string AuthenticationNo { get; set; }
+        public string COCNo { get; set; }
+
 
         //This text/value pair are mostly used for json
         public string CarCompanyText { get; set; }

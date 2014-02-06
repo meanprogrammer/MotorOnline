@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Root.Master" AutoEventWireup="true" CodeBehind="AllTransactionsView.aspx.cs" Inherits="MotorOnline.Web.AllTransactionsView" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="js/transactionsearch.js" type="text/javascript"></script>
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">
 <table border="0" cellpadding="2">
@@ -41,18 +39,13 @@
         <td colspan="3">
             <select id="mortgagee" name="mortgagee" class="width-400"></select></td>
         <td>
-            Car Company</td>
+            First Name</td>
         <td>
-            <select id="carcompany" name="carcompany"></select></td>
+            <input id="firstname" type="text" /></td>
         <td>
-            Motor Type</td>
+            Last Name</td>
         <td>
-            <select id="motortype" name="motortype">
-                <option value="0">--SELECT--</option>
-                <option value="LIGHT">LIGHT</option>
-                <option value="MEDIUM">MEDIUM</option>
-                <option value="HEAVY">HEAVY</option>
-            </select></td>
+            <input id="lastname" type="text" /></td>
     </tr>
     <tr>
         <td>Intermediary</td>
@@ -68,15 +61,25 @@
             <input id="engineno" type="text" /></td>
     </tr>
     <tr>
-        <td>&nbsp;</td>
+        <td>Car Company</td>
+        <td>
+            <select id="carcompany" name="carcompany"></select></td>
+        <td>Motor Type</td>
+        <td>
+            <select id="motortype" name="motortype">
+                <option value="0">--SELECT--</option>
+                <option value="LIGHT">LIGHT</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="HEAVY">HEAVY</option>
+            </select></td>
         <td>
             &nbsp;</td>
-        <td>&nbsp;</td>
-        <td colspan="3">
+        <td>
+            &nbsp;</td>
+        <td></td>
+        <td>
             <input id="searchbutton" type="button" value="Search" />&nbsp;<input id="resetbutton" 
                 type="button" value="Reset" /></td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
     </tr>
 </table>
     <div id="searchresult">

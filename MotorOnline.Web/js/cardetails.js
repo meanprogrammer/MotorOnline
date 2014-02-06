@@ -32,7 +32,9 @@
         "ConductionNo": $('#txtConductionNo').val(),
         "ChassisNo": $('#txtChasis').val(),
         "PlateNo": $('#txtPlateNo').val(),
-        "Accessories": $('#txtAccesories').val()
+        "Accessories": $('#txtAccesories').val(),
+        "AuthenticationNo": $('#txtAuthenticationNo').val(),
+        "COCNo": $('#txtCOCNo').val()
     };
     return cardetails;
 }
@@ -53,6 +55,9 @@ function populatecardetaildisplay(cardetail) {
     $('#lblPlateNo').html(cardetail.PlateNo);
     $('#lblConductionNo').html(cardetail.ConductionNo);
     $('#lblAccessories').html(cardetail.Accessories);
+    alert(cardetail.AuthenticationNo);
+    $('#lblAuthenticationNo').html(cardetail.AuthenticationNo);
+    $('#lblCOCNo').html(cardetail.COCNo);
 
 }
 

@@ -94,9 +94,11 @@ namespace MotorOnline.Web.ajax
             var motortype = Request.Form["motortype"];
             var chassisno = Request.Form["chassisno"];
             var engineno = Request.Form["engineno"];
+            var lastname = Request.Form["lastname"];
+            var firstname = Request.Form["firstname"];
 
             string whereClause = BuildSQLWhereClause(creditingbranch, parno, policyno, subline, datecreated, policyperiodfrom,
-                policyperiodto, typeofcover, mortgagee, intermediary, carcompany, motortype, chassisno, engineno);
+                policyperiodto, typeofcover, mortgagee, intermediary, carcompany, motortype, chassisno, engineno, firstname, lastname);
 
             IEnumerable<TransactionSearchResultDTO> ts = data.SearchTransaction(whereClause);
             Render<IEnumerable<TransactionSearchResultDTO>>(ts);
@@ -105,7 +107,8 @@ namespace MotorOnline.Web.ajax
         private string BuildSQLWhereClause(string creditingbranch,
             string parno, string policyno, string subline, string datecreated, string policyperiodfrom,
             string policyperiodto, string typeofcover, string mortgagee, string intermediary,
-            string carcompany, string motortype, string chassisno, string engineno) {
+            string carcompany, string motortype, string chassisno, string engineno,
+            string firstname, string lastname) {
 
                 StringBuilder sql = new StringBuilder();
                 if (creditingbranch != "0")
@@ -189,6 +192,18 @@ namespace MotorOnline.Web.ajax
                 {
                     AddAnd(sql);
                     sql.AppendFormat(" tc.EngineNo = '{0}' ", engineno.Trim());
+                }
+
+                if (!string.IsNullOrEmpty(firstname.Trim()))
+                {
+                    AddAnd(sql);
+                    sql.AppendFormat(" mtc.FirstName = '{0}' ", firstname.Trim());
+                }
+
+                if (!string.IsNullOrEmpty(lastname.Trim()))
+                {
+                    AddAnd(sql);
+                    sql.AppendFormat(" mtc.LastName = '{0}' ", lastname.Trim());
                 }
 
                 return sql.ToString();
@@ -303,7 +318,7 @@ namespace MotorOnline.Web.ajax
 
             options.Add("caryears", caryears);
 
-            DataTable ccDt = dl.sp_pop_CarCompanies();
+            DataTable ccDt = dl.PopulateCarCompanies();
             List<DropDownListItem> carcompanies = new List<DropDownListItem>();
             foreach (DataRow row in ccDt.Rows)
             {
@@ -588,7 +603,7 @@ namespace MotorOnline.Web.ajax
         private void HandleGetCarCompanies()
         {
             cls_data_access_layer dl = new cls_data_access_layer();
-            DataTable dt = dl.sp_pop_CarCompanies();
+            DataTable dt = dl.PopulateCarCompanies();
             List<DropDownListItem> items = new List<DropDownListItem>();
             foreach (DataRow row in dt.Rows)
             {

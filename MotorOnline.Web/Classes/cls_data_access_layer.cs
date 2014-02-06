@@ -40,26 +40,26 @@ namespace MotorOnline.Web
             return go_dah.uf_execute_data_table();
         }
 
-        public string get_lastparno() {
+        public string GetLastParNo() {
             go_dah.uf_set_stored_procedure("sp_getlastparno", ref go_sqlConnection);
             object result = go_dah.uf_execute_scalar();
             return result.ToString();
         }
 
-        public string get_lastpolicyno()
+        public string GetLastPolicyNo()
         {
             go_dah.uf_set_stored_procedure("sp_getlastpolicyno", ref go_sqlConnection);
             object result = go_dah.uf_execute_scalar();
             return result.ToString();
         }
 
-        public DataTable uf_pop_mSublines()
+        public DataTable PopulateSublines()
         {
             go_dah.uf_set_stored_procedure("sp_pop_mSublines", ref go_sqlConnection);
             return go_dah.uf_execute_data_table();
         }
 
-        public DataTable sp_pop_CarCompanies() {
+        public DataTable PopulateCarCompanies() {
             go_dah.uf_set_stored_procedure("sp_pop_mCarCompanies", ref go_sqlConnection);
             return go_dah.uf_execute_data_table();
         }
@@ -370,6 +370,8 @@ namespace MotorOnline.Web
                         carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@ChassisNo", Value = transaction.CarDetail.ChassisNo, DbType = DbType.String });
                         carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@PlateNo", Value = transaction.CarDetail.PlateNo, DbType = DbType.String });
                         carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@Accessories", Value = transaction.CarDetail.Accessories, DbType = DbType.String });
+                        carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@AuthenticationNo", Value = transaction.CarDetail.AuthenticationNo, DbType = DbType.String });
+                        carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@CocNo", SourceColumn="COCNo", Direction = ParameterDirection.Input, Value = transaction.CarDetail.COCNo, DbType = DbType.String });
 
                         carDetailResult = carDetailCmd.ExecuteNonQuery();
 
@@ -536,6 +538,8 @@ namespace MotorOnline.Web
                         carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@ChassisNo", Value = transaction.CarDetail.ChassisNo, DbType = DbType.String });
                         carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@PlateNo", Value = transaction.CarDetail.PlateNo, DbType = DbType.String });
                         carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@Accessories", Value = transaction.CarDetail.Accessories, DbType = DbType.String });
+                        carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@AuthenticationNo", Value = transaction.CarDetail.AuthenticationNo, DbType = DbType.String });
+                        carDetailCmd.Parameters.Add(new SqlParameter() { ParameterName = "@COCNo", Value = transaction.CarDetail.COCNo, DbType = DbType.String });
 
                         using (carDetailCmd)
                         {
@@ -702,6 +706,8 @@ namespace MotorOnline.Web
                 int accessoriesIdx = reader.GetOrdinal("Accessories");
                 int carCompanyNameIdx = reader.GetOrdinal("CarCompanyName");
                 int carMakeNameIdx = reader.GetOrdinal("CarMakeName");
+                int authenticationNoIdx = reader.GetOrdinal("AuthenticationNo");
+                int cocNoIdx = reader.GetOrdinal("COCNo");
                 while (reader.Read())
                 {
                     detail.TransactionID = reader.IsDBNull(transactionIdIdx) ? 0 : reader.GetInt32(transactionIdIdx);
@@ -721,6 +727,8 @@ namespace MotorOnline.Web
                     detail.Accessories = reader.IsDBNull(accessoriesIdx) ? string.Empty : reader.GetString(accessoriesIdx);
                     detail.CarCompanyText = reader.IsDBNull(carCompanyNameIdx) ? string.Empty : reader.GetString(carCompanyNameIdx);
                     detail.CarMakeText = reader.IsDBNull(carMakeNameIdx) ? string.Empty : reader.GetString(carMakeNameIdx);
+                    detail.AuthenticationNo = reader.IsDBNull(authenticationNoIdx) ? string.Empty : reader.GetString(authenticationNoIdx);
+                    detail.COCNo = reader.IsDBNull(cocNoIdx) ? string.Empty : reader.GetString(cocNoIdx);
                 }
             }
             return detail;
