@@ -49,6 +49,7 @@
     <Compile Include="Entity\DTO\DefaultTariffRateResponse.cs" />
     <Compile Include="Entity\DTO\TransactionSearchResultDTO.cs" />
     <Compile Include="Entity\EncryptionKeys.cs" />
+    <Compile Include="Entity\Endorsement.cs" />
     <Compile Include="Entity\Perils.cs" />
     <Compile Include="Entity\TariffRate.cs" />
     <Compile Include="Entity\Transaction.cs" />

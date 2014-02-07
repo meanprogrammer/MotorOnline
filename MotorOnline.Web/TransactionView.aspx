@@ -7,6 +7,7 @@
     <script src="js/datehelper.js" type="text/javascript"></script>
     <script src="js/perils.js" type="text/javascript"></script>
     <script src="js/transaction.js" type="text/javascript"></script>
+    <script src="js/endorsement.js" type="text/javascript"></script>
     <script type="text/javascript">
         function getexistingpolicy() {
             var engineNo = $('#txtEngine').val();
@@ -46,7 +47,6 @@
 
 
             var cardetail = createcardetails();
-            console.log(cardetail);
             populatecardetaildisplay(cardetail);
 
             displayperils();
@@ -261,6 +261,34 @@
                 $('#SaveButton').click(savetransaction);
                 $("#SaveButton").prop('value', 'Save');
             }
+
+
+
+            //Endorsement Section
+            $('#endorsebutton').click(
+                function () {
+                    $("#endorsement-dialog").css('display', 'block');
+                    $("#endorsement-dialog").dialog({
+                        modal: true,
+                        height: 500,
+                        width: 600,
+                        resizable: false,
+                        closeOnEscape: false,
+                        title: "Endorsement"
+                    });
+                }
+            );
+
+            $('#endcancelbutton').click(
+                function () {
+                    $('#endorsement-dialog').dialog('close');
+                    $("#endorsement-dialog").css('display', 'none');
+                }
+            );
+
+            $('#EndorsementDropdown').change(onendorsementselectchanged);
+
+            //Endorsement Section
         }
     );
 
@@ -901,6 +929,46 @@
                 </tr>
             </table>
         </div>
+        <div id="endorsement-dialog" style="display:none;">
+            <table cellpadding="8">
+                <tr>
+                    <td>
+                        Type of Endorsement</td>
+                    <td>
+<%--                        <select id="endorsementdropdown" name="endorsementdropdown">
+                            
+                        </select>--%>
+                        <asp:DropDownList ID="EndorsementDropdown" ClientIDMode="Static" runat="server">
+                            <asp:ListItem Value="0" Text="-- SELECT --"></asp:ListItem>
+                        </asp:DropDownList>
+                        </td>
+                    <td><span class="required-field">*</span></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <textarea id="endorsementtext" cols="60" 
+                            name="endorsementtext" rows="10" readonly="readonly"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="endorsement-controls">
+                        </div>
+                    </td>
+                    <td>
+                        &nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        &nbsp;</td>
+                    <td>
+                        <input id="endsavebutton" type="button" value="Save" />&nbsp;
+                        <input id="endcancelbutton" type="button" value="Cancel" />
+                        </td>
+                    <td>
+                        &nbsp;</td>
+                </tr>
+            </table>
+        </div>
         <hr />
         <table style="width: 500px">
             <tr>
@@ -909,9 +977,18 @@
                     <%--                    <asp:Button ID="NewButton" runat="server" Text="New" />&nbsp;--%>
                     <asp:Button ID="SaveButton" ClientIDMode="Static" runat="server" Text="Save" />&nbsp;
                     <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" />&nbsp;
-                    <asp:Button ID="PostButton" runat="server" Text="Post" />&nbsp;
+                    <asp:Button ID="PostButton" runat="server" Text="Post" />
+
+                    <% if (this.CurrentUser.UserRole.CanAmmendTransaction)
+                       { %>
+                    &nbsp;
                     <asp:Button ID="AmendButton" runat="server" Text="Amend" />
+                    <% } %>
+
+                    <% if (this.CurrentUser.UserRole.CanEndorse)
+                       { %>
                     <input id="endorsebutton" type="button" value="Endorse" />
+                    <% } %>
                 </td>
             </tr>
         </table>

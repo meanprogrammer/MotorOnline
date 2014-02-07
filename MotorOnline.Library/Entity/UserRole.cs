@@ -21,5 +21,6 @@ namespace MotorOnline.Library.Entity
         public bool CanEditUser { get; set; }
         public bool CanDeleteUser { get; set; }
         public bool CanEditPerils { get; set; }
+        public bool CanEndorse { get; set; }
     }
 }

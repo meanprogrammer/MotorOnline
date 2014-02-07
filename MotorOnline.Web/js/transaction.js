@@ -295,10 +295,6 @@ function loadtransaction(json, id) {
 
     $('#TypeOfInsuranceDropdown').val(json.TypeOfInsured);
 
-    //        public bool IsPosted { get; set; }
-    //        public bool IsPrinted { get; set; }
-    //        public bool IsEndorsed { get; set; }
-
     $('#TypeOfCoverDropdown').val(json.CarDetail.TypeOfCover);
     $('#CarCompaniesDropdown').val(json.CarDetail.CarCompany);
 
@@ -369,4 +365,115 @@ function showloader(message) {
 function hideloader() {
     $('#progressbox').dialog('close');
     $('#progressbox').css('display', 'none');
+}
+
+//function loadallendorsement() {
+//    $.ajax({
+//        url: "ajax/TransactionAjax.aspx",
+//        type: "post",
+//        data: {
+//            "action": 'loadallendorement'
+//        },
+//        success: function (result) {
+//            var json = JSON.parse(result);
+//            if (json != null) {
+//                html = '<option value="0">--SELECT--</option>';
+//                $.each(json, function (key, value) {
+//                    html += '<option value="' + value.EndorsementCode + '">' + value.EndorsementTitle + '</option>';
+//                });
+//                $('#endorsementdropdown').html(html);
+//            }
+//        },
+//        error: function () {
+//            hideloader();
+//        }
+//    });
+//}
+
+
+function onendorsementselectchanged() {
+    var s = $(this).val();
+    $.ajax({
+        url: "ajax/TransactionAjax.aspx",
+        type: "post",
+        data: {
+            "action": 'getendorsementbycode',
+            "ecode": s
+        },
+        success: function (result) {
+            var json = JSON.parse(result);
+            if (json != null) {
+                $('#endorsementtext').html(json.EndorsementText);
+                html = '';
+                switch (json.EndorsementCode) {
+                    case 15:
+                        html += '<table cellpadding="8"> <tr> <td> Last Name </td> <td> <input id="e_lastname" type="text" /> </td> </tr> <tr> <td> First Name </td> <td> <input id="e_firstname" type="text" /> </td> </tr> <tr> <td> MI Name </td> <td> <input id="e_mi" type="text" /> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copynames();
+                        break;
+                    case 17:
+                    case 19:
+                        html += '<table cellpadding="8"> <tr> <td> Address </td> <td> <input id="e_address" type="text" style="width:300px;" /> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copyaddress();
+                        break;
+                    case 20:
+                        html += '<table cellpadding="8"> <tr> <td> Mortgagee </td> <td> <select id="e_mortgagee"> </select> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copymortgagee();
+                        copymortgageeselected();
+                        break;
+                    case 22:
+                        html += '<table cellpadding="8"> <tr> <td> Mortgagee </td> <td> <select id="e_mortgagee"> </select> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copymortgagee();
+                        break;
+                    case 21:
+                        html += '<h3>Saving will delete the mortgagee for this transaction.</h3>';
+                        $('#endorsement-controls').html(html);
+                        break;
+                    case 3:
+                        html += ' <table cellpadding="8"> <tr> <td> COC No </td> <td> <input id="e_cocno" type="text" /> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copycocno();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+function copymortgagee() {
+    var orig_motgagee = $('#ddlMortgagee').html();
+    $('#e_mortgagee').html(orig_motgagee);
+}
+
+function copymortgageeselected() {
+    var orig_motgagee_selected = $('#ddlMortgagee').val();
+    $('#e_mortgagee').val(orig_motgagee_selected);
+}
+
+function copycocno() {
+    var cocno = $('#lblCOCNo').html();
+    $('#e_cocno').val(cocno);
+}
+
+function copynames() {
+    var lname = $('#txtLastName').val();
+    var fname = $('#txtFirstName').val();
+    var miname = $('#txtMI').val();
+
+    $('#e_lastname').val(lname);
+    $('#e_firstname').val(fname);
+    $('#e_mi').val(miname);
+}
+
+function copyaddress() {
+    var adds = $('#txtMailAdress').val();
+    $('#e_address').val(adds);
 }

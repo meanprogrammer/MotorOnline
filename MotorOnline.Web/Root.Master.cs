@@ -20,7 +20,22 @@ namespace MotorOnline.Web
                 FirstName = "Valiant",
                 LastName = "Dudan",
                 MI = "A",
-                Username = "meanprogrammer"
+                Username = "meanprogrammer",
+                RoleID = 1,
+                UserRole = new UserRole()
+                {
+                    CanAddTransaction = true,
+                    CanAddUser = true,
+                    CanAmmendTransaction = true,
+                    CanDeleteTransaction = true,
+                    CanDeleteUser = true,
+                    CanEditPerils = true,
+                    CanEditTransaction = true,
+                    CanEditUser = true,
+                    CanPostTransaction = true,
+                    CanViewTransaction = true,
+                    CanEndorse = true
+                }
             };
 
             Session.Add(string.Format("user_{0}", Session.SessionID), user);

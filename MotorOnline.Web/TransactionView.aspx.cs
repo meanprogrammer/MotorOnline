@@ -11,6 +11,16 @@ namespace MotorOnline.Web
 {
     public partial class TransactionView : cls_base_page
     {
+        private User _currentUser;
+        public User CurrentUser {
+            get {
+                return Session[string.Format("user_{0}", Session.SessionID)] as User;
+            }
+            set {
+                this._currentUser = value;
+            } 
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -36,6 +46,9 @@ namespace MotorOnline.Web
 
                 //Load data early for autocomplete later
                 GetNamesAutocomplete();
+
+                //TODO: Load All endorsements but later load this if the user is admin
+                PopuplateEndorsement();
 
                 //Load transaction if there is an id
                 string transactionId = Request.QueryString.Get("id");
@@ -108,6 +121,17 @@ namespace MotorOnline.Web
         {
             uf_populate_ddlb(ao_ddlb: CarCompaniesDropdown, adt_source: go_dal.PopulateCarCompanies(), as_empty_option_text: "Select Car Company");
             CarCompaniesDropdown.SelectedIndex = 0;
+        }
+
+        public void PopuplateEndorsement()
+        {
+            cls_data_access_layer dl = new cls_data_access_layer();
+            List<Endorsement> endorsements = dl.GetAllEndorsement();
+            foreach (Endorsement e in endorsements)
+            {
+                this.EndorsementDropdown.Items.Add(new ListItem(e.EndorsementTitle, e.EndorsementCode.ToString()));
+            }
+            this.EndorsementDropdown.SelectedIndex = 0;
         }
 
         public void GetNamesAutocomplete() {

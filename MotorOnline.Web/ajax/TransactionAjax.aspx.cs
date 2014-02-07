@@ -73,9 +73,28 @@ namespace MotorOnline.Web.ajax
                 case "searchtransactions":
                     HandleSearchTransactions();
                     break;
+                //NOT USED
+                case "loadallendorement":
+                    HandleLoadAllEndorsement();
+                    break;
+                case "getendorsementbycode":
+                    HandleGetEndorsementByCode();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void HandleGetEndorsementByCode()
+        {
+            Endorsement e = data.GetOneEndorsement(int.Parse(Request.Form["ecode"]));
+            Render<Endorsement>(e);
+        }
+
+        private void HandleLoadAllEndorsement()
+        {
+            List<Endorsement> endorsements = data.GetAllEndorsement();
+            Render<List<Endorsement>>(endorsements);
         }
 
         private void HandleSearchTransactions()

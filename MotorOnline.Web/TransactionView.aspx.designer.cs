@@ -553,6 +553,15 @@ namespace MotorOnline.Web {
         protected global::System.Web.UI.WebControls.Label lblTotalAmmountDue;
         
         /// <summary>
+        /// EndorsementDropdown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList EndorsementDropdown;
+        
+        /// <summary>
         /// CancelButton control.
         /// </summary>
         /// <remarks>

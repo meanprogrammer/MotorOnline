@@ -248,6 +248,20 @@ namespace MotorOnline.Web
                 int miIdx = reader.GetOrdinal("MI");
                 int lastnameIdx = reader.GetOrdinal("LastName");
                 int lastactivityIdx = reader.GetOrdinal("LastActivityDate");
+
+                int roleNameIdx = reader.GetOrdinal("RoleName");
+                int canAddTransactionIdx = reader.GetOrdinal("CanAddTransaction");
+                int canEditTransactionIdx = reader.GetOrdinal("CanEditTransaction");
+                int canViewTransactionIdx = reader.GetOrdinal("CanViewTransaction");
+                int canDeleteTransactionIdx = reader.GetOrdinal("CanDeleteTransaction");
+                int canPostTransactionIdx = reader.GetOrdinal("CanPostTransaction");
+                int canAmmendTransactionIdx = reader.GetOrdinal("CanAmmendTransaction");
+                int canAddUserIdx = reader.GetOrdinal("CanAddUser");
+                int canEditUserIdx = reader.GetOrdinal("CanEditUser");
+                int canDeleteUserIdx = reader.GetOrdinal("CanDeleteUser");
+                int canEditPerilsIdx = reader.GetOrdinal("CanEditPerils");
+                int canEndorseIdx = reader.GetOrdinal("CanEndorse");
+
                 while (reader.Read())
                 {
                     user = new User();
@@ -256,6 +270,22 @@ namespace MotorOnline.Web
                     user.FirstName = reader.IsDBNull(firsnameIdx) ? string.Empty : reader.GetString(firsnameIdx);
                     user.LastName = reader.IsDBNull(lastactivityIdx) ? string.Empty : reader.GetString(lastnameIdx);
                     user.MI = reader.IsDBNull(miIdx) ? string.Empty : reader.GetString(miIdx);
+
+                    user.UserRole = new UserRole()
+                    {
+                        RoleName = reader.GetString(roleNameIdx),
+                        CanAddTransaction = reader.GetBoolean(canAddTransactionIdx),
+                        CanEditTransaction = reader.GetBoolean(canEditTransactionIdx),
+                        CanViewTransaction = reader.GetBoolean(canViewTransactionIdx),
+                        CanDeleteTransaction = reader.GetBoolean(canDeleteTransactionIdx),
+                        CanPostTransaction = reader.GetBoolean(canPostTransactionIdx),
+                        CanAmmendTransaction = reader.GetBoolean(canAmmendTransactionIdx),
+                        CanAddUser = reader.GetBoolean(canAddUserIdx),
+                        CanEditUser = reader.GetBoolean(canEditUserIdx),
+                        CanDeleteUser = reader.GetBoolean(canDeleteUserIdx),
+                        CanEditPerils = reader.GetBoolean(canEditPerilsIdx),
+                        CanEndorse = reader.GetBoolean(canEndorseIdx)
+                    };
                 }
             }
             return user;
@@ -1033,6 +1063,49 @@ namespace MotorOnline.Web
                 }
             }
             return ts;
+        }
+
+        public List<Endorsement> GetAllEndorsement() {
+            go_dah.uf_set_stored_procedure("sp_getallendorsement", ref go_sqlConnection);
+            IDataReader reader = go_dah.uf_execute_reader();
+            List<Endorsement> list = new List<Endorsement>();
+
+            using (reader)
+            {
+                int codeIdx = reader.GetOrdinal("endtCode");
+                int titleIdx = reader.GetOrdinal("endtTitle");
+                while (reader.Read())
+                {
+                    Endorsement e = new Endorsement();
+                    e.EndorsementCode = reader.GetInt32(codeIdx);
+                    e.EndorsementTitle = reader.IsDBNull(titleIdx) ? string.Empty : reader.GetString(titleIdx);
+                    list.Add(e);
+                }
+            }
+
+            return list;
+        }
+
+        public Endorsement GetOneEndorsement(int endorsementCode)
+        {
+            go_dah.uf_set_stored_procedure("sp_getendorsementbycode", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@endtCode", endorsementCode);
+            IDataReader reader = go_dah.uf_execute_reader();
+            Endorsement e = new Endorsement();
+            using (reader)
+            {
+                int codeIdx = reader.GetOrdinal("endtCode");
+                int titleIdx = reader.GetOrdinal("endtTitle");
+                int textIdx = reader.GetOrdinal("endtText");
+                while (reader.Read())
+                {
+                    e.EndorsementCode = reader.GetInt32(codeIdx);
+                    e.EndorsementTitle = reader.IsDBNull(titleIdx) ? string.Empty : reader.GetString(titleIdx);
+                    e.EndorsementText = reader.IsDBNull(textIdx) ? string.Empty : reader.GetString(textIdx);
+                }
+            }
+
+            return e;
         }
     }
 }

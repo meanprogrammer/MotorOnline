@@ -631,6 +631,11 @@ function handledefaultvalue() {
     if (value == '2' || value == '3') {
         $('#autopatextbox').val(50000);
     }
+
+    if (value == '2' || value == '3') {
+        $('#' + associatedcontrols[191].rate).val('.25');
+        $('#' + associatedcontrols[191].policyrate).val('.25');
+    }
 }
 
 function handlebindingofthefttextboxkeyup() {
