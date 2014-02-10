@@ -80,8 +80,36 @@ namespace MotorOnline.Web.ajax
                 case "getendorsementbycode":
                     HandleGetEndorsementByCode();
                     break;
+                case "updateendorsement":
+                    HandleUpdateEndorsement();
+                    break;
                 default:
                     break;
+            }
+        }
+
+        private void HandleUpdateEndorsement()
+        {
+            var type = Request.Form["type"];
+            var transactionId = Request.Form["transactionid"];
+            int result = 0;
+            switch (type)
+            {
+                case "3":
+                    var newCocNo = Request.Form["newcocno"];
+                    result = data.UpdateCOCNo(newCocNo, int.Parse(transactionId));
+                    break;
+                default:
+                    break;
+            }
+
+            if (result > 0)
+            {
+                Render<bool>(true);
+            }
+            else
+            {
+                Render<bool>(false);
             }
         }
 

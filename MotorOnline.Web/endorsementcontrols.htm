@@ -2,8 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+    <style type="text/css">
+
+
+.required-field
+{
+    color: Red;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+    </style>
 </head>
 <body>
+    <form id="form1" runat="server">
 <div id="insured-namechange">
     <table cellpadding="8">
         <tr>
@@ -76,5 +88,63 @@
         </tr>
     </table>
 </div>
+
+<div id="change-period">
+        <table cellpadding="8">
+        <tr>
+            <td>
+                Policy Period From
+            </td>
+            <td>
+                <input id="e_policyperiodfrom" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Policy Period To
+            </td>
+            <td>
+                <input id="e_policyperiodto" type="text" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+    <div id="change-vehicledesc">
+        <table cellpadding="8">
+            <tr>
+                <td>
+                    Car Company
+                </td>
+                <td>
+                    </asp:DropDownList>
+                    <select id="e_carcompanydropdown" style="width: 200px;">
+                    </select>
+                    <span class="required-field">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Make
+                </td>
+                <td>
+                    <select id="e_carmakedropdown" style="width: 200px;">
+                    </select>
+                    <span class="required-field">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Engine
+                </td>
+                <td>
+                    <select id="e_enginedropdown">
+                    </select>
+                    <span class="required-field">*</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
 </body>
 </html>

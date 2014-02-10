@@ -393,6 +393,14 @@ function hideloader() {
 
 function onendorsementselectchanged() {
     var s = $(this).val();
+    //check if the selected is valid, if not dont do ajax call
+    //just reset the values
+    if (s == '0') {
+        $('#endorsement-controls').html('');
+        $('#endorsementtext').val('');
+        return;
+    }
+
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -437,6 +445,27 @@ function onendorsementselectchanged() {
                         $('#endorsement-controls').html(html);
                         copycocno();
                         break;
+                    case 25:
+                        html += ' <table cellpadding="8"> <tr> <td> Policy Period From </td> <td> <input id="e_policyperiodfrom" type="text" /> </td> </tr> <tr> <td> Policy Period To </td> <td> <input id="e_policyperiodto" type="text" /> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copypolicyperiods();
+                        $('#e_policyperiodfrom').datepicker({
+                            showOn: "button",
+                            buttonImage: "images/Calendar-icon.png",
+                            buttonImageOnly: true,
+                            onSelect: function () {
+                                handlecalendarselect(
+                                    'e_e_policyperiodfrom',
+                                    'e_policyperiodto'
+                                );
+                            }
+                        });
+                        break;
+                    case 33:
+                        html += '<table cellpadding="8"> <tr> <td> Car Company </td> <td> </asp:DropDownList> <select id="e_carcompanydropdown" style="width: 200px;"> </select> <span class="required-field">*</span> </td> </tr> <tr> <td> Make </td> <td> <select id="e_carmakedropdown" style="width: 200px;"> </select> <span class="required-field">*</span> </td> </tr> <tr> <td> Engine </td> <td> <select id="e_enginedropdown"> </select> <span class="required-field">*</span> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copycarcompanies();
+                        break;
                     default:
                         break;
                 }
@@ -460,6 +489,7 @@ function copymortgageeselected() {
 
 function copycocno() {
     var cocno = $('#lblCOCNo').html();
+    alert(cocno);
     $('#e_cocno').val(cocno);
 }
 
@@ -476,4 +506,41 @@ function copynames() {
 function copyaddress() {
     var adds = $('#txtMailAdress').val();
     $('#e_address').val(adds);
+}
+
+function copypolicyperiods() {
+    var from = $('#PeriodFromTextbox').val();
+    var to = $('#PeriodToTextbox').val();
+
+    $('#e_policyperiodfrom').val(from);
+    $('#e_policyperiodto').val(to);
+}
+
+function copycarcompanies() {
+
+    var companies = $('#CarCompaniesDropdown').html();
+    var selectedcompany = $('#CarCompaniesDropdown').val();
+    $('#e_carcompanydropdown').html(companies);
+    $('#e_carcompanydropdown').val(selectedcompany);
+
+    var carmakes = $('#CarMakeDropdown').html();
+    var selectedcarmake = $('#CarMakeDropdown').val();
+    $('#e_carmakedropdown').html(carmakes);
+    $('#e_carmakedropdown').val(selectedcarmake);
+
+    var carengines = $('#EngineDropdown').html();
+    var selectedengine = $('#EngineDropdown').val();
+    $('#e_enginedropdown').html(carengines);
+    $('#e_enginedropdown').val(selectedengine);
+
+    $('#e_carcompanydropdown').change({
+        carcompanydropdownid: 'e_carcompanydropdown',
+        carmakedropdownid: 'e_carmakedropdown',
+        enginedropdownid: 'e_enginedropdown'
+    }, carcompanychange);
+    $('#e_carmakedropdown').change({
+        carcompanydropdownid: 'e_carcompanydropdown',
+        carmakedropdownid: 'e_carmakedropdown',
+        enginedropdownid: 'e_enginedropdown'
+    }, carmakechange);
 }

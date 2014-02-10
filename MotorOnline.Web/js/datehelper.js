@@ -37,19 +37,19 @@ function AddDate(oldDate, offset, offsetType) {
 }
 
 
-function handlecalendarselect() {
+function handlecalendarselect(fromid, toid) {
     //CHANGE: 1/7/2014
     //Policy Period from: Can Back date up to 6 days only. Sample if today is Jan 7 2014
     //you can only pick Jan 2, 2014. forward date can accept. 
 
-    var value = $('#PeriodFromTextbox').val();
+    var value = $('#'+fromid).val();
     var addedDate = addDays(new Date(), -6);
     //var currentDate = new Date();
     //var exactCurrentDate = Date.parse(currentDate.getMonth() + 1 + '/' + formatdate(currentDate.getDate()) + '/' + currentDate.getFullYear());
     if (Date.parse(value) < Date.parse(addedDate)) {
         alert('The acceptable date is (6) six ago from the date today.');
-        $('#PeriodToTextbox').val('');
-        $('#PeriodFromTextbox').val('');
+        $('#' + toid).val('');
+        $('#'+fromid).val('');
         return;
     }
     
@@ -61,7 +61,7 @@ function handlecalendarselect() {
 //    }
     else {
         var endDate = AddDate(value, 1, "Y");
-        $('#PeriodToTextbox').val(endDate.getMonth() + 1 + '/' + formatdate(endDate.getDate()) + '/' + endDate.getFullYear());
+        $('#'+toid).val(endDate.getMonth() + 1 + '/' + formatdate(endDate.getDate()) + '/' + endDate.getFullYear());
     }
 }
 

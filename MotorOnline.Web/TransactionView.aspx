@@ -107,12 +107,16 @@
             $('#YearDropdown').removeClass('control-validation-error');
         }
 
-        function carcompanychange() {
-            var selectedCarCompany = $('#CarCompaniesDropdown').val();
+        function carcompanychange(event) {
+            var carcompanydropdownid = event.data.carcompanydropdownid;
+            var carmakedropdownid = event.data.carmakedropdownid;
+            var enginedropdownid = event.data.enginedropdownid;
+            
+            var selectedCarCompany = $('#' + carcompanydropdownid).val();
 
             if (parseInt(selectedCarCompany) <= 0) {
-                $('#CarMakeDropdown').html('');
-                $('#EngineDropdown').html('');
+                $('#' + carmakedropdownid).html('');
+                $('#' + enginedropdownid).html('');
                 return;
             }
 
@@ -128,7 +132,7 @@
                             html += '<option value="' + value.Value + '">' + value.Text + '</option>';
                         });
                         //
-                        $('#CarMakeDropdown').html(html);
+                        $('#' + carmakedropdownid).html(html);
                     }
 
                 },
@@ -177,7 +181,7 @@
                 buttonImage: "images/Calendar-icon.png",
                 buttonImageOnly: true,
                 onSelect: function () {
-                    handlecalendarselect();
+                    handlecalendarselect('PeriodFromTextbox', 'PeriodToTextbox');
                 }
             });
             $("#car-details").css('display', 'none');
@@ -202,8 +206,16 @@
                 }
             });
 
-            $('#CarCompaniesDropdown').change(carcompanychange);
-            $('#CarMakeDropdown').change(carmakechange);
+            $('#CarCompaniesDropdown').change({
+                carcompanydropdownid: 'CarCompaniesDropdown',
+                carmakedropdownid: 'CarMakeDropdown',
+                enginedropdownid: 'EngineDropdown'
+                        }, carcompanychange);
+            $('#CarMakeDropdown').change({
+                carcompanydropdownid: 'CarCompaniesDropdown',
+                carmakedropdownid: 'CarMakeDropdown',
+                enginedropdownid: 'EngineDropdown'
+                        },carmakechange);
 
             $('#SaveCarDetailsButton').click(cardetailsave);
             $(':button,:submit').button();
@@ -299,15 +311,18 @@
             $('#CarCompaniesDropdown').attr('disabled', enabled);
         }
 
-        function carmakechange() {
+        function carmakechange(event) {
+            var carcompanydropdownid = event.data.carcompanydropdownid;
+            var carmakedropdownid = event.data.carmakedropdownid;
+            var enginedropdownid = event.data.enginedropdownid;
 
-            var selectedMake = $('#CarMakeDropdown').val();
+            var selectedMake = $('#'+carmakedropdownid).val();
             if (selectedMake === "0") {
-                $('#EngineDropdown').html('');
+                $('#'+enginedropdownid).html('');
                 return;
             }
 
-            var selectedCompany = $('#CarCompaniesDropdown').val();
+            var selectedCompany = $('#'+carcompanydropdownid).val();
             var ids = selectedMake.split("|");
             var carMakeId = ids[0];
             var carSeriedId = ids[1];
@@ -323,7 +338,7 @@
                             html += '<option value="' + value.Value + '">' + value.Text + '</option>';
                         });
                         //
-                        $('#EngineDropdown').html(html);
+                        $('#'+enginedropdownid).html(html);
                     }
 
                 },
@@ -929,7 +944,7 @@
                 </tr>
             </table>
         </div>
-        <div id="endorsement-dialog" style="display:none;">
+        <div id="endorsement-dialog"> <%--style="display:none;">--%>
             <table cellpadding="8">
                 <tr>
                     <td>

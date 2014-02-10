@@ -1107,6 +1107,15 @@ namespace MotorOnline.Web
 
             return e;
         }
+
+        public int UpdateCOCNo(string newCocNo, int transactionId)
+        {
+            string sql = string.Format(
+                "UPDATE mTransactionCarDetail SET [COCNo] = '{0}' WHERE TransactionID={1}",
+                newCocNo, transactionId);
+            go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
+            return go_dah.uf_execute_non_query();
+        }
     }
 }
 
