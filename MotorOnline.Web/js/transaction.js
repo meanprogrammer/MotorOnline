@@ -354,6 +354,84 @@ function loadtransaction(json, id) {
     $('#CustomerInfo').val(json.CustomerID);
 }
 
+
+function loadtransactiondetails(json, id) {
+
+    $('#creditingbranchlabel').val(json.CreditingBranch);
+    $('#lblParNo').html(json.ParNo);
+    $('#lblPolicyNo').html(json.PolicyNo);
+    $('#lblGeniisysNo').html(json.GeniisysNo);
+    $('#lblCurrentDate').html(json.DateCreatedText);
+    $('#PeriodFromTextbox').val(json.PolicyPeriodFromText);
+    $('#PeriodToTextbox').val(json.PolicyPeriodToText);
+    $('#ddBusinessType').val(json.BussinessType);
+    $('#lblPolicyStatus').html(json.PolicyStatus);
+    $('#SublineDropdown').val(json.SubLineCode);
+    $('#ddlMortgagee').val(json.MortgageCode);
+
+    $('#ddInterMediary').val(json.IntermediaryCode);
+
+    $('#TypeOfInsuranceDropdown').val(json.TypeOfInsured);
+
+    $('#TypeOfCoverDropdown').val(json.CarDetail.TypeOfCover);
+    $('#CarCompaniesDropdown').val(json.CarDetail.CarCompany);
+
+    //TODO: Change this! It sucks!
+    //NOTE: This is nested because we wait for the ajax call to finish, 
+    //we need the result to continue populating the edit view
+    carcompanychangewithcallback(function () {
+        $('#CarMakeDropdown').val(json.CarMakeAndSeriesText);
+        carmakechangewithcallback(function () {
+            $('#EngineDropdown').val(json.CarEngineText);
+
+            var cardetail = createcardetails();
+            populatecardetaildisplay(cardetail);
+
+            $('#CarDetailsHidden').val(JSON.stringify(cardetail));
+
+            displayperilsedit(json.Perils, json.Remarks);
+
+            //NOTE: This is for edit mode, if the transaction is loaded and
+            //the current selected type of insurance must show the hidden controls
+            var loadedTypeOfIns = $('#TypeOfInsuranceDropdown').val();
+
+            if (parseInt(loadedTypeOfIns) > 1) {
+                loadedTypeOfIns == 2 ? $('#CorporateMultipleLabel').html('Multiple Name') :
+                                        $('#CorporateMultipleLabel').html('Corporate Name');
+                toggleaddtionaltextbox(true);
+
+            }
+            //HACK
+            hideloader();
+
+            //END NOTE
+        });
+    });
+    //END NOTE
+
+    $('#txtEngine').val(json.CarDetail.EngineNo);
+    $('#txtColor').val(json.CarDetail.Color);
+    $('#txtConductionNo').val(json.CarDetail.ConductionNo);
+    $('#txtChasis').val(json.CarDetail.ChassisNo);
+    $('#txtPlateNo').val(json.CarDetail.PlateNo);
+    $('#txtAccesories').val(json.CarDetail.Accessories);
+    $('#YearDropdown').val(json.CarDetail.CarYear);
+    $('#TypeOfBodyDropdown').val(json.CarDetail.CarTypeOfBodyID);
+    $('#txtAuthenticationNo').val(json.CarDetail.AuthenticationNo);
+    $('#txtCOCNo').val(json.CarDetail.COCNo);
+
+    $('#ddDesignation').val(json.Customer.Designation);
+    $('#txtLastName').val(json.Customer.LastName);
+    $('#txtFirstName').val(json.Customer.FirstName);
+    $('#txtMI').val(json.Customer.MiddleName);
+    $('#txtMailAdress').val(json.Customer.Address);
+    $('#txtTelephone').val(json.Customer.Telephone);
+    $('#txtMobileNo').val(json.Customer.MobileNo);
+    $('#txtEmailAdd').val(json.Customer.Email);
+    $('#CorporateMultipleTextbox').val(json.Customer.MultipleCorporateName);
+    $('#CustomerInfo').val(json.CustomerID);
+}
+
 function showloader(message) {
     if (message != undefined && message != '') {
         $('#progress-message').html(message);
@@ -453,12 +531,7 @@ function onendorsementselectchanged() {
                             showOn: "button",
                             buttonImage: "images/Calendar-icon.png",
                             buttonImageOnly: true,
-                            onSelect: function () {
-                                handlecalendarselect(
-                                    'e_e_policyperiodfrom',
-                                    'e_policyperiodto'
-                                );
-                            }
+                            onSelect: handlecalendarselectendorsement
                         });
                         break;
                     case 33:

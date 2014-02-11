@@ -1116,6 +1116,67 @@ namespace MotorOnline.Web
             go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
             return go_dah.uf_execute_non_query();
         }
+
+        public int UpdateInsuredName(int recordId, string newFirstName, string newLastName,
+                                    string newMi) 
+        {
+            string sql = string.Format(
+                "UPDATE mTransactionCustomerInfo SET [FirstName] = '{0}',[LastName]='{1}',[MiddleName]='{2}' WHERE RecordID={3}",
+                newFirstName,newLastName, newMi, recordId);
+                        go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
+                        return go_dah.uf_execute_non_query();
+        }
+
+        public int UpdateAddress(int recordId, string newAddress)
+        {
+            string sql = string.Format(
+                "UPDATE mTransactionCustomerInfo SET [Address] = '{0}' WHERE RecordID={1}",
+                 newAddress, recordId);
+            go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
+            return go_dah.uf_execute_non_query();
+        }
+
+        public int UpdateMortgagee(int transactionId, string mortgagee)
+        {
+            string sql = string.Format(
+                "UPDATE mTransactions SET [mortgage] = {0} WHERE TransactionID={1}",
+                 mortgagee, transactionId);
+            go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
+            return go_dah.uf_execute_non_query();
+        }
+
+        public int DeleteMortgagee(int transactionId)
+        {
+            string sql = string.Format(
+                "UPDATE mTransactions SET [mortgage] = 0 WHERE TransactionID={0}", transactionId);
+            go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
+            return go_dah.uf_execute_non_query();
+        }
+
+        public int UpdatePolicyPeriod(int transactionId, DateTime from, DateTime to)
+        {
+            string sql = string.Format(
+                "UPDATE mTransactions SET [policyPeriodFrom] = @PolicyPeriodFrom,[policyPeriodTo] = @PolicyPeriodTo WHERE TransactionID={0}", transactionId);
+            go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@PolicyPeriodFrom", from);
+            go_dah.uf_set_stored_procedure_param("@PolicyPeriodTo", to);
+            return go_dah.uf_execute_non_query();
+        }
+
+        public int UpdateVehicleDescription(int transactionId, int carcompany,
+            string carmake, int carseries, string engineseries)
+        {
+            string sql = string.Format(
+                "UPDATE mTransactionCarDetail SET [CarCompany] = {0},[CarMake] = '{1}',[CarSeries]={2},[EngineSeries]='{3}' WHERE TransactionID={4}",
+                        carcompany, carmake, carseries, engineseries, transactionId);
+            go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
+            return go_dah.uf_execute_non_query();
+        }
+
+        public int UpdateTransferOwnership()
+        {
+            return 1;
+        }
     }
 }
 

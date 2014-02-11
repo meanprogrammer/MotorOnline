@@ -92,6 +92,7 @@ function searchtransactions() {
             var obj = JSON.parse(result);
             html = '<table border="1" cellpadding="4"><tr>';
             html += '<th></th>';
+            html += '<th></th>';
             html += '<th>Branch</th>';
             html += '<th>Par No</th>';
             html += '<th>Policy No</th>';
@@ -112,6 +113,7 @@ function searchtransactions() {
             if (obj != null) {
                 $.each(obj, function (key, value) {
                     html += '<tr>';
+                    html += '<td><a href="TransactionDetailsView.aspx?id=' + value.TransactionID + '">Details</a></td>';
                     html += '<td><a href="TransactionView.aspx?id=' + value.TransactionID + '">Edit</a></td>';
                     html += '<td>' + value.CreditingBranch + '</td>';
                     html += '<td>' + value.ParNo + '</td>';

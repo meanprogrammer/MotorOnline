@@ -92,12 +92,52 @@ namespace MotorOnline.Web.ajax
         {
             var type = Request.Form["type"];
             var transactionId = Request.Form["transactionid"];
+            var customerId = Request.Form["customerid"];
             int result = 0;
             switch (type)
             {
                 case "3":
                     var newCocNo = Request.Form["newcocno"];
                     result = data.UpdateCOCNo(newCocNo, int.Parse(transactionId));
+                    break;
+                case "15":
+                    var newLastName = Request.Form["newlastname"];
+                    var newFirstName = Request.Form["newfirstname"];
+                    var newMI = Request.Form["newmi"];
+                    result = data.UpdateInsuredName(int.Parse(customerId), newFirstName, newLastName, newMI);
+                    break;
+                case "17":
+                case "19":
+                    var newAddress = Request.Form["newaddress"];
+                    result = data.UpdateAddress(int.Parse(customerId), newAddress);
+                    break;
+                case "20":
+                case "22":
+                    var newMortgagee = Request.Form["newmortgagee"];
+                    result = data.UpdateMortgagee(int.Parse(transactionId), newMortgagee);
+                    break;
+                case "21":
+                    result = data.DeleteMortgagee(int.Parse(transactionId));
+                    break;
+                case "25":
+                    var periodfrom = Request.Form["periodfrom"];
+                    var periodto = Request.Form["periodto"];
+                    result = data.UpdatePolicyPeriod(
+                                int.Parse(transactionId),
+                                ParseDate(periodfrom),
+                                ParseDate(periodto));
+                    break;
+                case "33":
+                    var carcompany = Request.Form["carcompany"];
+                    var carmake = Request.Form["carmake"];
+                    var engineseries = Request.Form["engineseries"];
+                    result = data.UpdateVehicleDescription(
+                                int.Parse(transactionId),
+                                int.Parse(carcompany),
+                                GetCarMake(carmake),
+                                GetCarSeries(carmake),
+                                engineseries);
+
                     break;
                 default:
                     break;
@@ -689,6 +729,23 @@ namespace MotorOnline.Web.ajax
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Response.Write(serializer.Serialize(item));
             Response.End();
+        }
+
+        private static DateTime ParseDate(string inputdate)
+        {
+            DateTime result;
+                //NOTE: This become a bug for no apparent reason
+            DateTime.TryParse(inputdate, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
+            return result;
+        }
+
+        private string GetCarMake(string text) {
+            return text.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+        }
+
+        private int GetCarSeries(string text)
+        {
+            return Convert.ToInt32(text.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Last());
         }
     }
 }

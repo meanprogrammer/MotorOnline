@@ -68,6 +68,7 @@
     <Content Include="Content\Images\PlasticBlueHeader.jpg" />
     <Content Include="Content\Images\RedWineHeader.jpg" />
     <Content Include="Content\Site.css" />
+    <Content Include="TransactionDetailsView.aspx" />
     <Content Include="CreateKeys.aspx" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\motoronline\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -134,6 +135,13 @@
     <Compile Include="Classes\cls_data_access_helper.cs" />
     <Compile Include="Classes\cls_data_access_layer.cs" />
     <Compile Include="Classes\cls_data_access_sqlgenerator.cs" />
+    <Compile Include="TransactionDetailsView.aspx.cs">
+      <DependentUpon>TransactionDetailsView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TransactionDetailsView.aspx.designer.cs">
+      <DependentUpon>TransactionDetailsView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CreateKeys.aspx.cs">
       <DependentUpon>CreateKeys.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
