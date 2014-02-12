@@ -429,7 +429,7 @@ namespace MotorOnline.Web.ajax
 
             options.Add("typesofbody", typesofbody);
 
-            DataTable typesOfCoverDt = dl.sp_pop_coverTypes();
+            DataTable typesOfCoverDt = dl.PopulateCoverTypes();
             List<DropDownListItem> typesOfCover = new List<DropDownListItem>();
             foreach (DataRow row in typesOfCoverDt.Rows)
             {
@@ -626,7 +626,7 @@ namespace MotorOnline.Web.ajax
             }
 
             cls_data_access_layer dl = new cls_data_access_layer();
-            DataTable dt = dl.sp_getUploadedPolicyStatusByEngineNo(engineNo);
+            DataTable dt = dl.GetUploadedPolicyStatusByEngineNo(engineNo);
             List<string> items = new List<string>();
             foreach (DataRow row in dt.Rows)
             {
@@ -641,7 +641,7 @@ namespace MotorOnline.Web.ajax
             var companyId = Request.Form["compid"];
             var seriesId = Request.Form["seriesid"];
             cls_data_access_layer dl = new cls_data_access_layer();
-            DataTable dt = dl.sp_filterCarEngineByCarSeries(int.Parse(makeId), int.Parse(companyId), int.Parse(seriesId));
+            DataTable dt = dl.FilterCarEngineByCarSeries(int.Parse(makeId), int.Parse(companyId), int.Parse(seriesId));
             List<DropDownListItem> items = new List<DropDownListItem>();
             foreach (DataRow row in dt.Rows)
             {
@@ -658,7 +658,7 @@ namespace MotorOnline.Web.ajax
             var makeId = Request.Form["makeid"];
             var companyId = Request.Form["compid"];
             cls_data_access_layer dl = new cls_data_access_layer();
-            DataTable dt = dl.sp_filterCarSeriesByCarMake(int.Parse(makeId), int.Parse(companyId));
+            DataTable dt = dl.FilterCarSeriesByCarMake(int.Parse(makeId), int.Parse(companyId));
             List<DropDownListItem> items = new List<DropDownListItem>();
             foreach (DataRow row in dt.Rows)
             {

@@ -38,7 +38,7 @@ namespace MotorOnline.Web
             //"IntermediaryCode":$('#ddInterMediary').val(),
             t.IntermediaryCode = result.GetInt32FromJson("IntermediaryCode");
             //"TypeOfInsured":$('#TypeOfInsuranceDropdown').val(),
-            t.TypeOfInsured = result.GetStringFromJson("TypeOfInsured");
+            t.TypeOfInsurance = result.GetInt32FromJson("TypeOfInsured");
             //"IsPosted":false,
             t.IsPosted = result.GetBooleanFromJson("IsPosted");
             //"IsPrinted":false,

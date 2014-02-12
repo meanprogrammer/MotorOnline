@@ -43,5 +43,8 @@ namespace MotorOnline.Library.Entity
 
         public string EngineSeriesText { get; set; }
         public int EngineSeriesValue { get; set; }
+
+        //additional properties for display
+        public string CarYearText { get; set; }
     }
 }

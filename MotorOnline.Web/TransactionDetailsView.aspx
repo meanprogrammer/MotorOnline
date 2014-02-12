@@ -11,35 +11,7 @@
     <script type="text/javascript">
         $(document).ready(
         function () {
-            $('#PeriodFromTextbox').datepicker({
-                showOn: "button",
-                buttonImage: "images/Calendar-icon.png",
-                buttonImageOnly: true,
-                onSelect: function () {
-                    handlecalendarselect('PeriodFromTextbox', 'PeriodToTextbox');
-                }
-            });
             $("#car-details").css('display', 'none');
-            toggleaddtionaltextbox(false);
-            $('#InputCarDetailsButton').click(
-                inputcardetailsbuttonclick
-            );
-
-            $('#TypeOfInsuranceDropdown').change(function () {
-                var selectedValue = $('#TypeOfInsuranceDropdown').val();
-                //multiname
-                if (selectedValue == 2) {
-                    $('#CorporateMultipleLabel').html('Multiple Name');
-                    toggleaddtionaltextbox(true);
-                } else if
-                //corporate
-                (selectedValue == 3) {
-                    $('#CorporateMultipleLabel').html('Corporate Name');
-                    toggleaddtionaltextbox(true);
-                } else {
-                    toggleaddtionaltextbox(false);
-                }
-            });
 
             $(':button,:submit').button();
 
@@ -63,7 +35,7 @@
                         var obj = JSON.parse(result);
                         console.log(obj);
                         if (obj != null) {
-
+                            console.log(obj);
                             loadtransactiondetails(obj, id);
 
                         }
@@ -107,109 +79,6 @@
         }
     );
 
-        function togglecardetailscontrols(enabled) {
-            $('#TypeOfBodyDropdown').attr('disabled', enabled);
-            $('#YearDropdown').attr('disabled', enabled);
-            $('#TypeOfCoverDropdown').attr('disabled', enabled);
-            $('#CarCompaniesDropdown').attr('disabled', enabled);
-        }
-
-        function carmakechange(event) {
-            var carcompanydropdownid = event.data.carcompanydropdownid;
-            var carmakedropdownid = event.data.carmakedropdownid;
-            var enginedropdownid = event.data.enginedropdownid;
-
-            var selectedMake = $('#'+carmakedropdownid).val();
-            if (selectedMake === "0") {
-                $('#'+enginedropdownid).html('');
-                return;
-            }
-
-            var selectedCompany = $('#'+carcompanydropdownid).val();
-            var ids = selectedMake.split("|");
-            var carMakeId = ids[0];
-            var carSeriedId = ids[1];
-            $.ajax({
-                url: "ajax/TransactionAjax.aspx",
-                type: "post",
-                data: { "action": 'filterengine', "makeid": carMakeId, "compid": selectedCompany, "seriesid": carSeriedId },
-                success: function (result) {
-                    var obj = JSON.parse(result);
-                    if (obj != null) {
-                        var html = '<option value="0">-- SELECT --</option>';
-                        $.each(obj, function (key, value) {
-                            html += '<option value="' + value.Value + '">' + value.Text + '</option>';
-                        });
-                        //
-                        $('#'+enginedropdownid).html(html);
-                    }
-
-                },
-                error: function () {
-                }
-            });
-        }
-
-        function carmakechangewithcallback(callback) {
-
-            var selectedMake = $('#CarMakeDropdown').val();
-            if (selectedMake === "0") {
-                $('#EngineDropdown').html('');
-                return;
-            }
-
-            var selectedCompany = $('#CarCompaniesDropdown').val();
-            var ids = selectedMake.split("|");
-            var carMakeId = ids[0];
-            var carSeriedId = ids[1];
-            $.ajax({
-                url: "ajax/TransactionAjax.aspx",
-                type: "post",
-                data: { "action": 'filterengine', "makeid": carMakeId, "compid": selectedCompany, "seriesid": carSeriedId },
-                success: function (result) {
-                    var obj = JSON.parse(result);
-                    if (obj != null) {
-                        var html = '<option value="0">-- SELECT --</option>';
-                        $.each(obj, function (key, value) {
-                            html += '<option value="' + value.Value + '">' + value.Text + '</option>';
-                        });
-                        //
-                        $('#EngineDropdown').html(html);
-                        callback();
-                    }
-
-                },
-                error: function () {
-                }
-            });
-        }
-
-        function toggleaddtionaltextbox(show) {
-            var value = show ? 'block' : 'none';
-            $('#CorporateMultipleLabel').css('display', value);
-            $('#CorporateMultipleTextbox').css('display', value);
-        }
-
-        function inputcardetailsbuttonclick() {
-            if (!validatebeforeaddingcardetails()) {
-                alert('Select a Subline first.');
-                return;
-            }
-
-            $("#car-details").dialog({
-                modal: true,
-                height: 300,
-                width: 680,
-                resizable: false,
-                title: "Car Details"//,
-                //close: function (event, ui) { alert('close'); }
-            });
-            //            var cardetailjson = $('#CarDetailsHidden').val();
-            //            if (cardetailjson.length === 0) {
-            //                loadcardetailsoptions();
-            //            }
-        }
-
         function handleprint() {
             var id = $('#IdHiddenField').val();
             if (id.length === 0) {
@@ -251,11 +120,8 @@
                     <strong>Policy Period From:</strong>
                 </td>
                 <td colspan="2" valign="middle">
-                    <asp:TextBox ID="PeriodFromTextbox" ClientIDMode="Static" ReadOnly="true" runat="server"></asp:TextBox>
-                    &nbsp;<span class="required-field">*</span>
-                </td>
+                    <span id="policyperiodfrom"></span></td>
                 <td colspan="2" valign="middle">
-                    &nbsp;
                 </td>
             </tr>
             <tr>
@@ -269,7 +135,7 @@
                     <strong>Policy Period To:</strong>
                 </td>
                 <td class="style1" colspan="2">
-                    <asp:TextBox ID="PeriodToTextbox" runat="server" ClientIDMode="Static" ReadOnly="True"></asp:TextBox>
+                    <span id="policyperiodto"></span>
                 </td>
                 <td class="style1" colspan="2">
                     &nbsp;
@@ -287,11 +153,7 @@
                     <strong>Businesss Type</strong>
                 </td>
                 <td>
-                    <asp:DropDownList ID="ddBusinessType" runat="server" ClientIDMode="Static">
-                        <asp:ListItem Value="NEW">NEW</asp:ListItem>
-                        <asp:ListItem Value="RENEW">RENEW</asp:ListItem>
-                    </asp:DropDownList>
-                </td>
+                    <span id="businesstype"></span></td>
                 <td colspan="2">
                     <strong>Policy Status</strong>
                 </td>
@@ -307,28 +169,21 @@
                     <strong>SubLine:</strong>
                 </td>
                 <td>
-                    <asp:DropDownList ID="SublineDropdown" runat="server" ClientIDMode="Static">
-                    </asp:DropDownList>
-                    &nbsp;<span class="required-field">*</span>
-                </td>
+                    <span id="subline"></span></td>
             </tr>
             <tr>
                 <td>
                     <strong>Mortgagee:</strong>
                 </td>
                 <td>
-                    <asp:DropDownList ID="ddlMortgagee" runat="server" ClientIDMode="Static">
-                    </asp:DropDownList>
-                </td>
+                    <span id="mortgagee"></span></td>
             </tr>
             <tr>
                 <td>
                     <strong>Intermediary:</strong>
                 </td>
                 <td>
-                    <asp:DropDownList ID="ddInterMediary" runat="server" ClientIDMode="Static">
-                    </asp:DropDownList>
-                    &nbsp;<span class="required-field">*</span>
+                    <span id="intermediary"></span>
                 </td>
             </tr>
             <tr>
@@ -336,9 +191,7 @@
                     <strong>Type of insurance</strong>
                 </td>
                 <td>
-                    <asp:DropDownList ID="TypeOfInsuranceDropdown" ClientIDMode="Static" runat="server">
-                    </asp:DropDownList>
-                    &nbsp;<span class="required-field">*</span>
+                    <span id="typeofinsurance"></span>
                 </td>
             </tr>
         </table>
@@ -349,32 +202,24 @@
                     <strong>Designation:</strong>
                 </td>
                 <td>
-                    <asp:DropDownList ID="ddDesignation" runat="server" ClientIDMode="Static">
-                        <asp:ListItem Value="Mr.">Mr.</asp:ListItem>
-                        <asp:ListItem Value="Mrs.">Mrs.</asp:ListItem>
-                    </asp:DropDownList>
-                    &nbsp;<span class="required-field">*</span>
+                    <span id="designation"></span>
                 </td>
                 <td>
                     <strong>Last Name:</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtLastName" runat="server" ClientIDMode="Static"></asp:TextBox>
-                    &nbsp;<span class="required-field">*</span>
+                    <span id="lastname"></span>
                 </td>
                 <td>
                     <strong>First Name:</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtFirstName" runat="server" ClientIDMode="Static"></asp:TextBox>
-                    &nbsp;<span class="required-field">*</span>
-                </td>
+                    <span id="firstname"></span></td>
                 <td>
                     <strong>M.I.:</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtMI" runat="server" ClientIDMode="Static"></asp:TextBox>
-                    &nbsp;<span class="required-field">*</span>
+                    <span id="middlename"></span>
                 </td>
             </tr>
             <tr>
@@ -382,28 +227,22 @@
                     <strong>Address:</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtMailAdress" runat="server" ClientIDMode="Static"></asp:TextBox>
-                    &nbsp;<span class="required-field">*</span>
-                </td>
+                    <span id="address"></span></td>
                 <td>
                     <strong>Telephone:</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtTelephone" runat="server" ClientIDMode="Static"></asp:TextBox>
-                </td>
+                    <span id="telephone"></span></td>
                 <td>
                     <strong>Mobile No.:</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtMobileNo" runat="server" ClientIDMode="Static"></asp:TextBox>
-                    &nbsp;<span class="required-field">*</span>
-                </td>
+                    <span id="mobileno"></span></td>
                 <td>
                     <strong>Email Address:</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtEmailAdd" runat="server" ClientIDMode="Static"></asp:TextBox>
-                </td>
+                    <span id="emailaddress"></span></td>
             </tr>
             <tr>
                 <td>
@@ -411,8 +250,7 @@
                         <asp:Label ID="CorporateMultipleLabel" ClientIDMode="Static" runat="server" Text="Label"></asp:Label></strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="CorporateMultipleTextbox" runat="server" ClientIDMode="Static"></asp:TextBox>
-                </td>
+                    <span id="corporatemultiple"></span></td>
                 <td style="text-align: right">
                     &nbsp;
                 </td>
@@ -433,17 +271,8 @@
                 </td>
             </tr>
         </table>
-        <table border="0">
-            <tr>
-                <td>
-                    <input id="InputCarDetailsButton" type="button" value="Input Car Details" />
-                </td>
-                <td>
-                    <span id="cardetails-span">* Input car details.</span>
-                </td>
-            </tr>
-        </table>
-        <div id="car-details">
+ 
+        <%--<div id="car-details">
             <table class="table-vertical-align-td" border="0">
                 <tr>
                     <td>
@@ -452,7 +281,6 @@
                     <td>
                         <asp:DropDownList ID="TypeOfBodyDropdown" ClientIDMode="Static" runat="server" Width="120px">
                         </asp:DropDownList>
-                        <%--                    <asp:Button ID="NewButton" runat="server" Text="New" />&nbsp;--%>
                     </td>
                     <td>
                         Type Of Cover
@@ -579,7 +407,7 @@
                 </tr>
             </table>
             <span id="validation-message"></span>
-        </div>
+        </div>--%>
         <br />
         <table width="70%" cellpadding="6" class="car-details-table">
             <tr>

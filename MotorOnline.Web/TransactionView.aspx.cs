@@ -76,13 +76,13 @@ namespace MotorOnline.Web
 
         public void PopulateCoverTypes()
         {
-            uf_populate_ddlb(ao_ddlb: TypeOfCoverDropdown, adt_source: go_dal.sp_pop_coverTypes(), as_empty_option_text: "Select Cover Type ");
+            uf_populate_ddlb(ao_ddlb: TypeOfCoverDropdown, adt_source: go_dal.PopulateCoverTypes(), as_empty_option_text: "Select Cover Type ");
             TypeOfCoverDropdown.SelectedIndex = 0;
         }
 
         public void PopulateMortgagee()
         {
-            uf_populate_ddlb(ao_ddlb: ddlMortgagee, adt_source: go_dal.sp_pop_mMortgagee(), as_empty_option_text: "Select Mortgagee");
+            uf_populate_ddlb(ao_ddlb: ddlMortgagee, adt_source: go_dal.PopulateMortgagee(), as_empty_option_text: "Select Mortgagee");
             ddlMortgagee.SelectedIndex = 0;
         }
 

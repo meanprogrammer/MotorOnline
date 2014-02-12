@@ -70,7 +70,7 @@ namespace MotorOnline.Web
             return go_dah.uf_execute_data_table();
         }
 
-        public DataTable sp_filterCarSeriesByCarMake(int makeId, int companyId)
+        public DataTable FilterCarSeriesByCarMake(int makeId, int companyId)
         {
             go_dah.uf_set_stored_procedure("sp_filterCarSeriesByCarMake", ref go_sqlConnection);
             go_dah.uf_set_stored_procedure_param("@MakeID", makeId);
@@ -78,7 +78,7 @@ namespace MotorOnline.Web
             return go_dah.uf_execute_data_table();
         }
 
-        public DataTable sp_filterCarEngineByCarSeries(int makeId, int companyId, int seriesId)
+        public DataTable FilterCarEngineByCarSeries(int makeId, int companyId, int seriesId)
         {
             go_dah.uf_set_stored_procedure("sp_filterCarEngineByCarSeriesMakeAndCompany", ref go_sqlConnection);
             go_dah.uf_set_stored_procedure_param("@MakeID", makeId);
@@ -87,7 +87,7 @@ namespace MotorOnline.Web
             return go_dah.uf_execute_data_table();
         }
 
-        public DataTable sp_getUploadedPolicyStatusByEngineNo(string engineNo) 
+        public DataTable GetUploadedPolicyStatusByEngineNo(string engineNo) 
         {
             go_dah.uf_set_stored_procedure("sp_getUploadedPolicyStatusByEngineNo", ref go_sqlConnection);
             go_dah.uf_set_stored_procedure_param("@EngineNo", engineNo);
@@ -100,13 +100,13 @@ namespace MotorOnline.Web
         //    return go_dah.uf_execute_data_table();
         //}
 
-        public DataTable sp_pop_coverTypes()
+        public DataTable PopulateCoverTypes()
         {
             go_dah.uf_set_stored_procedure("sp_pop_coverTypes", ref go_sqlConnection);
             return go_dah.uf_execute_data_table();
         }
 
-        public DataTable sp_pop_mMortgagee()
+        public DataTable PopulateMortgagee()
         {
             go_dah.uf_set_stored_procedure("sp_pop_mMortgagee", ref go_sqlConnection);
             return go_dah.uf_execute_data_table();
@@ -329,7 +329,7 @@ namespace MotorOnline.Web
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@sublineCode", Value = transaction.SubLineCode, DbType = DbType.String });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@mortgage", Value = transaction.MortgageCode, DbType = DbType.Int32 });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@intermediaryCode", Value = transaction.IntermediaryCode, DbType = DbType.Int32 });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@typeOfInsured", Value = transaction.TypeOfInsured, DbType = DbType.String });
+                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@typeOfInsured", Value = transaction.TypeOfInsurance, DbType = DbType.Int32 });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@isPosted", Value = transaction.IsPosted, DbType = DbType.Boolean });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@isPrinted", Value = transaction.IsPrinted, DbType = DbType.Boolean });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@isEndorse", Value = transaction.IsEndorsed, DbType = DbType.Boolean });
@@ -488,7 +488,7 @@ namespace MotorOnline.Web
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@sublineCode", Value = transaction.SubLineCode, DbType = DbType.String });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@mortgage", Value = transaction.MortgageCode, DbType = DbType.Int32 });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@intermediaryCode", Value = transaction.IntermediaryCode, DbType = DbType.Int32 });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@typeOfInsured", Value = transaction.TypeOfInsured, DbType = DbType.String });
+                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@typeOfInsured", Value = transaction.TypeOfInsurance, DbType = DbType.Int32 });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@isPosted", Value = transaction.IsPosted, DbType = DbType.Boolean });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@isPrinted", Value = transaction.IsPrinted, DbType = DbType.Boolean });
                 cmd.Parameters.Add(new SqlParameter() { ParameterName = "@isEndorse", Value = transaction.IsEndorsed, DbType = DbType.Boolean });
@@ -661,6 +661,10 @@ namespace MotorOnline.Web
                 int multipleCorporateNameIdx = reader.GetOrdinal("MultipleCorporateName");
                 int customerIdIdx = reader.GetOrdinal("CustomerID");
                 int sublineNameIdx = reader.GetOrdinal("SublineName");
+                int creditingBranchNameIdx = reader.GetOrdinal("creditingBranchName");
+                int mortgageeNameIdx = reader.GetOrdinal("MortgName");
+                int intmNameIdx = reader.GetOrdinal("intmName");
+                int typeOfInsuranceNameIdx = reader.GetOrdinal("typeOfInsName");
                 while (reader.Read()) 
                 {
                     t.TransactionID = reader.IsDBNull(transactionIdIdx) ? 0 : reader.GetInt32(transactionIdIdx);
@@ -677,7 +681,7 @@ namespace MotorOnline.Web
                     t.SubLineCode = reader.IsDBNull(sublineCodeIdx) ? string.Empty : reader.GetString(sublineCodeIdx);
                     t.MortgageCode = reader.IsDBNull(mortgageIdx) ? 0 : reader.GetInt32(mortgageIdx);
                     t.IntermediaryCode = reader.IsDBNull(intermediaryCodeIdx) ? 0 : reader.GetInt32(intermediaryCodeIdx);
-                    t.TypeOfInsured = reader.IsDBNull(typeOfInsuredIdx) ? string.Empty : reader.GetString(typeOfInsuredIdx);
+                    t.TypeOfInsurance = reader.IsDBNull(typeOfInsuredIdx) ? 0 : reader.GetInt32(typeOfInsuredIdx);
                     t.IsPosted = reader.IsDBNull(isPostedIdx) ? false : ChangeTypeHelper.SafeParseToBoolean(reader.GetInt32(isPostedIdx).ToString());
                     t.IsPrinted = reader.IsDBNull(isPrintedIdx) ? false : ChangeTypeHelper.SafeParseToBoolean(reader.GetInt32(isPrintedIdx).ToString());
                     t.IsEndorsed = reader.IsDBNull(isEndorseIdx) ? false : ChangeTypeHelper.SafeParseToBoolean(reader.GetInt32(isEndorseIdx).ToString());
@@ -694,6 +698,10 @@ namespace MotorOnline.Web
                     t.CustomerID = reader.IsDBNull(customerIdIdx) ? 0 : reader.GetInt32(customerIdIdx);
                     t.Customer.CustomerID = t.CustomerID;
                     t.SublineText = reader.IsDBNull(sublineNameIdx) ? string.Empty : reader.GetString(sublineNameIdx);
+                    t.CreditingBranchName = reader.IsDBNull(creditingBranchNameIdx) ? string.Empty : reader.GetString(creditingBranchNameIdx);
+                    t.MortgageeName = reader.IsDBNull(mortgageeNameIdx) ? string.Empty : reader.GetString(mortgageeNameIdx);
+                    t.IntermediaryName = reader.IsDBNull(intmNameIdx) ? string.Empty : reader.GetString(intmNameIdx);
+                    t.TypeOfInsuranceName = reader.IsDBNull(typeOfInsuranceNameIdx) ? string.Empty : reader.GetString(typeOfInsuranceNameIdx);
                     //t.CarDetail.MotorType = reader.IsDBNull(33) ? string.Empty : reader.GetString(33);
                     //t.CarDetail.TypeOfCoverValue = reader.IsDBNull(34) ? 0 : reader.GetInt32(34);
                     //t.CarDetail.EngineSeriesText = reader.IsDBNull(35) ? string.Empty : reader.GetString(35);
@@ -738,6 +746,8 @@ namespace MotorOnline.Web
                 int carMakeNameIdx = reader.GetOrdinal("CarMakeName");
                 int authenticationNoIdx = reader.GetOrdinal("AuthenticationNo");
                 int cocNoIdx = reader.GetOrdinal("COCNo");
+                int yearModelIdx = reader.GetOrdinal("yearModel");
+                int coverNameIdx = reader.GetOrdinal("coverName");
                 while (reader.Read())
                 {
                     detail.TransactionID = reader.IsDBNull(transactionIdIdx) ? 0 : reader.GetInt32(transactionIdIdx);
@@ -759,6 +769,8 @@ namespace MotorOnline.Web
                     detail.CarMakeText = reader.IsDBNull(carMakeNameIdx) ? string.Empty : reader.GetString(carMakeNameIdx);
                     detail.AuthenticationNo = reader.IsDBNull(authenticationNoIdx) ? string.Empty : reader.GetString(authenticationNoIdx);
                     detail.COCNo = reader.IsDBNull(cocNoIdx) ? string.Empty : reader.GetString(cocNoIdx);
+                    detail.CarYearText = reader.IsDBNull(yearModelIdx) ? "0" : reader.GetInt32(yearModelIdx).ToString();
+                    detail.TypeOfCoverText = reader.IsDBNull(coverNameIdx) ? string.Empty : reader.GetString(coverNameIdx);
                 }
             }
             return detail;

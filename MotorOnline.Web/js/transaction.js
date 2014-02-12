@@ -175,6 +175,7 @@ function updatetransaction() {
     }
 
     var t = buildtransactionobject();
+
     var perils = buildtransactionperils();
     var cardetails = $('#CarDetailsHidden').val();
     var net = parseFloat($('#basic-premiumnettext').html());
@@ -293,7 +294,7 @@ function loadtransaction(json, id) {
 
     $('#ddInterMediary').val(json.IntermediaryCode);
 
-    $('#TypeOfInsuranceDropdown').val(json.TypeOfInsured);
+    $('#TypeOfInsuranceDropdown').val(json.TypeOfInsurance);
 
     $('#TypeOfCoverDropdown').val(json.CarDetail.TypeOfCover);
     $('#CarCompaniesDropdown').val(json.CarDetail.CarCompany);
@@ -356,22 +357,20 @@ function loadtransaction(json, id) {
 
 
 function loadtransactiondetails(json, id) {
-
-    $('#creditingbranchlabel').val(json.CreditingBranch);
+    console.log(json);
+    $('#creditingbranchlabel').html(json.CreditingBranchName);
     $('#lblParNo').html(json.ParNo);
     $('#lblPolicyNo').html(json.PolicyNo);
     $('#lblGeniisysNo').html(json.GeniisysNo);
     $('#lblCurrentDate').html(json.DateCreatedText);
-    $('#PeriodFromTextbox').val(json.PolicyPeriodFromText);
-    $('#PeriodToTextbox').val(json.PolicyPeriodToText);
-    $('#ddBusinessType').val(json.BussinessType);
+    $('#policyperiodfrom').html(json.PolicyPeriodFromText);
+    $('#policyperiodto').html(json.PolicyPeriodToText);
+    $('#businesstype').html(json.BussinessType);
     $('#lblPolicyStatus').html(json.PolicyStatus);
-    $('#SublineDropdown').val(json.SubLineCode);
-    $('#ddlMortgagee').val(json.MortgageCode);
-
-    $('#ddInterMediary').val(json.IntermediaryCode);
-
-    $('#TypeOfInsuranceDropdown').val(json.TypeOfInsured);
+    $('#subline').html(json.SublineText);
+    $('#mortgagee').html(json.MortgageeName);
+    $('#intermediary').html(json.IntermediaryName);
+    $('#typeofinsurance').html(json.TypeOfInsuranceName);
 
     $('#TypeOfCoverDropdown').val(json.CarDetail.TypeOfCover);
     $('#CarCompaniesDropdown').val(json.CarDetail.CarCompany);
@@ -379,34 +378,53 @@ function loadtransactiondetails(json, id) {
     //TODO: Change this! It sucks!
     //NOTE: This is nested because we wait for the ajax call to finish, 
     //we need the result to continue populating the edit view
-    carcompanychangewithcallback(function () {
-        $('#CarMakeDropdown').val(json.CarMakeAndSeriesText);
-        carmakechangewithcallback(function () {
-            $('#EngineDropdown').val(json.CarEngineText);
+//    carcompanychangewithcallback(function () {
+//        $('#CarMakeDropdown').val(json.CarMakeAndSeriesText);
+//        carmakechangewithcallback(function () {
+//            $('#EngineDropdown').val(json.CarEngineText);
+    var cardetail = json.CarDetail;
+    console.log(cardetail);
+    $('#lblSublineType').html(json.SublineText);
+    //$('#lblSublineType').html($('#SublineDropdown option:selected').text());
+    $('#lblTypeOfCover').html(cardetail.TypeOfCoverText);
+    $('#lblYear').html(cardetail.CarYearText);
+    $('#lblCarCompany').html(cardetail.CarCompanyText);
+    $('#lblMake').html(cardetail.CarMakeText);
+    $('#lblMotorType').html(cardetail.MotorType);
+    $('#lblEngineNo').html(cardetail.Engine);
+    $('#lblChasisNo').html(cardetail.ChassisNo);
 
-            var cardetail = createcardetails();
-            populatecardetaildisplay(cardetail);
+    $('#lblColor').html(cardetail.Color);
+    $('#lblPlateNo').html(cardetail.PlateNo);
+    $('#lblConductionNo').html(cardetail.ConductionNo);
+    $('#lblAccessories').html(cardetail.Accessories);
+    $('#lblAuthenticationNo').html(cardetail.AuthenticationNo);
+    $('#lblCOCNo').html(cardetail.COCNo);
 
-            $('#CarDetailsHidden').val(JSON.stringify(cardetail));
+//    var cardetail = createcardetails();
+//    console.log(cardetail);
+//            populatecardetaildisplay(cardetail);
 
-            displayperilsedit(json.Perils, json.Remarks);
+//            $('#CarDetailsHidden').val(JSON.stringify(cardetail));
 
-            //NOTE: This is for edit mode, if the transaction is loaded and
-            //the current selected type of insurance must show the hidden controls
-            var loadedTypeOfIns = $('#TypeOfInsuranceDropdown').val();
+//            displayperilsedit(json.Perils, json.Remarks);
 
-            if (parseInt(loadedTypeOfIns) > 1) {
-                loadedTypeOfIns == 2 ? $('#CorporateMultipleLabel').html('Multiple Name') :
-                                        $('#CorporateMultipleLabel').html('Corporate Name');
-                toggleaddtionaltextbox(true);
+//            //NOTE: This is for edit mode, if the transaction is loaded and
+//            //the current selected type of insurance must show the hidden controls
+//            var loadedTypeOfIns = $('#TypeOfInsuranceDropdown').val();
 
-            }
-            //HACK
-            hideloader();
+//            if (parseInt(loadedTypeOfIns) > 1) {
+//                loadedTypeOfIns == 2 ? $('#CorporateMultipleLabel').html('Multiple Name') :
+//                                        $('#CorporateMultipleLabel').html('Corporate Name');
+//                toggleaddtionaltextbox(true);
 
-            //END NOTE
-        });
-    });
+//            }
+//            //HACK
+//            hideloader();
+
+//            //END NOTE
+//        });
+//    });
     //END NOTE
 
     $('#txtEngine').val(json.CarDetail.EngineNo);
@@ -420,16 +438,17 @@ function loadtransactiondetails(json, id) {
     $('#txtAuthenticationNo').val(json.CarDetail.AuthenticationNo);
     $('#txtCOCNo').val(json.CarDetail.COCNo);
 
-    $('#ddDesignation').val(json.Customer.Designation);
-    $('#txtLastName').val(json.Customer.LastName);
-    $('#txtFirstName').val(json.Customer.FirstName);
-    $('#txtMI').val(json.Customer.MiddleName);
-    $('#txtMailAdress').val(json.Customer.Address);
-    $('#txtTelephone').val(json.Customer.Telephone);
-    $('#txtMobileNo').val(json.Customer.MobileNo);
-    $('#txtEmailAdd').val(json.Customer.Email);
-    $('#CorporateMultipleTextbox').val(json.Customer.MultipleCorporateName);
+    $('#designation').html(json.Customer.Designation);
+    $('#lastname').html(json.Customer.LastName);
+    $('#firstname').html(json.Customer.FirstName);
+    $('#middlename').html(json.Customer.MiddleName);
+    $('#address').html(json.Customer.Address);
+    $('#telephone').html(json.Customer.Telephone);
+    $('#mobileno').html(json.Customer.MobileNo);
+    $('#emailaddress').html(json.Customer.Email);
+    $('#corporatemultiple').html(json.Customer.MultipleCorporateName);
     $('#CustomerInfo').val(json.CustomerID);
+    hideloader();
 }
 
 function showloader(message) {

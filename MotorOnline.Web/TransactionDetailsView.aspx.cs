@@ -68,61 +68,6 @@ namespace MotorOnline.Web
             //}
         }
 
-        public void PopulateCreditingBranch()
-        {
-            //uf_populate_ddlb(ao_ddlb: ddlCreditingBranch, adt_source: go_dal.uf_pop_mCreditingBranches(), as_empty_option_text: "Select Crediting Branch");
-            //ddlCreditingBranch.SelectedIndex = 0;
-        }
-
-        public void PopulateCoverTypes()
-        {
-            uf_populate_ddlb(ao_ddlb: TypeOfCoverDropdown, adt_source: go_dal.sp_pop_coverTypes(), as_empty_option_text: "Select Cover Type ");
-            TypeOfCoverDropdown.SelectedIndex = 0;
-        }
-
-        public void PopulateMortgagee()
-        {
-            uf_populate_ddlb(ao_ddlb: ddlMortgagee, adt_source: go_dal.sp_pop_mMortgagee(), as_empty_option_text: "Select Mortgagee");
-            ddlMortgagee.SelectedIndex = 0;
-        }
-
-        public void PopulateIntermediaries()
-        {
-            uf_populate_ddlb(ao_ddlb: ddInterMediary, adt_source: go_dal.sp_pop_mIntermediaries(), as_empty_option_text: "Select Intermediary");
-            ddInterMediary.SelectedIndex = 0;
-        }
-
-        public void PopulateTypeOfInsurance()
-        {
-            uf_populate_ddlb(ao_ddlb: TypeOfInsuranceDropdown, adt_source: go_dal.sp_pop_typeOfInsurance(), as_empty_option_text: "Select Type of Cover");
-            TypeOfInsuranceDropdown.SelectedIndex = 0;
-        }
-
-        public void PopulateSublines()
-        {
-            uf_populate_ddlb(ao_ddlb: SublineDropdown, adt_source: go_dal.PopulateSublines(), as_empty_option_text: "Select Subline");
-            SublineDropdown.SelectedIndex = 0;
-        }
-
-        public void PopulateTypesOfBody()
-        {
-            uf_populate_ddlb(ao_ddlb: TypeOfBodyDropdown, adt_source: go_dal.sp_pop_carTypesOfBody(), as_empty_option_text: "Select Body Type");
-            TypeOfBodyDropdown.SelectedIndex = 0;
-        }
-
-        public void PopulateCarYears() {
-            uf_populate_ddlb(ao_ddlb: YearDropdown, 
-            adt_source: go_dal.sp_pop_carYears_reader(), 
-            as_empty_option_text: "Select Car Year");
-            YearDropdown.SelectedIndex = 0;
-        }
-
-        public void PopulateCarCompany()
-        {
-            uf_populate_ddlb(ao_ddlb: CarCompaniesDropdown, adt_source: go_dal.PopulateCarCompanies(), as_empty_option_text: "Select Car Company");
-            CarCompaniesDropdown.SelectedIndex = 0;
-        }
-
         public void PopuplateEndorsement()
         {
             cls_data_access_layer dl = new cls_data_access_layer();

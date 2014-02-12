@@ -32,7 +32,7 @@ namespace MotorOnline.Library.Entity
         public string SublineText { get; set; }
         public int MortgageCode { get; set; }
         public int IntermediaryCode { get; set; }
-        public string TypeOfInsured { get; set; }
+        public int TypeOfInsurance { get; set; }
 
         public bool IsPosted { get; set; }
         public bool IsPrinted { get; set; }
@@ -46,18 +46,14 @@ namespace MotorOnline.Library.Entity
         public TransactionComputation Computations { get; set; }
         public CustomerInfo Customer { get; set; }
 
-        //public string Designation { get; set; }
-        //public string LastName { get; set; }
-        //public string FirstName { get; set; }
-        //public string MiddleName { get; set; }
-        //public string Address { get; set; }
-        //public string Telephone { get; set; }
-        //public string MobileNo { get; set; }
-        //public string Email { get; set; }
-        //public string MultipleCorporateName  { get; set; }
-
 
         public int CustomerID { get; set; }
+
+        //Additional properties for display only
+        public string CreditingBranchName { get; set; }
+        public string MortgageeName { get; set; }
+        public string IntermediaryName { get; set; }
+        public string TypeOfInsuranceName { get; set; }
 
         //For display purposes only
         public string DateCreatedText
