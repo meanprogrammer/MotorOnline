@@ -15,34 +15,34 @@ namespace MotorOnline.Web
         protected void Page_Load(object sender, EventArgs e)
         {
             //To avoid login for now
-            User user = new User()
-            {
-                FirstName = "Valiant",
-                LastName = "Dudan",
-                MI = "A",
-                Username = "meanprogrammer",
-                RoleID = 1,
-                UserRole = new UserRole()
-                {
-                    CanAddTransaction = true,
-                    CanAddUser = true,
-                    CanAmmendTransaction = true,
-                    CanDeleteTransaction = true,
-                    CanDeleteUser = true,
-                    CanEditPerils = true,
-                    CanEditTransaction = true,
-                    CanEditUser = true,
-                    CanPostTransaction = true,
-                    CanViewTransaction = true,
-                    CanEndorse = true
-                }
-            };
+            //User user = new User()
+            //{
+            //    FirstName = "Valiant",
+            //    LastName = "Dudan",
+            //    MI = "A",
+            //    Username = "meanprogrammer",
+            //    RoleID = 1,
+            //    UserRole = new UserRole()
+            //    {
+            //        CanAddTransaction = true,
+            //        CanAddUser = true,
+            //        CanAmmendTransaction = true,
+            //        CanDeleteTransaction = true,
+            //        CanDeleteUser = true,
+            //        CanEditPerils = true,
+            //        CanEditTransaction = true,
+            //        CanEditUser = true,
+            //        CanPostTransaction = true,
+            //        CanViewTransaction = true,
+            //        CanEndorse = true
+            //    }
+            //};
 
-            Session.Add(string.Format("user_{0}", Session.SessionID), user);
+            //Session.Add(string.Format("user_{0}", Session.SessionID), user);
 
             if (AuthenticationHelper.HasAuthenticatedUser())
             {
-                //User user = AuthenticationHelper.GetCurrentLoggedUser();
+                User user = AuthenticationHelper.GetCurrentLoggedUser();
                 if (user != null)
                 {
                     JavaScriptSerializer serializer = new JavaScriptSerializer();

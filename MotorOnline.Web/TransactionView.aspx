@@ -943,7 +943,7 @@
                 </tr>
             </table>
         </div>
-        <div id="endorsement-dialog"> <%--style="display:none;">--%>
+        <div id="endorsement-dialog" style="display:none;">
             <table cellpadding="8">
                 <tr>
                     <td>

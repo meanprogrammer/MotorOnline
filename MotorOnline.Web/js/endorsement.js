@@ -60,7 +60,8 @@ function updatecocno(type, transactionid) {
             policyno: policyno
         },
         success: function (result) {
-            handlesaveendorsement(result);
+            var obj = JSON.parse(result);
+            handlesaveendorsement(obj);
             hideloader();
         },
         error: function () {
@@ -206,9 +207,13 @@ function updatevehicledescription(type, transactionid) {
 }
 
 function handlesaveendorsement(result) {
-    if (result == 'true') {
-        alert('updated');
-        //window.location.href = ""
+    if (result.Status == 'true') {
+        if(confirm('The transaction has been successfully endorsed and changes have been made. Do you want to view the print out?'))
+        {
+            //Show print out in new window
+        }
+        //redirect here
+        window.location.href = "TransactionView.aspx?id=" + result.NewID;
     } else {
         alert('endorsement failed!');
     }

@@ -95,12 +95,13 @@ namespace MotorOnline.Web.ajax
             var transactionId = Request.Form["transactionid"];
             var customerId = Request.Form["customerid"];
             int result = 0;
+            int newId = 0;
             switch (type)
             {
                 case "3":
                     var newCocNo = Request.Form["newcocno"];
                     var currentPolicyNo = Request.Form["policyno"];
-                    int newId = 0;
+                    
                     result = data.SaveTransactionWithUpdatedCOCNo(
                         int.Parse(transactionId), 
                         PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), 
@@ -150,13 +151,19 @@ namespace MotorOnline.Web.ajax
                     break;
             }
 
+            Dictionary<string, string> res = new Dictionary<string, string>();
+            res.Add("NewID", newId.ToString());
+           
+
             if (result > 0)
             {
-                Render<bool>(true);
+                res.Add("Status", "true");
+                Render<Dictionary<string, string>>(res);
             }
             else
             {
-                Render<bool>(false);
+                res.Add("Status", "false");
+                Render<Dictionary<string, string>>(res);
             }
         }
 

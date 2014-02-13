@@ -68,6 +68,7 @@
     <Content Include="Content\Images\PlasticBlueHeader.jpg" />
     <Content Include="Content\Images\RedWineHeader.jpg" />
     <Content Include="Content\Site.css" />
+    <Content Include="EndorsementPrintOut.aspx" />
     <Content Include="TransactionDetailsView.aspx" />
     <Content Include="CreateKeys.aspx" />
     <Content Include="css\bootstrap.min.css" />
@@ -135,6 +136,13 @@
     <Compile Include="Classes\cls_data_access_helper.cs" />
     <Compile Include="Classes\cls_data_access_layer.cs" />
     <Compile Include="Classes\cls_data_access_sqlgenerator.cs" />
+    <Compile Include="EndorsementPrintOut.aspx.cs">
+      <DependentUpon>EndorsementPrintOut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EndorsementPrintOut.aspx.designer.cs">
+      <DependentUpon>EndorsementPrintOut.aspx</DependentUpon>
+    </Compile>
     <Compile Include="TransactionDetailsView.aspx.cs">
       <DependentUpon>TransactionDetailsView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
