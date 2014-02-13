@@ -35,7 +35,7 @@ function saveendorsement () {
         default:
             break;
     }
-    savetransaction();
+    //savetransaction();
 }
 
 
@@ -48,6 +48,7 @@ function cancelendorsement() {
 
 function updatecocno(type, transactionid) {
     var newCocNo = $('#e_cocno').val();
+    var policyno = $('#lblPolicyNo').html();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -55,7 +56,8 @@ function updatecocno(type, transactionid) {
             action: "updateendorsement",
             type: type,
             newcocno: newCocNo,
-            transactionid: transactionid
+            transactionid: transactionid,
+            policyno: policyno
         },
         success: function (result) {
             handlesaveendorsement(result);

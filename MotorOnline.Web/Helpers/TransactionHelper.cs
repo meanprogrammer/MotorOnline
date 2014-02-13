@@ -56,12 +56,13 @@ namespace MotorOnline.Web
 
         private static string GeneratePolicyNoWithFormat(string lastPolicyNo) {
             //string yearPart = DateTime.Now.Year.ToString().Remove(0, 2);
+            string yearPart = DateTime.Now.Year.ToString().Remove(0, 2);
             if (!string.IsNullOrEmpty(lastPolicyNo))
             {
                 string[] parts = lastPolicyNo.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
                 //int idPart = int.Parse(parts[1]);
                 int lastDigitPart = int.Parse(parts[1]);
-                string yearPart = DateTime.Now.Year.ToString().Remove(0, 2);
+                
                 if (lastDigitPart == 99)
                 {
                     //idPart++;
@@ -76,8 +77,21 @@ namespace MotorOnline.Web
             }
             else
             {
-                return string.Format("MC-00000000-00-00");
+                return string.Format("MC-{0}-0000000-00-00", yearPart);
             }
+        }
+
+        public static string GetEndorsementPolicyNo(string currentPolicyNo) {
+            //MC-14-0000015-00-00
+            //if (!string.IsNullOrEmpty(currentPolicyNo))
+            //{
+                string[] parts = currentPolicyNo.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+                //TODO: Is this safe
+                int last = Convert.ToInt32(parts.Last());
+                last++;
+                currentPolicyNo = currentPolicyNo.Remove(currentPolicyNo.Length - 3, 3);
+                return string.Format("{0}-{1}", currentPolicyNo, last.ToString("D2"));
+            //}
         }
     }
 

@@ -33,9 +33,7 @@
                     data: { "action": 'gettransactionbyid', "transactionid": id },
                     success: function (result) {
                         var obj = JSON.parse(result);
-                        console.log(obj);
                         if (obj != null) {
-                            console.log(obj);
                             loadtransactiondetails(obj, id);
 
                         }
@@ -87,6 +85,12 @@
                 window.open('GeneratePrintOut.aspx?id=' + id, "_blank", 'toolbar=0,location=0,menubar=0');
             }
             return false;
+        }
+
+        function toggleaddtionaltextbox(show) {
+            var value = show ? 'block' : 'none';
+            $('#CorporateMultipleLabel').css('display', value);
+            $('#corporatemultiple').css('display', value);
         }
     </script>
 </asp:Content>
@@ -570,7 +574,7 @@
                 </tr>
             </table>
         </div>
-        <div id="endorsement-dialog"> <%--style="display:none;">--%>
+        <div id="endorsement-dialog" style="display:none;">
             <table cellpadding="8">
                 <tr>
                     <td>

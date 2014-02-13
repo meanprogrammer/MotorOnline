@@ -88,6 +88,7 @@ namespace MotorOnline.Web.ajax
             }
         }
 
+
         private void HandleUpdateEndorsement()
         {
             var type = Request.Form["type"];
@@ -98,7 +99,13 @@ namespace MotorOnline.Web.ajax
             {
                 case "3":
                     var newCocNo = Request.Form["newcocno"];
-                    result = data.UpdateCOCNo(newCocNo, int.Parse(transactionId));
+                    var currentPolicyNo = Request.Form["policyno"];
+                    int newId = 0;
+                    result = data.SaveTransactionWithUpdatedCOCNo(
+                        int.Parse(transactionId), 
+                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), 
+                        newCocNo,
+                        out newId);
                     break;
                 case "15":
                     var newLastName = Request.Form["newlastname"];

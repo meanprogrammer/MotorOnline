@@ -256,6 +256,123 @@ function displayperilsedit(json, remarks) {
     $('#grosscomputationbutton').click(handleshowcomputation);
 }
 
+function displayperilsdetails(json, remarks, computations, customer) {
+    var selectedType = $('#TypeOfCoverDropdown').val();
+    var transactionId = $('#IdHiddenField').val();
+    var html = '<table class="computation-table" cellpadding=4 WIDTH=70%>';
+    html += '<tr>';
+    html += '<th>Coverage/Perils</th>';
+    html += '<th>Limit/SI</th>';
+    html += '<th>Rate</th>';
+    html += '<th>Premium</th>';
+    html += '<th>Policy Rate</th>';
+    html += '<th>Policy Premium</th>';
+    html += '</tr>';
+    if (json != null) {
+
+        $.each(json, function (key, value) {
+            console.log(value);
+            html += '<tr>';
+            html += '<td>';
+            html += value.PerilName;
+            html += "";
+            html += '</td>';
+
+            html += '<td>';
+            html += parseFloat(value.NewLimitSI).toFixed(2);
+            html += '</td>';
+
+            html += '<td>';
+            html += parseFloat(value.NewRate).toFixed(2);
+            html += '</td>';
+
+            html += '<td>';
+            html += parseFloat(value.NewPremium).toFixed(2);
+            html += '</td>';
+
+            html += '<td>';
+            html += parseFloat(value.NewPolicyRate).toFixed(2);
+            html += '</td>';
+
+            html += '<td>';
+            html += parseFloat(value.NewPolicyPremium).toFixed(2);
+            html += '</td>';
+
+            html += '</tr>';
+        });
+
+    }
+    html += '<tr><td colspan="2"></td>';
+    html += '<td align="right"><strong>Basic Premium Net:</strong></td><td><span id="basic-premiumnettext">' + computations.NetComputationDetails.BasicPremium + '</span></td>';
+    html += '<td align="right"><strong>Basic Premium Gross:</strong></td><td><span id="basic-premiumgrosstext">' + computations.GrossComputationDetails.BasicPremium + '</span></td></tr>';
+    html += '</table>';
+    html += '<br />';
+
+    html += '<table cellpadding=4 WIDTH=70%>';
+    html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" /></td></tr>';
+    html += '</table>';
+
+    html += '<table>';
+    html += '<tr><td><strong>Remarks</strong></td><td colspan="3">' + remarks + '</td></tr>';
+    html += '</table>';
+    $('#perils-table').html(html);
+
+//    initializeinputmasks();
+//    //handledefaultvalue();
+//    populatevtplcontrolswithcallback(
+//    function () {
+//        if (json != null) {
+//            $.each(json, function (key, value) {
+//                if (parseInt(value.PerilID) === 194) {
+//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
+//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+//                }
+//            });
+//        }
+//    },
+//    function () {
+//        if (json != null) {
+//            $.each(json, function (key, value) {
+//                if (parseInt(value.PerilID) !== 194 && parseInt(value.PerilID) !== 195) {
+//                    //NOTE:  blur() is called to trigger the formatting to currency
+//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(value.NewLimitSI);
+//                    $('#' + associatedcontrols[value.PerilID].limitsi).blur();
+//                    $('#' + associatedcontrols[value.PerilID].rate).val(value.NewRate);
+//                    $('#' + associatedcontrols[value.PerilID].rate).blur();
+//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+//                    $('#' + associatedcontrols[value.PerilID].policyrate).val(value.NewPolicyRate);
+//                    $('#' + associatedcontrols[value.PerilID].policyrate).blur();
+//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+//                } else if (parseInt(value.PerilID) === 195) {
+
+//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
+//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+//                } else {
+//                }
+//            });
+//            handlecompute();
+//        }
+//    });
+
+
+//    $('#computebutton').click(handlecompute);
+    //    disablevtplrates();
+    $('#netcomputationbutton,#grosscomputationbutton').button();
+    $('#netcomputationbutton').click(
+                { computation: computations.NetComputationDetails,
+                    covertype: customer.TypeOfCover
+                },
+                    handleshowcomputationdetails);
+                console.log(customer);
+    $('#grosscomputationbutton').click(
+                { computation: computations.GrossComputationDetails,
+                    covertype: customer.TypeOfCover
+                },
+                    handleshowcomputationdetails);
+}
+
 
 function initializebuttons() {
     $('#computebutton').button();
@@ -285,6 +402,52 @@ function handleshowcomputation() {
     var type = (this.id === "netcomputationbutton" ? "Net" : "Gross");
 
     populatecomputationdetails(type);
+}
+
+function handleshowcomputationdetails(event) {
+    var computation = event.data.computation;
+    var covertype = event.data.covertype;
+
+                $('#lblBasicPremium').html(computation.BasicPremium);
+
+                //Documentary stamps
+                $('#lblDocStamps').html(computation.DocumentaryStamps.toFixed(2));
+
+                //valueaddedtax
+                $('#lblVat').html(computation.ValueAddedTax.toFixed(2));
+
+                //local goverment tax
+                $('#lblLgt').html(computation.LocalGovernmentTax.toFixed(2));
+
+                //dst on coc - constant
+                $('#lblDST').html(computation.DSTonCOC.toFixed(2));
+
+                //lto interconnect - constant
+                $('#lblLtoInter').html(computation.LTOInterconnectivity.toFixed(2));
+
+                //total
+                $('#lblTotalAmmountDue').html(computation.GrandTotal.toFixed(2));
+
+                if (covertype == '1' || covertype == '2') {
+                    $('#lto-row').css('display', 'table-row');
+                    $('#dst-row').css('display', 'table-row');
+                } else {
+                    $('#lto-row').css('display', 'none');
+                    $('#dst-row').css('display', 'none');
+                }
+
+                $("#computation-dialog").css('display', 'block');
+                $("#computation-dialog").dialog({
+                    modal: true,
+                    height: 430,
+                    width: 450,
+                    resizable: false,
+                    title: " Computation",
+                    beforeClose: function (event, ui) {
+                        //clearcomputationdetails();
+                    }
+                });
+
 }
 
 function clearcomputationdetails() {

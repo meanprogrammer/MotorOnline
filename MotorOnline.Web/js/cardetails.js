@@ -41,6 +41,7 @@
 
 
 function populatecardetaildisplay(cardetail) {
+    console.log(cardetail);
     $('#lblSublineType').html($('#SublineDropdown option:selected').text());
     $('#lblTypeOfCover').html(cardetail.TypeOfCoverText);
     $('#lblYear').html(cardetail.YearText);

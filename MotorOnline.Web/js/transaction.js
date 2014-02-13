@@ -357,7 +357,6 @@ function loadtransaction(json, id) {
 
 
 function loadtransactiondetails(json, id) {
-    console.log(json);
     $('#creditingbranchlabel').html(json.CreditingBranchName);
     $('#lblParNo').html(json.ParNo);
     $('#lblPolicyNo').html(json.PolicyNo);
@@ -383,7 +382,6 @@ function loadtransactiondetails(json, id) {
 //        carmakechangewithcallback(function () {
 //            $('#EngineDropdown').val(json.CarEngineText);
     var cardetail = json.CarDetail;
-    console.log(cardetail);
     $('#lblSublineType').html(json.SublineText);
     //$('#lblSublineType').html($('#SublineDropdown option:selected').text());
     $('#lblTypeOfCover').html(cardetail.TypeOfCoverText);
@@ -391,7 +389,7 @@ function loadtransactiondetails(json, id) {
     $('#lblCarCompany').html(cardetail.CarCompanyText);
     $('#lblMake').html(cardetail.CarMakeText);
     $('#lblMotorType').html(cardetail.MotorType);
-    $('#lblEngineNo').html(cardetail.Engine);
+    $('#lblEngineNo').html(cardetail.EngineNo);
     $('#lblChasisNo').html(cardetail.ChassisNo);
 
     $('#lblColor').html(cardetail.Color);
@@ -400,25 +398,24 @@ function loadtransactiondetails(json, id) {
     $('#lblAccessories').html(cardetail.Accessories);
     $('#lblAuthenticationNo').html(cardetail.AuthenticationNo);
     $('#lblCOCNo').html(cardetail.COCNo);
-
 //    var cardetail = createcardetails();
-//    console.log(cardetail);
 //            populatecardetaildisplay(cardetail);
 
-//            $('#CarDetailsHidden').val(JSON.stringify(cardetail));
+           $('#CarDetailsHidden').val(JSON.stringify(cardetail));
 
-//            displayperilsedit(json.Perils, json.Remarks);
+           displayperilsdetails(json.Perils, json.Remarks, json.Computations, cardetail);
 
 //            //NOTE: This is for edit mode, if the transaction is loaded and
 //            //the current selected type of insurance must show the hidden controls
-//            var loadedTypeOfIns = $('#TypeOfInsuranceDropdown').val();
+           var loadedTypeOfIns = json.TypeOfInsurance;
 
-//            if (parseInt(loadedTypeOfIns) > 1) {
-//                loadedTypeOfIns == 2 ? $('#CorporateMultipleLabel').html('Multiple Name') :
-//                                        $('#CorporateMultipleLabel').html('Corporate Name');
-//                toggleaddtionaltextbox(true);
-
-//            }
+           if (parseInt(loadedTypeOfIns) > 1) {
+               loadedTypeOfIns == 2 ? $('#CorporateMultipleLabel').html('Multiple Name') :
+                                        $('#CorporateMultipleLabel').html('Corporate Name');
+               toggleaddtionaltextbox(true);
+           } else {
+               toggleaddtionaltextbox(false);
+           }
 //            //HACK
 //            hideloader();
 
@@ -581,7 +578,6 @@ function copymortgageeselected() {
 
 function copycocno() {
     var cocno = $('#lblCOCNo').html();
-    alert(cocno);
     $('#e_cocno').val(cocno);
 }
 

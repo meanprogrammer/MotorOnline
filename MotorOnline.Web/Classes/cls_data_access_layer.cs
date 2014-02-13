@@ -446,6 +446,40 @@ namespace MotorOnline.Web
             return transaction.CustomerID > 0 && result > 0 && perilResult > 0 && computationResult > 0 && carDetailResult > 0;
         }
 
+
+        public int SaveTransactionWithUpdatedCOCNo(int transactionId, string newPolicyNo, string newCOCNo, out int newId)
+        {
+            //go_dah.uf_set_stored_procedure("sp_saveendorsement", ref go_sqlConnection);
+            //go_dah.uf_set_stored_procedure_param(
+
+            if (go_sqlConnection.State == ConnectionState.Closed)
+            {
+                go_sqlConnection.Open();
+            }
+
+            SqlCommand cmd = go_sqlConnection.CreateCommand();
+            cmd.CommandText = "sp_saveendorsement";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = go_sqlConnection;
+
+            cmd.Parameters.AddWithValue("@OldTransID", transactionId);
+            cmd.Parameters.AddWithValue("@NewPolicyNo", newPolicyNo);
+            SqlParameter newTransID = new SqlParameter() { ParameterName="@NewTransID", 
+                DbType=System.Data.DbType.Int32, Value=0, Size = int.MaxValue , 
+                Direction=ParameterDirection.Output };
+            cmd.Parameters.Add(newTransID);
+
+            int result = cmd.ExecuteNonQuery();
+            //NOTE: Must be assigned before leaving the method
+            newId = 0;
+            //if(result > 0){
+                newId = (int)newTransID.Value;
+            //}
+
+            return UpdateCOCNo(newCOCNo, newId);
+
+        }
+
         public bool UpdateTransaction(Transaction transaction) {
             int result = 0;
             int perilResult = 0;

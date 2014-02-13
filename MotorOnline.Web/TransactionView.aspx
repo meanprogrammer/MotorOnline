@@ -258,7 +258,6 @@
                     data: { "action": 'gettransactionbyid', "transactionid": id },
                     success: function (result) {
                         var obj = JSON.parse(result);
-                        console.log(obj);
                         if (obj != null) {
 
                             loadtransaction(obj, id);
