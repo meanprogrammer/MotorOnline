@@ -1223,6 +1223,53 @@ namespace MotorOnline.Web
         {
             return 1;
         }
+
+        public bool SaveEndorsementDetails(int transactionId, int newTransactionId,
+                            string endorsementText, DateTime dateEndorsed,
+                            DateTime effectivityDate, DateTime expiryDate)
+        {
+            go_dah.uf_set_stored_procedure("sp_saveendorsementdetails", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@ParentTransactionID", transactionId);
+            go_dah.uf_set_stored_procedure_param("@NewTransactionID", newTransactionId);
+            go_dah.uf_set_stored_procedure_param("@EndorsementText", endorsementText);
+            go_dah.uf_set_stored_procedure_param("@DateEndorsed", dateEndorsed);
+            go_dah.uf_set_stored_procedure_param("@EffectivityDate", effectivityDate);
+            go_dah.uf_set_stored_procedure_param("@ExpiryDate", expiryDate);
+
+            return go_dah.uf_execute_non_query() > 0;
+
+        }
+
+        public EndorsementDetail GetEndorsementDetail(int id)
+        {
+            go_dah.uf_set_stored_procedure("sp_getendorsementdetailbyid", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@NewTransactionID", id);
+
+            IDataReader reader = go_dah.uf_execute_reader();
+            EndorsementDetail endorsementDetail = null;
+            using (reader)
+            {
+                int parentIdIdx = reader.GetOrdinal("ParentTransactionID");
+                int newIdIdx = reader.GetOrdinal("NewTransactionID");
+                int eTextIdx = reader.GetOrdinal("EndorsementText");
+                int dateEndorsedId = reader.GetOrdinal("DateEndorsed");
+                int effectivityDateIdx = reader.GetOrdinal("EffectivityDate");
+                int expDateIdx = reader.GetOrdinal("ExpiryDate");
+
+                while (reader.Read())
+                {
+                    endorsementDetail = new EndorsementDetail();
+                    endorsementDetail.ParentTransactionID = reader.GetInt32(parentIdIdx);
+                    endorsementDetail.NewTransactionID = reader.GetInt32(newIdIdx);
+                    endorsementDetail.EndorsementText = reader.GetString(eTextIdx);
+                    endorsementDetail.DateEndorsed = reader.GetDateTime(dateEndorsedId);
+                    endorsementDetail.EffectivityDate = reader.GetDateTime(effectivityDateIdx);
+                    endorsementDetail.ExpiryDate = reader.GetDateTime(expDateIdx);
+                }
+            }
+            return endorsementDetail;
+
+        }
     }
 }
 

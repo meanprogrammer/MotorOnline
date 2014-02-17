@@ -626,13 +626,8 @@
 
                     <% if (this.CurrentUser.UserRole.CanAmmendTransaction)
                        { %>
-                    &nbsp;
-                    <asp:Button ID="AmendButton" runat="server" Text="Amend" />
-                    <% } %>
-
-                    <% if (this.CurrentUser.UserRole.CanEndorse)
-                       { %>
-                    <input id="endorsebutton" type="button" value="Endorse" />
+                    &nbsp;<% } %><% if (this.CurrentUser.UserRole.CanEndorse)
+                       { %><input id="endorsebutton" type="button" value="Endorse" />
                     <% } %>
                 </td>
             </tr>

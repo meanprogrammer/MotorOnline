@@ -623,14 +623,16 @@ html, body
 
 input[type="text"]
 {
-    border: solid 1px #C0C0C0;
-    padding: 3px;
-}
+    border: solid 1px
 
-select
+input[type="text"]
 {
     border: solid 1px #C0C0C0;
     padding: 3px;
+    width: 160px;
+}
+
+adding: 3px;
 }
 
 .navbar

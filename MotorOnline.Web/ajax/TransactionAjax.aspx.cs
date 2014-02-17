@@ -94,6 +94,9 @@ namespace MotorOnline.Web.ajax
             var type = Request.Form["type"];
             var transactionId = Request.Form["transactionid"];
             var customerId = Request.Form["customerid"];
+            var endorsementText = Request.Form["etext"];
+            var effectivityDate = Request.Form["edate"];
+            var expireDate = Request.Form["expdate"];
             int result = 0;
             int newId = 0;
             switch (type)
@@ -149,6 +152,14 @@ namespace MotorOnline.Web.ajax
                     break;
                 default:
                     break;
+            }
+
+            if (result > 0)
+            { 
+                DateTime effectDate = DateTime.Parse(ChangeDateFormat(effectivityDate));
+                DateTime expDate = DateTime.Parse(ChangeDateFormatWithTime(expireDate));
+                data.SaveEndorsementDetails(int.Parse(transactionId), newId,
+                        endorsementText, DateTime.Now, effectDate, expDate);
             }
 
             Dictionary<string, string> res = new Dictionary<string, string>();
@@ -320,6 +331,15 @@ namespace MotorOnline.Web.ajax
             return newDate.ToString(toFormat);
         }
 
+        private string ChangeDateFormatWithTime(string date)
+        {
+            string fromFormat = "MM/dd/yyyy H:mm:ss";
+            string toFormat = "yyyy-MM-dd H:mm:ss";
+
+            DateTime newDate = DateTime.ParseExact(date + " 12:00:00", fromFormat, null);
+
+            return newDate.ToString(toFormat);
+        }
         public void AddAnd(StringBuilder filter)
         {
             if (!string.IsNullOrEmpty(filter.ToString()))

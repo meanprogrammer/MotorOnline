@@ -210,12 +210,12 @@
                 carcompanydropdownid: 'CarCompaniesDropdown',
                 carmakedropdownid: 'CarMakeDropdown',
                 enginedropdownid: 'EngineDropdown'
-                        }, carcompanychange);
+            }, carcompanychange);
             $('#CarMakeDropdown').change({
                 carcompanydropdownid: 'CarCompaniesDropdown',
                 carmakedropdownid: 'CarMakeDropdown',
                 enginedropdownid: 'EngineDropdown'
-                        },carmakechange);
+            }, carmakechange);
 
             $('#SaveCarDetailsButton').click(cardetailsave);
             $(':button,:submit').button();
@@ -281,7 +281,7 @@
                     $("#endorsement-dialog").css('display', 'block');
                     $("#endorsement-dialog").dialog({
                         modal: true,
-                        height: 500,
+                        height: 600,
                         width: 600,
                         resizable: false,
                         closeOnEscape: false,
@@ -298,7 +298,7 @@
             );
 
             $('#EndorsementDropdown').change(onendorsementselectchanged);
-
+            $('#effectivitydate').datepicker();
             //Endorsement Section
         }
     );
@@ -943,7 +943,7 @@
                 </tr>
             </table>
         </div>
-        <div id="endorsement-dialog" style="display:none;">
+        <div id="endorsement-dialog">
             <table cellpadding="8">
                 <tr>
                     <td>
@@ -959,9 +959,16 @@
                     <td><span class="required-field">*</span></td>
                 </tr>
                 <tr>
+                    <td>
+                        Effectivity date</td>
+                    <td>
+                        <input id="effectivitydate" type="text" /></td>
+                    <td><span class="required-field">*</span></td>
+                </tr>
+                <tr>
                     <td colspan="3">
                         <textarea id="endorsementtext" cols="60" 
-                            name="endorsementtext" rows="10" readonly="readonly"></textarea></td>
+                            name="endorsementtext" rows="10"></textarea></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -995,13 +1002,8 @@
 
                     <% if (this.CurrentUser.UserRole.CanAmmendTransaction)
                        { %>
-                    &nbsp;
-                    <asp:Button ID="AmendButton" runat="server" Text="Amend" />
-                    <% } %>
-
-                    <% if (this.CurrentUser.UserRole.CanEndorse)
-                       { %>
-                    <input id="endorsebutton" type="button" value="Endorse" />
+                    &nbsp;<% } %><% if (this.CurrentUser.UserRole.CanEndorse)
+                       { %><input id="endorsebutton" type="button" value="Endorse" />
                     <% } %>
                 </td>
             </tr>

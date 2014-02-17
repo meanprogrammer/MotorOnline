@@ -49,6 +49,9 @@ function cancelendorsement() {
 function updatecocno(type, transactionid) {
     var newCocNo = $('#e_cocno').val();
     var policyno = $('#lblPolicyNo').html();
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    var expdate = $('#PeriodToTextbox').val();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -57,7 +60,10 @@ function updatecocno(type, transactionid) {
             type: type,
             newcocno: newCocNo,
             transactionid: transactionid,
-            policyno: policyno
+            policyno: policyno,
+            etext: etext,
+            edate: edate,
+            expdate: expdate
         },
         success: function (result) {
             var obj = JSON.parse(result);
@@ -210,7 +216,10 @@ function handlesaveendorsement(result) {
     if (result.Status == 'true') {
         if(confirm('The transaction has been successfully endorsed and changes have been made. Do you want to view the print out?'))
         {
+            var id = $('#IdHiddenField').val();
             //Show print out in new window
+            var url = 'EndorsementPrintOut.aspx?id=' + id;
+            window.open(url, "_blank", 'toolbar=0,location=0,menubar=0');
         }
         //redirect here
         window.location.href = "TransactionView.aspx?id=" + result.NewID;
