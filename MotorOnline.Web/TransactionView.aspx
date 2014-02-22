@@ -264,7 +264,6 @@
                             if (obj.HasEndorsement == true) {
                                 $('#printendorsement').css('display', 'inline');
                             }
-                            alert(obj.IsEndorsed);
                             if (obj.IsEndorsed == true) {
                                 $('#endorsebutton').css('display', 'none');
                             }
@@ -960,7 +959,7 @@
             </table>
         </div>
         <div id="endorsement-dialog" style="display:none;">
-            <table cellpadding="8">
+            <table cellpadding="8" width="100%">
                 <tr>
                     <td>
                         Type of Endorsement</td>

@@ -640,6 +640,58 @@ namespace MotorOnline.Web
 
         }
 
+        public int SaveTransactionWithNewOwner(int transactionId, string newPolicyNo, out int newId, 
+            int typeofinsurance,string designation, string lastname, string firstname, string mi, string multicorpname)
+        {
+            if (go_sqlConnection.State == ConnectionState.Closed)
+            {
+                go_sqlConnection.Open();
+            }
+
+            SqlCommand cmd = go_sqlConnection.CreateCommand();
+            cmd.CommandText = "sp_saveendorsement";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = go_sqlConnection;
+
+            cmd.Parameters.AddWithValue("@OldTransID", transactionId);
+            cmd.Parameters.AddWithValue("@NewPolicyNo", newPolicyNo);
+            SqlParameter newTransID = new SqlParameter()
+            {
+                ParameterName = "@NewTransID",
+                DbType = System.Data.DbType.Int32,
+                Value = 0,
+                Size = int.MaxValue,
+                Direction = ParameterDirection.Output
+            };
+            cmd.Parameters.Add(newTransID);
+
+            int result = cmd.ExecuteNonQuery();
+            //NOTE: Must be assigned before leaving the method
+            newId = 0;
+            //if(result > 0){
+            newId = (int)newTransID.Value;
+            //}
+
+            cmd.Parameters.Clear();
+
+            cmd.CommandText = "sp_savecustomerinfo";
+            cmd.Parameters.AddWithValue("@Designation", designation);
+            cmd.Parameters.AddWithValue("@FirstName", firstname);
+            cmd.Parameters.AddWithValue("@LastName", lastname);
+            cmd.Parameters.AddWithValue("@MiddleName", mi);
+            cmd.Parameters.AddWithValue("@MultipleCorporateName", multicorpname);
+            cmd.Parameters.AddWithValue("@Address", string.Empty);
+            cmd.Parameters.AddWithValue("@Telephone", string.Empty);
+            cmd.Parameters.AddWithValue("@MobileNo", string.Empty);
+            cmd.Parameters.AddWithValue("@Email", string.Empty);
+
+            int newCustomerId = Convert.ToInt32(cmd.ExecuteScalar());
+
+            return UpdateTransferOwnership(newId, newCustomerId, typeofinsurance);
+            
+        }
+
+
         public int SaveTransactionWithUpdatePolicyDate(int transactionId,
          string newPolicyNo, out int newId, DateTime from, DateTime to)
         {
@@ -1460,9 +1512,14 @@ namespace MotorOnline.Web
             return go_dah.uf_execute_non_query();
         }
 
-        public int UpdateTransferOwnership()
+        public int UpdateTransferOwnership(int transactionId, int customerId, int typeofinsurance)
         {
-            return 1;
+            string sql = string.Format(
+                "UPDATE mTransactions SET [CustomerID] = @CustomerID,[typeOfInsured]=@typeOfInsured WHERE TransactionID={0}", transactionId);
+            go_dah.uf_set_sql_statement(sql, ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@CustomerID", customerId);
+            go_dah.uf_set_stored_procedure_param("@typeOfInsured", typeofinsurance);
+            return go_dah.uf_execute_non_query();
         }
 
         public bool SaveEndorsementDetails(int transactionId, int newTransactionId,
@@ -1511,6 +1568,8 @@ namespace MotorOnline.Web
             return endorsementDetail;
 
         }
+
+
     }
 }
 

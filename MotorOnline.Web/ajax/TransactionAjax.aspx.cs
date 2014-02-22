@@ -97,7 +97,7 @@ namespace MotorOnline.Web.ajax
             var endorsementText = Request.Form["etext"];
             var effectivityDate = Request.Form["edate"];
             var expireDate = Request.Form["expdate"];
-            var currentPolicyNo = Request.Form["policyno"];
+            var endorsementPolNo = PolicyNoHelper.GetEndorsementPolicyNo(Request.Form["policyno"]);
 
             int result = 0;
             int newId = 0;
@@ -107,7 +107,7 @@ namespace MotorOnline.Web.ajax
                     var newCocNo = Request.Form["newcocno"];
                     result = data.SaveTransactionWithUpdatedCOCNo(
                         int.Parse(transactionId), 
-                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), 
+                        PolicyNoHelper.GetEndorsementPolicyNo(endorsementPolNo), 
                         newCocNo,
                         out newId);
                     break;
@@ -116,31 +116,30 @@ namespace MotorOnline.Web.ajax
                     var newFirstName = Request.Form["newfirstname"];
                     var newMI = Request.Form["newmi"];
                     result = data.SaveTransactionWithUpdatedInsuredName(int.Parse(transactionId),
-                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo),
-                        int.Parse(customerId), out newId, newFirstName, newLastName, newMI);
+                        endorsementPolNo, int.Parse(customerId), out newId, newFirstName, newLastName, newMI);
                     break;
                 case "17":
                 case "19":
                     var newAddress = Request.Form["newaddress"];
                     result = data.SaveTransactionWithUpdatedAddress(int.Parse(transactionId),
-                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), int.Parse(customerId), out newId, newAddress);
+                        endorsementPolNo, int.Parse(customerId), out newId, newAddress);
                     break;
                 case "20":
                 case "22":
                     var newMortgagee = Request.Form["newmortgagee"];
                     result = data.SaveTransactionWithUpdatedMortgagee(int.Parse(transactionId),
-                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), out newId, newMortgagee);
+                        endorsementPolNo, out newId, newMortgagee);
                     break;
                 case "21":
                     result = data.SaveTransactionWithDeleteMortgagee(int.Parse(transactionId),
-                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), out newId);
+                        endorsementPolNo, out newId);
                     break;
                 case "25":
                     var periodfrom = Request.Form["periodfrom"];
                     var periodto = Request.Form["periodto"];
                     result = data.SaveTransactionWithUpdatePolicyDate(
                                 int.Parse(transactionId),
-                                PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo),
+                                endorsementPolNo,
                                 out newId,
                                 ParseDate(periodfrom),
                                 ParseDate(periodto));
@@ -151,13 +150,26 @@ namespace MotorOnline.Web.ajax
                     var engineseries = Request.Form["engineseries"];
                     result = data.SaveTransactionWithUpdatedVehicleDescription(
                                 int.Parse(transactionId),
-                                PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo),
+                                endorsementPolNo,
                                 out newId,
                                 int.Parse(carcompany),
                                 GetCarMake(carmake),
                                 GetCarSeries(carmake),
                                 engineseries);
-
+                    break;
+                case "23":
+                    var lastname = Request.Form["lastname"];
+                    var firstname = Request.Form["firstname"];
+                    var mi = Request.Form["mi"];
+                    var designation = Request.Form["designation"];
+                    var multicorpname = Request.Form["multicorpname"];
+                    var toi = Request.Form["toi"];
+                    result = data.SaveTransactionWithNewOwner(
+                        int.Parse(transactionId),
+                        endorsementPolNo,
+                        out newId, int.Parse(toi),
+                        designation, lastname, firstname, mi, 
+                        ((toi == "2" || toi == "3") ? multicorpname : string.Empty));
                     break;
                 default:
                     break;

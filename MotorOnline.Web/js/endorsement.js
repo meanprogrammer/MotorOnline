@@ -32,6 +32,9 @@ function saveendorsement () {
         case '33':
             updatevehicledescription(selected, transactionid);
             break;
+        case '23':
+            updatetransferownership(selected, transactionid);
+            break;
         default:
             break;
     }
@@ -256,6 +259,46 @@ function updatevehicledescription(type, transactionid) {
             edate: edate,
             expdate: expdate,
             policyno: policyno
+        },
+        success: function (result) {
+            var obj = JSON.parse(result);
+            handlesaveendorsement(obj);
+            hideloader();
+        },
+        error: function () {
+            hideloader();
+        }
+    });
+}
+
+function updatetransferownership(type, transactionid) {
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    var expdate = $('#PeriodToTextbox').val();
+    var policyno = $('#lblPolicyNo').html();
+    var toi = $('#e_typeofinsurance').val();
+    var designation = $('#e_designation').val();
+    var lastname = $('#e_lastname').val();
+    var firstname = $('#e_firstname').val();
+    var mi = $('#e_mi').val();
+    var multicorpname = $('#e_multinamecorporatetext').val();
+    $.ajax({
+        url: "ajax/TransactionAjax.aspx",
+        type: "post",
+        data: {
+            action: "updateendorsement",
+            type: type,
+            transactionid: transactionid,
+            etext: etext,
+            edate: edate,
+            expdate: expdate,
+            policyno: policyno,
+            toi: toi,
+            designation: designation,
+            lastname: lastname,
+            firstname: firstname,
+            mi: mi,
+            multicorpname: multicorpname
         },
         success: function (result) {
             var obj = JSON.parse(result);

@@ -556,9 +556,27 @@ function onendorsementselectchanged() {
                         copycarcompanies();
                         break;
                     case 23:
-                        html += '<table cellpadding="8"> <tr> <td> <strong>Type of insurance</strong> </td> <td> <select id="e_typeofinsurance"> <option></option> </select> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>Designation:</strong> </td> <td> <select id="e_designation"> <option value="Mr.">Mr.</option> <option value="Mrs.">Mrs.</option> </select> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>Last Name:</strong> </td> <td> <input id="e_lastname" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>First Name:</strong> </td> <td> <input id="e_firstname" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>M.I.:</strong> </td> <td> <input id="e_mi" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> </table>';
+                        html += '<table cellpadding="8"> <tr> <td> <strong>Type of insurance</strong> </td> <td colspan="3"> <select id="e_typeofinsurance"> <option></option> </select> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>Designation:</strong> </td> <td> <select id="e_designation"> <option value="Mr.">Mr.</option> <option value="Mrs.">Mrs.</option> </select> &nbsp;<span class="required-field">*</span> </td> <td> <strong><span id="e_multinamecorporatelabel" style="display:none;"></span></strong></td> <td> <input id="e_multinamecorporatetext" type="text" style="display:none;" /></td> </tr> <tr> <td> <strong>Last Name:</strong> </td> <td colspan="3"> <input id="e_lastname" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>First Name:</strong> </td> <td colspan="3"> <input id="e_firstname" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>M.I.:</strong> </td> <td colspan="3"> <input id="e_mi" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> </table>';
                         $('#endorsement-controls').html(html);
                         copytypeofinsurance();
+                        $('#e_typeofinsurance').change(function () {
+                            var selectedValue = $('#e_typeofinsurance').val();
+                            //multiname
+                            if (selectedValue == 2) {
+                                $('#e_multinamecorporatelabel').html('Multiple Name');
+                                $('#e_multinamecorporatetext').show();
+                                $('#e_multinamecorporatelabel').show();
+                            } else if
+                            //corporate
+                            (selectedValue == 3) {
+                                $('#e_multinamecorporatelabel').html('Corporate Name');
+                                $('#e_multinamecorporatetext').show();
+                                $('#e_multinamecorporatelabel').show();
+                            } else {
+                                $('#e_multinamecorporatetext').hide();
+                                $('#e_multinamecorporatelabel').hide();
+                            }
+                        });
                         break;
                     default:
                         break;
