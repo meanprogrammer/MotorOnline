@@ -555,6 +555,11 @@ function onendorsementselectchanged() {
                         $('#endorsement-controls').html(html);
                         copycarcompanies();
                         break;
+                    case 23:
+                        html += '<table cellpadding="8"> <tr> <td> <strong>Type of insurance</strong> </td> <td> <select id="e_typeofinsurance"> <option></option> </select> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>Designation:</strong> </td> <td> <select id="e_designation"> <option value="Mr.">Mr.</option> <option value="Mrs.">Mrs.</option> </select> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>Last Name:</strong> </td> <td> <input id="e_lastname" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>First Name:</strong> </td> <td> <input id="e_firstname" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>M.I.:</strong> </td> <td> <input id="e_mi" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copytypeofinsurance();
+                        break;
                     default:
                         break;
                 }
@@ -566,9 +571,14 @@ function onendorsementselectchanged() {
     });
 }
 
+function copytypeofinsurance() {
+    var insurances = $('#TypeOfInsuranceDropdown').html();
+    $('#e_typeofinsurance').html(insurances);
+}
+
 function copymortgagee() {
-    var orig_motgagee = $('#ddlMortgagee').html();
-    $('#e_mortgagee').html(orig_motgagee);
+    var motgagee = $('#ddlMortgagee').html();
+    $('#e_mortgagee').html(motgagee);
 }
 
 function copymortgageeselected() {

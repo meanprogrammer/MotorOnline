@@ -41,8 +41,7 @@ namespace MotorOnline.Web
                 PopulateCarYears();
                 PopulateCarCompany();
 
-                this.lblParNo.Text = ParNoHelper.GenerateValidParNo();
-                this.lblPolicyNo.Text = PolicyNoHelper.GenerateValidPolicyNo();
+
 
                 //Load data early for autocomplete later
                 GetNamesAutocomplete();
@@ -58,12 +57,15 @@ namespace MotorOnline.Web
 
                     this.IdHiddenField.Value = id.ToString();
 
-
-
                     //JavaScriptSerializer serializer = new JavaScriptSerializer();
                     //string json = serializer.Serialize(t); 
 
                     //ClientScript.RegisterStartupScript(this.GetType(), "on_load", string.Format("loadtransaction('{0}', '{1}');", json, id), true);
+                }
+                else
+                {
+                    this.lblParNo.Text = ParNoHelper.GenerateValidParNo();
+                    this.lblPolicyNo.Text = PolicyNoHelper.GenerateValidPolicyNo();
                 }
             }
         }

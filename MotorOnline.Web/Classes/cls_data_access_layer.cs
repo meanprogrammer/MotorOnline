@@ -480,6 +480,245 @@ namespace MotorOnline.Web
 
         }
 
+        public int SaveTransactionWithUpdatedInsuredName(int transactionId, 
+            string newPolicyNo, int customerId, out int newId,
+            string newLastName, string newFirstName, string newMI)
+        {
+            //go_dah.uf_set_stored_procedure("sp_saveendorsement", ref go_sqlConnection);
+            //go_dah.uf_set_stored_procedure_param(
+
+            if (go_sqlConnection.State == ConnectionState.Closed)
+            {
+                go_sqlConnection.Open();
+            }
+
+            SqlCommand cmd = go_sqlConnection.CreateCommand();
+            cmd.CommandText = "sp_saveendorsement";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = go_sqlConnection;
+
+            cmd.Parameters.AddWithValue("@OldTransID", transactionId);
+            cmd.Parameters.AddWithValue("@NewPolicyNo", newPolicyNo);
+            SqlParameter newTransID = new SqlParameter()
+            {
+                ParameterName = "@NewTransID",
+                DbType = System.Data.DbType.Int32,
+                Value = 0,
+                Size = int.MaxValue,
+                Direction = ParameterDirection.Output
+            };
+            cmd.Parameters.Add(newTransID);
+
+            int result = cmd.ExecuteNonQuery();
+            //NOTE: Must be assigned before leaving the method
+            newId = 0;
+            //if(result > 0){
+            newId = (int)newTransID.Value;
+            //}
+
+            return UpdateInsuredName(customerId, newFirstName, newLastName, newMI);
+
+        }
+
+
+        public int SaveTransactionWithUpdatedAddress(int transactionId,
+            string newPolicyNo, int customerId, out int newId,
+            string newAddress)
+        {
+            //go_dah.uf_set_stored_procedure("sp_saveendorsement", ref go_sqlConnection);
+            //go_dah.uf_set_stored_procedure_param(
+
+            if (go_sqlConnection.State == ConnectionState.Closed)
+            {
+                go_sqlConnection.Open();
+            }
+
+            SqlCommand cmd = go_sqlConnection.CreateCommand();
+            cmd.CommandText = "sp_saveendorsement";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = go_sqlConnection;
+
+            cmd.Parameters.AddWithValue("@OldTransID", transactionId);
+            cmd.Parameters.AddWithValue("@NewPolicyNo", newPolicyNo);
+            SqlParameter newTransID = new SqlParameter()
+            {
+                ParameterName = "@NewTransID",
+                DbType = System.Data.DbType.Int32,
+                Value = 0,
+                Size = int.MaxValue,
+                Direction = ParameterDirection.Output
+            };
+            cmd.Parameters.Add(newTransID);
+
+            int result = cmd.ExecuteNonQuery();
+            //NOTE: Must be assigned before leaving the method
+            newId = 0;
+            //if(result > 0){
+            newId = (int)newTransID.Value;
+            //}
+
+            return UpdateAddress(customerId, newAddress);
+
+        }
+
+        public int SaveTransactionWithUpdatedMortgagee(int transactionId,
+            string newPolicyNo, out int newId,
+            string mortgagee)
+        {
+            //go_dah.uf_set_stored_procedure("sp_saveendorsement", ref go_sqlConnection);
+            //go_dah.uf_set_stored_procedure_param(
+
+            if (go_sqlConnection.State == ConnectionState.Closed)
+            {
+                go_sqlConnection.Open();
+            }
+
+            SqlCommand cmd = go_sqlConnection.CreateCommand();
+            cmd.CommandText = "sp_saveendorsement";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = go_sqlConnection;
+
+            cmd.Parameters.AddWithValue("@OldTransID", transactionId);
+            cmd.Parameters.AddWithValue("@NewPolicyNo", newPolicyNo);
+            SqlParameter newTransID = new SqlParameter()
+            {
+                ParameterName = "@NewTransID",
+                DbType = System.Data.DbType.Int32,
+                Value = 0,
+                Size = int.MaxValue,
+                Direction = ParameterDirection.Output
+            };
+            cmd.Parameters.Add(newTransID);
+
+            int result = cmd.ExecuteNonQuery();
+            //NOTE: Must be assigned before leaving the method
+            newId = 0;
+            //if(result > 0){
+            newId = (int)newTransID.Value;
+            //}
+
+            return UpdateMortgagee(newId, mortgagee);
+
+        }
+
+        public int SaveTransactionWithDeleteMortgagee(int transactionId,
+            string newPolicyNo, out int newId)
+        {
+            //go_dah.uf_set_stored_procedure("sp_saveendorsement", ref go_sqlConnection);
+            //go_dah.uf_set_stored_procedure_param(
+
+            if (go_sqlConnection.State == ConnectionState.Closed)
+            {
+                go_sqlConnection.Open();
+            }
+
+            SqlCommand cmd = go_sqlConnection.CreateCommand();
+            cmd.CommandText = "sp_saveendorsement";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = go_sqlConnection;
+
+            cmd.Parameters.AddWithValue("@OldTransID", transactionId);
+            cmd.Parameters.AddWithValue("@NewPolicyNo", newPolicyNo);
+            SqlParameter newTransID = new SqlParameter()
+            {
+                ParameterName = "@NewTransID",
+                DbType = System.Data.DbType.Int32,
+                Value = 0,
+                Size = int.MaxValue,
+                Direction = ParameterDirection.Output
+            };
+            cmd.Parameters.Add(newTransID);
+
+            int result = cmd.ExecuteNonQuery();
+            //NOTE: Must be assigned before leaving the method
+            newId = 0;
+            //if(result > 0){
+            newId = (int)newTransID.Value;
+            //}
+
+            return DeleteMortgagee(newId);
+
+        }
+
+        public int SaveTransactionWithUpdatePolicyDate(int transactionId,
+         string newPolicyNo, out int newId, DateTime from, DateTime to)
+        {
+            //go_dah.uf_set_stored_procedure("sp_saveendorsement", ref go_sqlConnection);
+            //go_dah.uf_set_stored_procedure_param(
+
+            if (go_sqlConnection.State == ConnectionState.Closed)
+            {
+                go_sqlConnection.Open();
+            }
+
+            SqlCommand cmd = go_sqlConnection.CreateCommand();
+            cmd.CommandText = "sp_saveendorsement";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = go_sqlConnection;
+
+            cmd.Parameters.AddWithValue("@OldTransID", transactionId);
+            cmd.Parameters.AddWithValue("@NewPolicyNo", newPolicyNo);
+            SqlParameter newTransID = new SqlParameter()
+            {
+                ParameterName = "@NewTransID",
+                DbType = System.Data.DbType.Int32,
+                Value = 0,
+                Size = int.MaxValue,
+                Direction = ParameterDirection.Output
+            };
+            cmd.Parameters.Add(newTransID);
+
+            int result = cmd.ExecuteNonQuery();
+            //NOTE: Must be assigned before leaving the method
+            newId = 0;
+            //if(result > 0){
+            newId = (int)newTransID.Value;
+            //}
+
+            return UpdatePolicyPeriod(newId, from, to);
+
+        }
+
+        public int SaveTransactionWithUpdatedVehicleDescription(int transactionId,
+             string newPolicyNo, out int newId, int carcompany, string carmake, 
+             int carseries, string engineSeries)
+        {
+            //go_dah.uf_set_stored_procedure("sp_saveendorsement", ref go_sqlConnection);
+            //go_dah.uf_set_stored_procedure_param(
+
+            if (go_sqlConnection.State == ConnectionState.Closed)
+            {
+                go_sqlConnection.Open();
+            }
+
+            SqlCommand cmd = go_sqlConnection.CreateCommand();
+            cmd.CommandText = "sp_saveendorsement";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = go_sqlConnection;
+
+            cmd.Parameters.AddWithValue("@OldTransID", transactionId);
+            cmd.Parameters.AddWithValue("@NewPolicyNo", newPolicyNo);
+            SqlParameter newTransID = new SqlParameter()
+            {
+                ParameterName = "@NewTransID",
+                DbType = System.Data.DbType.Int32,
+                Value = 0,
+                Size = int.MaxValue,
+                Direction = ParameterDirection.Output
+            };
+            cmd.Parameters.Add(newTransID);
+
+            int result = cmd.ExecuteNonQuery();
+            //NOTE: Must be assigned before leaving the method
+            newId = 0;
+            //if(result > 0){
+            newId = (int)newTransID.Value;
+            //}
+
+            return UpdateVehicleDescription(newId, carcompany, carmake, carseries, engineSeries);
+
+        }
+
         public bool UpdateTransaction(Transaction transaction) {
             int result = 0;
             int perilResult = 0;
@@ -699,6 +938,7 @@ namespace MotorOnline.Web
                 int mortgageeNameIdx = reader.GetOrdinal("MortgName");
                 int intmNameIdx = reader.GetOrdinal("intmName");
                 int typeOfInsuranceNameIdx = reader.GetOrdinal("typeOfInsName");
+                int hasEndorsementIdx = reader.GetOrdinal("HasEndorsement");
                 while (reader.Read()) 
                 {
                     t.TransactionID = reader.IsDBNull(transactionIdIdx) ? 0 : reader.GetInt32(transactionIdIdx);
@@ -716,9 +956,9 @@ namespace MotorOnline.Web
                     t.MortgageCode = reader.IsDBNull(mortgageIdx) ? 0 : reader.GetInt32(mortgageIdx);
                     t.IntermediaryCode = reader.IsDBNull(intermediaryCodeIdx) ? 0 : reader.GetInt32(intermediaryCodeIdx);
                     t.TypeOfInsurance = reader.IsDBNull(typeOfInsuredIdx) ? 0 : reader.GetInt32(typeOfInsuredIdx);
-                    t.IsPosted = reader.IsDBNull(isPostedIdx) ? false : ChangeTypeHelper.SafeParseToBoolean(reader.GetInt32(isPostedIdx).ToString());
-                    t.IsPrinted = reader.IsDBNull(isPrintedIdx) ? false : ChangeTypeHelper.SafeParseToBoolean(reader.GetInt32(isPrintedIdx).ToString());
-                    t.IsEndorsed = reader.IsDBNull(isEndorseIdx) ? false : ChangeTypeHelper.SafeParseToBoolean(reader.GetInt32(isEndorseIdx).ToString());
+                    t.IsPosted = reader.IsDBNull(isPostedIdx) ? false : Convert.ToBoolean(reader.GetInt32(isPostedIdx));
+                    t.IsPrinted = reader.IsDBNull(isPrintedIdx) ? false : Convert.ToBoolean(reader.GetInt32(isPrintedIdx));
+                    t.IsEndorsed = reader.IsDBNull(isEndorseIdx) ? false : Convert.ToBoolean(reader.GetInt32(isEndorseIdx));
                     t.Remarks = reader.IsDBNull(remarksIdx) ? string.Empty : reader.GetString(remarksIdx);
                     t.Customer.Designation = reader.IsDBNull(designationIdx) ? string.Empty : reader.GetString(designationIdx);
                     t.Customer.FirstName = reader.IsDBNull(firstNameIdx) ? string.Empty : reader.GetString(firstNameIdx);
@@ -736,6 +976,7 @@ namespace MotorOnline.Web
                     t.MortgageeName = reader.IsDBNull(mortgageeNameIdx) ? string.Empty : reader.GetString(mortgageeNameIdx);
                     t.IntermediaryName = reader.IsDBNull(intmNameIdx) ? string.Empty : reader.GetString(intmNameIdx);
                     t.TypeOfInsuranceName = reader.IsDBNull(typeOfInsuranceNameIdx) ? string.Empty : reader.GetString(typeOfInsuranceNameIdx);
+                    t.HasEndorsement = reader.IsDBNull(hasEndorsementIdx) ? false : Convert.ToBoolean(reader.GetInt32(hasEndorsementIdx));
                     //t.CarDetail.MotorType = reader.IsDBNull(33) ? string.Empty : reader.GetString(33);
                     //t.CarDetail.TypeOfCoverValue = reader.IsDBNull(34) ? 0 : reader.GetInt32(34);
                     //t.CarDetail.EngineSeriesText = reader.IsDBNull(35) ? string.Empty : reader.GetString(35);

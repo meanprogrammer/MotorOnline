@@ -81,6 +81,10 @@ function updateinsuredname(type, transactionid) {
     var newfirstname = $('#e_firstname').val();
     var newmi = $('#e_mi').val();
     var customerid = $('#CustomerInfo').val();
+    var policyno = $('#lblPolicyNo').html();
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    var expdate = $('#PeriodToTextbox').val();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -90,10 +94,16 @@ function updateinsuredname(type, transactionid) {
             newlastname: newlastname,
             newfirstname: newfirstname,
             newmi: newmi,
-            customerid: customerid
+            customerid: customerid,
+            policyno: policyno,
+            etext: etext,
+            edate: edate,
+            expdate: expdate,
+            transactionid: transactionid
         },
         success: function (result) {
-            handlesaveendorsement(result);
+            var obj = JSON.parse(result);
+            handlesaveendorsement(obj);
             hideloader();
         },
         error: function () {
@@ -105,6 +115,10 @@ function updateinsuredname(type, transactionid) {
 function updateaddress(type, transactionid) {
     var newaddress = $('#e_address').val();
     var customerid = $('#CustomerInfo').val();
+    var policyno = $('#lblPolicyNo').html();
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    var expdate = $('#PeriodToTextbox').val();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -112,10 +126,16 @@ function updateaddress(type, transactionid) {
             action: "updateendorsement",
             type: type,
             newaddress: newaddress,
-            customerid: customerid
+            customerid: customerid,
+            policyno: policyno,
+            etext: etext,
+            edate: edate,
+            expdate: expdate,
+            transactionid: transactionid
         },
         success: function (result) {
-            handlesaveendorsement(result);
+            var obj = JSON.parse(result);
+            handlesaveendorsement(obj);
             hideloader();
         },
         error: function () {
@@ -126,6 +146,10 @@ function updateaddress(type, transactionid) {
 
 function updatemortgagee(type, transactionid) {
     var newmortgagee = $('#e_mortgagee').val();
+    var policyno = $('#lblPolicyNo').html();
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    var expdate = $('#PeriodToTextbox').val();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -133,10 +157,15 @@ function updatemortgagee(type, transactionid) {
             action: "updateendorsement",
             type: type,
             newmortgagee: newmortgagee,
-            transactionid: transactionid
+            transactionid: transactionid,
+            policyno: policyno,
+            etext: etext,
+            edate: edate,
+            expdate: expdate
         },
         success: function (result) {
-            handlesaveendorsement(result);
+            var obj = JSON.parse(result);
+            handlesaveendorsement(obj);
             hideloader();
         },
         error: function () {
@@ -146,16 +175,25 @@ function updatemortgagee(type, transactionid) {
 }
 
 function deletemortgagee(type, transactionid) {
+    var policyno = $('#lblPolicyNo').html();
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    var expdate = $('#PeriodToTextbox').val();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
         data: {
             action: "updateendorsement",
             type: type,
-            transactionid: transactionid
+            transactionid: transactionid,
+            policyno: policyno,
+            etext: etext,
+            edate: edate,
+            expdate: expdate
         },
         success: function (result) {
-            handlesaveendorsement(result);
+            var obj = JSON.parse(result);
+            handlesaveendorsement(obj);
             hideloader();
         },
         error: function () {
@@ -167,6 +205,10 @@ function deletemortgagee(type, transactionid) {
 function updatepolicyperiod(type, transactionid) {
     var periodfrom = $('#e_policyperiodfrom').val();
     var periodto = $('#e_policyperiodto').val();
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    var expdate = $('#PeriodToTextbox').val();
+    var policyno = $('#lblPolicyNo').html();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -175,10 +217,15 @@ function updatepolicyperiod(type, transactionid) {
             type: type,
             transactionid: transactionid,
             periodfrom: periodfrom,
-            periodto: periodto
+            periodto: periodto,
+            etext: etext,
+            edate: edate,
+            expdate: expdate,
+            policyno: policyno
         },
         success: function (result) {
-            handlesaveendorsement(result);
+            var obj = JSON.parse(result);
+            handlesaveendorsement(obj);
             hideloader();
         },
         error: function () {
@@ -191,6 +238,10 @@ function updatevehicledescription(type, transactionid) {
     var carcompany = $('#e_carcompanydropdown').val();
     var carmake = $('#e_carmakedropdown').val();
     var engineseries = $('#e_enginedropdown').val();
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    var expdate = $('#PeriodToTextbox').val();
+    var policyno = $('#lblPolicyNo').html();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -200,10 +251,15 @@ function updatevehicledescription(type, transactionid) {
             transactionid: transactionid,
             carcompany: carcompany,
             carmake: carmake,
-            engineseries: engineseries
+            engineseries: engineseries,
+            etext: etext,
+            edate: edate,
+            expdate: expdate,
+            policyno: policyno
         },
         success: function (result) {
-            handlesaveendorsement(result);
+            var obj = JSON.parse(result);
+            handlesaveendorsement(obj);
             hideloader();
         },
         error: function () {

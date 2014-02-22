@@ -55,6 +55,8 @@ namespace MotorOnline.Library.Entity
         public string IntermediaryName { get; set; }
         public string TypeOfInsuranceName { get; set; }
 
+        public bool HasEndorsement { get; set; }
+
         //For display purposes only
         public string DateCreatedText
         {

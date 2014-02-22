@@ -97,14 +97,14 @@ namespace MotorOnline.Web.ajax
             var endorsementText = Request.Form["etext"];
             var effectivityDate = Request.Form["edate"];
             var expireDate = Request.Form["expdate"];
+            var currentPolicyNo = Request.Form["policyno"];
+
             int result = 0;
             int newId = 0;
             switch (type)
             {
                 case "3":
                     var newCocNo = Request.Form["newcocno"];
-                    var currentPolicyNo = Request.Form["policyno"];
-                    
                     result = data.SaveTransactionWithUpdatedCOCNo(
                         int.Parse(transactionId), 
                         PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), 
@@ -115,26 +115,33 @@ namespace MotorOnline.Web.ajax
                     var newLastName = Request.Form["newlastname"];
                     var newFirstName = Request.Form["newfirstname"];
                     var newMI = Request.Form["newmi"];
-                    result = data.UpdateInsuredName(int.Parse(customerId), newFirstName, newLastName, newMI);
+                    result = data.SaveTransactionWithUpdatedInsuredName(int.Parse(transactionId),
+                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo),
+                        int.Parse(customerId), out newId, newFirstName, newLastName, newMI);
                     break;
                 case "17":
                 case "19":
                     var newAddress = Request.Form["newaddress"];
-                    result = data.UpdateAddress(int.Parse(customerId), newAddress);
+                    result = data.SaveTransactionWithUpdatedAddress(int.Parse(transactionId),
+                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), int.Parse(customerId), out newId, newAddress);
                     break;
                 case "20":
                 case "22":
                     var newMortgagee = Request.Form["newmortgagee"];
-                    result = data.UpdateMortgagee(int.Parse(transactionId), newMortgagee);
+                    result = data.SaveTransactionWithUpdatedMortgagee(int.Parse(transactionId),
+                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), out newId, newMortgagee);
                     break;
                 case "21":
-                    result = data.DeleteMortgagee(int.Parse(transactionId));
+                    result = data.SaveTransactionWithDeleteMortgagee(int.Parse(transactionId),
+                        PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo), out newId);
                     break;
                 case "25":
                     var periodfrom = Request.Form["periodfrom"];
                     var periodto = Request.Form["periodto"];
-                    result = data.UpdatePolicyPeriod(
+                    result = data.SaveTransactionWithUpdatePolicyDate(
                                 int.Parse(transactionId),
+                                PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo),
+                                out newId,
                                 ParseDate(periodfrom),
                                 ParseDate(periodto));
                     break;
@@ -142,8 +149,10 @@ namespace MotorOnline.Web.ajax
                     var carcompany = Request.Form["carcompany"];
                     var carmake = Request.Form["carmake"];
                     var engineseries = Request.Form["engineseries"];
-                    result = data.UpdateVehicleDescription(
+                    result = data.SaveTransactionWithUpdatedVehicleDescription(
                                 int.Parse(transactionId),
+                                PolicyNoHelper.GetEndorsementPolicyNo(currentPolicyNo),
+                                out newId,
                                 int.Parse(carcompany),
                                 GetCarMake(carmake),
                                 GetCarSeries(carmake),

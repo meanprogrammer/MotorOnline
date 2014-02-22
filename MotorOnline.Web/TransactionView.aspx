@@ -261,7 +261,13 @@
                         if (obj != null) {
 
                             loadtransaction(obj, id);
-
+                            if (obj.HasEndorsement == true) {
+                                $('#printendorsement').css('display', 'inline');
+                            }
+                            alert(obj.IsEndorsed);
+                            if (obj.IsEndorsed == true) {
+                                $('#endorsebutton').css('display', 'none');
+                            }
                         }
                     },
                     error: function () {
@@ -299,7 +305,17 @@
 
             $('#EndorsementDropdown').change(onendorsementselectchanged);
             $('#effectivitydate').datepicker();
+
+            $('#printendorsement').click(
+                function () {
+                    var tid = $('#IdHiddenField').val();
+                    var url = 'EndorsementPrintOut.aspx?id=' + tid;
+                    window.open(url, "_blank", 'toolbar=0,location=0,menubar=0');
+                }
+            );
+
             //Endorsement Section
+
         }
     );
 
@@ -943,7 +959,7 @@
                 </tr>
             </table>
         </div>
-        <div id="endorsement-dialog">
+        <div id="endorsement-dialog" style="display:none;">
             <table cellpadding="8">
                 <tr>
                     <td>
@@ -991,7 +1007,7 @@
             </table>
         </div>
         <hr />
-        <table style="width: 500px">
+        <table style="width: 550px">
             <tr>
                 <td>
                     <asp:Button ID="CancelButton" runat="server" Text="Cancel" />&nbsp;
@@ -1005,7 +1021,7 @@
                     &nbsp;<% } %><% if (this.CurrentUser.UserRole.CanEndorse)
                        { %><input id="endorsebutton" type="button" value="Endorse" />
                     <% } %>
-                </td>
+                    <input id="printendorsement" type="button" value="Print Endorsement" style="display:none;" /></td>
             </tr>
         </table>
     </div>
