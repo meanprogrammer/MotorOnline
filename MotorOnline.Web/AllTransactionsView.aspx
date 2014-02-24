@@ -11,62 +11,62 @@
     </tr>
     <tr>
         <td>Crediting Branch</td>
-        <td><select id="creditingbranch"></select></td>
+        <td><select id="creditingbranch" class="form-control input-sm"></select></td>
         <td>Par No:</td>
-        <td><input id="parno" type="text" /></td>
+        <td><input id="parno" type="text" class="form-control input-sm" /></td>
         <td>Policy No:</td>
-        <td><input id="policyno" type="text" /></td>
+        <td><input id="policyno" type="text" class="form-control input-sm" /></td>
         <td>Subline</td>
-        <td><select id="subline" name="subline"></select></td>
+        <td><select id="subline" name="subline" class="form-control input-sm"></select></td>
     </tr>
     <tr>
         <td>Date Created</td>
         <td>
-            <input id="datecreated" type="text" /></td>
+            <input id="datecreated" type="text" class="form-control input-sm width-170 not-block" /></td>
         <td>
             Policy Period From</td>
         <td>
-            <input id="policyperiodfrom" type="text" /></td>
+            <input id="policyperiodfrom" type="text" class="form-control input-sm width-170 not-block" /></td>
         <td>Policy Period To</td>
         <td>
-            <input id="policyperiodto" type="text" /></td>
+            <input id="policyperiodto" type="text" class="form-control input-sm width-170 not-block" /></td>
         <td>Type of Cover</td>
         <td>
-            <select id="typeofcover" name="typeofcover"></select></td>
+            <select id="typeofcover" name="typeofcover" class="form-control input-sm"></select></td>
     </tr>
     <tr>
         <td>Mortgagee</td>
         <td colspan="3">
-            <select id="mortgagee" name="mortgagee" class="width-400"></select></td>
+            <select id="mortgagee" name="mortgagee" class="width-400 form-control input-sm"></select></td>
         <td>
             First Name</td>
         <td>
-            <input id="firstname" type="text" /></td>
+            <input id="firstname" type="text" class="form-control input-sm" /></td>
         <td>
             Last Name</td>
         <td>
-            <input id="lastname" type="text" /></td>
+            <input id="lastname" type="text" class="form-control input-sm" /></td>
     </tr>
     <tr>
         <td>Intermediary</td>
         <td colspan="3">
-            <select id="intermediary" name="intermediary" class="width-400"></select></td>
+            <select id="intermediary" name="intermediary" class="width-400 form-control input-sm"></select></td>
         <td>
             Chassis No</td>
         <td>
-            <input id="chassisno" type="text" /></td>
+            <input id="chassisno" type="text" class="form-control input-sm" /></td>
         <td>
             Engine No</td>
         <td>
-            <input id="engineno" type="text" /></td>
+            <input id="engineno" type="text" class="form-control input-sm" /></td>
     </tr>
     <tr>
         <td>Car Company</td>
         <td>
-            <select id="carcompany" name="carcompany"></select></td>
+            <select id="carcompany" name="carcompany" class="form-control input-sm"></select></td>
         <td>Motor Type</td>
         <td>
-            <select id="motortype" name="motortype">
+            <select id="motortype" name="motortype" class="form-control input-sm">
                 <option value="0">--SELECT--</option>
                 <option value="LIGHT">LIGHT</option>
                 <option value="MEDIUM">MEDIUM</option>
@@ -78,8 +78,8 @@
             &nbsp;</td>
         <td></td>
         <td>
-            <input id="searchbutton" type="button" value="Search" />&nbsp;<input id="resetbutton" 
-                type="button" value="Reset" /></td>
+            <input id="searchbutton" class="btn btn-primary" type="button" value="Search" />&nbsp;<input id="resetbutton" 
+                type="button" value="Reset" class="btn btn-default" /></td>
     </tr>
 </table>
     <div id="searchresult">

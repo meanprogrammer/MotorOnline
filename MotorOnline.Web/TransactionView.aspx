@@ -964,9 +964,6 @@
                     <td>
                         Type of Endorsement</td>
                     <td>
-<%--                        <select id="endorsementdropdown" name="endorsementdropdown">
-                            
-                        </select>--%>
                         <asp:DropDownList ID="EndorsementDropdown" ClientIDMode="Static" runat="server">
                             <asp:ListItem Value="0" Text="-- SELECT --"></asp:ListItem>
                         </asp:DropDownList>
@@ -1010,7 +1007,6 @@
             <tr>
                 <td>
                     <asp:Button ID="CancelButton" runat="server" Text="Cancel" />&nbsp;
-                    <%--                    <asp:Button ID="NewButton" runat="server" Text="New" />&nbsp;--%>
                     <asp:Button ID="SaveButton" ClientIDMode="Static" runat="server" Text="Save" />&nbsp;
                     <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" />&nbsp;
                     <asp:Button ID="PostButton" runat="server" Text="Post" />

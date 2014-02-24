@@ -8,32 +8,44 @@ function initialize() {
 function saveendorsement () {
     var selected = $('#EndorsementDropdown').val();
     var transactionid = $('#IdHiddenField').val();
+    var etext = $('#endorsementtext').val();
+    var edate = $('#effectivitydate').val();
+    alert($('#pagetypehidden').val());
+    var expdate = ($('#pagetypehidden').val() == 'detail' ? $('#policyperiodto').html() : $('#PeriodToTextbox').val());
+
+    resetvalidations();
+
+    if (edate == '' || !validateString(edate)) {
+        $('#effectivitydate').addClass('control-validation-error');
+        return;
+    }
+
     switch (selected) {
         case '3':
-            updatecocno(selected, transactionid);
+            updatecocno(selected, transactionid, etext, edate, expdate);
             break;
         case '15':
-            updateinsuredname(selected, transactionid);
+            updateinsuredname(selected, transactionid, etext, edate, expdate);
             break;
         case '19':
         case '17':
-            updateaddress(selected, transactionid);
+            updateaddress(selected, transactionid, etext, edate, expdate);
             break;
         case '20':
         case '22':
-            updatemortgagee(selected, transactionid);
+            updatemortgagee(selected, transactionid, etext, edate, expdate);
             break;
         case '21':
-            deletemortgagee(selected, transactionid);
+            deletemortgagee(selected, transactionid, etext, edate, expdate);
             break;
         case '25':
-            updatepolicyperiod(selected, transactionid);
+            updatepolicyperiod(selected, transactionid, etext, edate, expdate);
             break;
         case '33':
-            updatevehicledescription(selected, transactionid);
+            updatevehicledescription(selected, transactionid, etext, edate, expdate);
             break;
         case '23':
-            updatetransferownership(selected, transactionid);
+            updatetransferownership(selected, transactionid, etext, edate, expdate);
             break;
         default:
             break;
@@ -41,20 +53,27 @@ function saveendorsement () {
     //savetransaction();
 }
 
+function resetvalidations() {
+    $('.control-validation-error').removeClass('control-validation-error');
+}
 
 function cancelendorsement() {
+    resetvalidations();
     $('#EndorsementDropdown').val('0');
     $('#endorsementtext').html('');
     $('#endorsement-controls').html('');
     $('#endorsement-dialog').dialog('close');
 }
 
-function updatecocno(type, transactionid) {
+function updatecocno(type, transactionid, etext, edate, expdate) {
     var newCocNo = $('#e_cocno').val();
     var policyno = $('#lblPolicyNo').html();
-    var etext = $('#endorsementtext').val();
-    var edate = $('#effectivitydate').val();
-    var expdate = $('#PeriodToTextbox').val();
+
+    if (newCocNo == '' || !validateString(newCocNo)) {
+        $('#e_cocno').addClass('control-validation-error');
+        return;
+    }
+
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -79,15 +98,33 @@ function updatecocno(type, transactionid) {
     });
 }
 
-function updateinsuredname(type, transactionid) {
+function updateinsuredname(type, transactionid, etext, edate, expdate) {
     var newlastname = $('#e_lastname').val();
     var newfirstname = $('#e_firstname').val();
     var newmi = $('#e_mi').val();
     var customerid = $('#CustomerInfo').val();
     var policyno = $('#lblPolicyNo').html();
-    var etext = $('#endorsementtext').val();
-    var edate = $('#effectivitydate').val();
-    var expdate = $('#PeriodToTextbox').val();
+
+    var isValid = true;
+    if (newlastname == '' || !validateString(newlastname)) {
+        $('#e_lastname').addClass('control-validation-error');
+        isValid = false;
+    }
+
+    if (newfirstname == '' || !validateString(newfirstname)) {
+        $('#e_firstname').addClass('control-validation-error');
+        isValid = false;
+    }
+
+    if (newmi == '' || !validateString(newmi)) {
+        $('#e_mi').addClass('control-validation-error');
+        isValid = false;
+    }
+
+    if (isValid == false) {
+        return;
+    }
+
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -115,13 +152,16 @@ function updateinsuredname(type, transactionid) {
     });
 }
 
-function updateaddress(type, transactionid) {
+function updateaddress(type, transactionid, etext, edate, expdate) {
     var newaddress = $('#e_address').val();
     var customerid = $('#CustomerInfo').val();
     var policyno = $('#lblPolicyNo').html();
-    var etext = $('#endorsementtext').val();
-    var edate = $('#effectivitydate').val();
-    var expdate = $('#PeriodToTextbox').val();
+
+    if (newaddress == '' || !validateString(newaddress)) {
+        $('#e_address').addClass('control-validation-error');
+        return;
+    }
+
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -147,12 +187,15 @@ function updateaddress(type, transactionid) {
     });
 }
 
-function updatemortgagee(type, transactionid) {
+function updatemortgagee(type, transactionid, etext, edate, expdate) {
     var newmortgagee = $('#e_mortgagee').val();
     var policyno = $('#lblPolicyNo').html();
-    var etext = $('#endorsementtext').val();
-    var edate = $('#effectivitydate').val();
-    var expdate = $('#PeriodToTextbox').val();
+
+    if (newmortgagee == '0') {
+        $('#e_mortgagee').addClass('control-validation-error');
+        return;
+    }
+
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -177,11 +220,8 @@ function updatemortgagee(type, transactionid) {
     });
 }
 
-function deletemortgagee(type, transactionid) {
+function deletemortgagee(type, transactionid, etext, edate, expdate) {
     var policyno = $('#lblPolicyNo').html();
-    var etext = $('#endorsementtext').val();
-    var edate = $('#effectivitydate').val();
-    var expdate = $('#PeriodToTextbox').val();
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -205,13 +245,16 @@ function deletemortgagee(type, transactionid) {
     });
 }
 
-function updatepolicyperiod(type, transactionid) {
+function updatepolicyperiod(type, transactionid, etext, edate, expdate) {
     var periodfrom = $('#e_policyperiodfrom').val();
     var periodto = $('#e_policyperiodto').val();
-    var etext = $('#endorsementtext').val();
-    var edate = $('#effectivitydate').val();
-    var expdate = $('#PeriodToTextbox').val();
     var policyno = $('#lblPolicyNo').html();
+
+    if (periodfrom == '' || !validateString(periodfrom)) {
+        $('#e_policyperiodfrom').addClass('control-validation-error');
+        return;
+    }
+
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -237,14 +280,32 @@ function updatepolicyperiod(type, transactionid) {
     });
 }
 
-function updatevehicledescription(type, transactionid) {
+function updatevehicledescription(type, transactionid, etext, edate, expdate) {
     var carcompany = $('#e_carcompanydropdown').val();
     var carmake = $('#e_carmakedropdown').val();
     var engineseries = $('#e_enginedropdown').val();
-    var etext = $('#endorsementtext').val();
-    var edate = $('#effectivitydate').val();
-    var expdate = $('#PeriodToTextbox').val();
     var policyno = $('#lblPolicyNo').html();
+
+    var isvalid = true;
+    if (carcompany == '0') {
+        $('#e_carcompanydropdown').addClass('control-validation-error');
+        isvalid = false;
+    }
+
+    if (carmake == '0') {
+        $('#e_carmakedropdown').addClass('control-validation-error');
+        isvalid = false;
+    }
+
+    if (engineseries == '0') {
+        $('#e_enginedropdown').addClass('control-validation-error');
+        isvalid = false;
+    }
+
+    if (isvalid == false) {
+        return;
+    }
+
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -271,10 +332,7 @@ function updatevehicledescription(type, transactionid) {
     });
 }
 
-function updatetransferownership(type, transactionid) {
-    var etext = $('#endorsementtext').val();
-    var edate = $('#effectivitydate').val();
-    var expdate = $('#PeriodToTextbox').val();
+function updatetransferownership(type, transactionid, etext, edate, expdate) {
     var policyno = $('#lblPolicyNo').html();
     var toi = $('#e_typeofinsurance').val();
     var designation = $('#e_designation').val();
@@ -282,6 +340,40 @@ function updatetransferownership(type, transactionid) {
     var firstname = $('#e_firstname').val();
     var mi = $('#e_mi').val();
     var multicorpname = $('#e_multinamecorporatetext').val();
+
+    var isvalid = true;
+
+    if (lastname == '' || !validateString(lastname)) {
+        $('#e_lastname').addClass('control-validation-error');
+        isvalid = false;
+    }
+
+    if (firstname == '' || !validateString(firstname)) {
+        $('#e_firstname').addClass('control-validation-error');
+        isvalid = false;
+    }
+
+    if (mi == '' || !validateString(mi)) {
+        $('#e_mi').addClass('control-validation-error');
+        isvalid = false;
+    }
+
+    if (toi == '0') {
+        $('#e_typeofinsurance').addClass('control-validation-error');
+        isvalid = false;
+    }
+
+    if (toi == '2' || toi == '3') {
+        if (multicorpname == '' || !validateString(multicorpname)) {
+            $('#e_multinamecorporatetext').addClass('control-validation-error');
+            isvalid = false;
+        }
+    }
+
+    if (!isvalid) {
+        return;
+    }
+
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
@@ -313,15 +405,16 @@ function updatetransferownership(type, transactionid) {
 
 function handlesaveendorsement(result) {
     if (result.Status == 'true') {
-        if(confirm('The transaction has been successfully endorsed and changes have been made. Do you want to view the print out?'))
-        {
-            var id = $('#IdHiddenField').val();
-            //Show print out in new window
-            var url = 'EndorsementPrintOut.aspx?id=' + id;
-            window.open(url, "_blank", 'toolbar=0,location=0,menubar=0');
-        }
+    //NOTE: Just don't ask if they want to print
+//        if(confirm('The transaction has been successfully endorsed and changes have been made. Do you want to view the print out?'))
+//        {
+//            var id = $('#IdHiddenField').val();
+//            //Show print out in new window
+//            var url = 'EndorsementPrintOut.aspx?id=' + id;
+//            window.open(url, "_blank", 'toolbar=0,location=0,menubar=0');
+//        }
         //redirect here
-        window.location.href = "TransactionView.aspx?id=" + result.NewID;
+        window.location.href = "TransactionDetailsView.aspx?id=" + result.NewID;
     } else {
         alert('endorsement failed!');
     }

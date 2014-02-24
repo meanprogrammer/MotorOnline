@@ -47,8 +47,8 @@ namespace MotorOnline.Web
             //    //Load data early for autocomplete later
             //    GetNamesAutocomplete();
 
-            //    //TODO: Load All endorsements but later load this if the user is admin
-            //    PopuplateEndorsement();
+            //TODO: Load All endorsements but later load this if the user is admin
+            PopuplateEndorsement();
 
             //    //Load transaction if there is an id
             string transactionId = Request.QueryString.Get("id");

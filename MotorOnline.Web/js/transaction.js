@@ -540,7 +540,7 @@ function onendorsementselectchanged() {
                         copycocno();
                         break;
                     case 25:
-                        html += ' <table cellpadding="8"> <tr> <td> Policy Period From </td> <td> <input id="e_policyperiodfrom" type="text" /> </td> </tr> <tr> <td> Policy Period To </td> <td> <input id="e_policyperiodto" type="text" /> </td> </tr> </table>';
+                        html += ' <table cellpadding="8"> <tr> <td> Policy Period From </td> <td> <input id="e_policyperiodfrom" type="text" /> </td> </tr> <tr> <td> Policy Period To </td> <td> <input id="e_policyperiodto" type="text" readonly="readonly" /> </td> </tr> </table>';
                         $('#endorsement-controls').html(html);
                         copypolicyperiods();
                         $('#e_policyperiodfrom').datepicker({
@@ -610,13 +610,25 @@ function copycocno() {
 }
 
 function copynames() {
-    var lname = $('#txtLastName').val();
-    var fname = $('#txtFirstName').val();
-    var miname = $('#txtMI').val();
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype == 'detail') {
+        var lname = $('#lastname').html();
+        var fname = $('#firstname').html();
+        var mi = $('#middlename').html();
 
-    $('#e_lastname').val(lname);
-    $('#e_firstname').val(fname);
-    $('#e_mi').val(miname);
+
+        $('#e_lastname').val(lname);
+        $('#e_firstname').val(fname);
+        $('#e_mi').val(mi);
+    } else {
+        var lname = $('#txtLastName').val();
+        var fname = $('#txtFirstName').val();
+        var miname = $('#txtMI').val();
+
+        $('#e_lastname').val(lname);
+        $('#e_firstname').val(fname);
+        $('#e_mi').val(miname);
+    }
 }
 
 function copyaddress() {

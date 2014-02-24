@@ -26,7 +26,7 @@ namespace MotorOnline.Web
             }
             else
             {
-                this.FailureText.Text = "Username/Password incorrect. Access denied.";
+                this.FailureText.Text = "<p class='bg-danger'>Username/Password incorrect. Access denied.</p>";
             }
         }
     }

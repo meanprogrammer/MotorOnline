@@ -194,14 +194,14 @@ function displayperilsedit(json, remarks) {
         });
 
     }
-    html += '<tr><td colspan="2"><input id="computebutton" type="button" value="Compute" /></td>';
+    html += '<tr><td colspan="2"><input id="computebutton" type="button" class="btn btn-default" value="Compute" /></td>';
     html += '<td align="right"><strong>Basic Premium Net:</strong></td><td><span id="basic-premiumnettext"></span></td>';
     html += '<td align="right"><strong>Basic Premium Gross:</strong></td><td><span id="basic-premiumgrosstext"></span></td></tr>';
     html += '</table>';
     html += '<br />';
 
     html += '<table cellpadding=4 WIDTH=70%>';
-    html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" /></td></tr>';
+    html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" class="btn btn-info" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" class="btn btn-info" /></td></tr>';
     html += '</table>';
 
     html += '<table>';
@@ -306,66 +306,22 @@ function displayperilsdetails(json, remarks, computations, customer) {
     html += '<td align="right"><strong>Basic Premium Net:</strong></td><td><span id="basic-premiumnettext">' + computations.NetComputationDetails.BasicPremium + '</span></td>';
     html += '<td align="right"><strong>Basic Premium Gross:</strong></td><td><span id="basic-premiumgrosstext">' + computations.GrossComputationDetails.BasicPremium + '</span></td></tr>';
     html += '</table>';
-    html += '<br />';
 
     html += '<table cellpadding=4 WIDTH=70%>';
-    html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" /></td></tr>';
+    html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" class="btn btn-default" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" class="btn btn-default" /></td></tr>';
     html += '</table>';
 
-    html += '<table>';
-    html += '<tr><td><strong>Remarks</strong></td><td colspan="3">' + remarks + '</td></tr>';
-    html += '</table>';
+    html += '<strong>Remarks</strong>';
+    html += '<div class="remarks-text">';
+    html += remarks;
+    html += '</div>';
     $('#perils-table').html(html);
-
-//    initializeinputmasks();
-//    //handledefaultvalue();
-//    populatevtplcontrolswithcallback(
-//    function () {
-//        if (json != null) {
-//            $.each(json, function (key, value) {
-//                if (parseInt(value.PerilID) === 194) {
-//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
-//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
-//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
-//                }
-//            });
-//        }
-//    },
-//    function () {
-//        if (json != null) {
-//            $.each(json, function (key, value) {
-//                if (parseInt(value.PerilID) !== 194 && parseInt(value.PerilID) !== 195) {
-//                    //NOTE:  blur() is called to trigger the formatting to currency
-//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(value.NewLimitSI);
-//                    $('#' + associatedcontrols[value.PerilID].limitsi).blur();
-//                    $('#' + associatedcontrols[value.PerilID].rate).val(value.NewRate);
-//                    $('#' + associatedcontrols[value.PerilID].rate).blur();
-//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
-//                    $('#' + associatedcontrols[value.PerilID].policyrate).val(value.NewPolicyRate);
-//                    $('#' + associatedcontrols[value.PerilID].policyrate).blur();
-//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
-//                } else if (parseInt(value.PerilID) === 195) {
-
-//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
-//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
-//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
-//                } else {
-//                }
-//            });
-//            handlecompute();
-//        }
-//    });
-
-
-//    $('#computebutton').click(handlecompute);
-    //    disablevtplrates();
-    $('#netcomputationbutton,#grosscomputationbutton').button();
+    //$('#netcomputationbutton,#grosscomputationbutton').button();
     $('#netcomputationbutton').click(
                 { computation: computations.NetComputationDetails,
                     covertype: customer.TypeOfCover
                 },
                     handleshowcomputationdetails);
-                console.log(customer);
     $('#grosscomputationbutton').click(
                 { computation: computations.GrossComputationDetails,
                     covertype: customer.TypeOfCover
@@ -375,9 +331,9 @@ function displayperilsdetails(json, remarks, computations, customer) {
 
 
 function initializebuttons() {
-    $('#computebutton').button();
-    $('#netcomputationbutton').button();
-    $('#grosscomputationbutton').button();
+//    $('#computebutton').button();
+//    $('#netcomputationbutton').button();
+//    $('#grosscomputationbutton').button();
 }
 
 

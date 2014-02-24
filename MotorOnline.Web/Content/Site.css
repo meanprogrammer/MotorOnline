@@ -647,6 +647,7 @@ adding: 3px;
 {
     background-color: #B5C7DE;
     width: 100%;
+    padding:5px;
 }
 
 .label-text
@@ -786,3 +787,26 @@ adding: 3px;
 }
 
 .width-400{width:400px;}
+
+.width-170 { width:170px !important; }
+.not-block { display:inline !important; }
+ 
+.remarks-text { padding:10px; width: 700px; }
+.width-100 { width:100px !important; }
+
+#login {
+    margin: auto;
+    padding: 4% 0 0;
+    width: 400px;
+}
+
+.login-label { padding: 0; margin: 0; }
+
+.login-form {
+    font-weight: 400;
+    overflow: hidden;
+    padding: 20px;
+    height:310px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+}

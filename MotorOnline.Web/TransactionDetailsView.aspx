@@ -13,7 +13,7 @@
         function () {
             $("#car-details").css('display', 'none');
 
-            $(':button,:submit').button();
+            //$(':button,:submit').button();
 
             $('#PrintButton').click(handleprint);
 
@@ -48,14 +48,13 @@
             }
 
 
-
             //Endorsement Section
             $('#endorsebutton').click(
                 function () {
                     $("#endorsement-dialog").css('display', 'block');
                     $("#endorsement-dialog").dialog({
                         modal: true,
-                        height: 500,
+                        height: 600,
                         width: 600,
                         resizable: false,
                         closeOnEscape: false,
@@ -72,7 +71,15 @@
             );
 
             $('#EndorsementDropdown').change(onendorsementselectchanged);
+            $('#effectivitydate').datepicker();
 
+            $('#printendorsement').click(
+                function () {
+                    var tid = $('#IdHiddenField').val();
+                    var url = 'EndorsementPrintOut.aspx?id=' + tid;
+                    window.open(url, "_blank", 'toolbar=0,location=0,menubar=0');
+                }
+            );
             //Endorsement Section
         }
     );
@@ -574,15 +581,12 @@
                 </tr>
             </table>
         </div>
-        <div id="endorsement-dialog" style="display:none;">
-            <table cellpadding="8">
+         <div id="endorsement-dialog" style="display:none;">
+            <table cellpadding="8" width="100%">
                 <tr>
                     <td>
                         Type of Endorsement</td>
                     <td>
-<%--                        <select id="endorsementdropdown" name="endorsementdropdown">
-                            
-                        </select>--%>
                         <asp:DropDownList ID="EndorsementDropdown" ClientIDMode="Static" runat="server">
                             <asp:ListItem Value="0" Text="-- SELECT --"></asp:ListItem>
                         </asp:DropDownList>
@@ -590,9 +594,16 @@
                     <td><span class="required-field">*</span></td>
                 </tr>
                 <tr>
+                    <td>
+                        Effectivity date</td>
+                    <td>
+                        <input id="effectivitydate" type="text" /></td>
+                    <td><span class="required-field">*</span></td>
+                </tr>
+                <tr>
                     <td colspan="3">
                         <textarea id="endorsementtext" cols="60" 
-                            name="endorsementtext" rows="10" readonly="readonly"></textarea></td>
+                            name="endorsementtext" rows="10"></textarea></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -618,16 +629,15 @@
         <table style="width: 500px">
             <tr>
                 <td>
-                    <asp:Button ID="CancelButton" runat="server" Text="Cancel" />&nbsp;
-                    <%--                    <asp:Button ID="NewButton" runat="server" Text="New" />&nbsp;--%>
-                    <asp:Button ID="SaveButton" ClientIDMode="Static" runat="server" Text="Save" />&nbsp;
-                    <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" />&nbsp;
-                    <asp:Button ID="PostButton" runat="server" Text="Post" />
+                    <asp:Button ID="CancelButton" runat="server" Text="Cancel" class="btn btn-default" />&nbsp;
+                    <asp:Button ID="SaveButton" ClientIDMode="Static" runat="server" Text="Save" class="btn btn-primary" />&nbsp;
+                    <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" class="btn btn-success" />&nbsp;
+                    <asp:Button ID="PostButton" runat="server" Text="Post" class="btn btn-default" />
 
                     <% if (this.CurrentUser.UserRole.CanAmmendTransaction)
                        { %>
                     &nbsp;<% } %><% if (this.CurrentUser.UserRole.CanEndorse)
-                       { %><input id="endorsebutton" type="button" value="Endorse" />
+                       { %><input id="endorsebutton" type="button" value="Endorse" class="btn btn-default" />
                     <% } %>
                 </td>
             </tr>
@@ -636,6 +646,7 @@
     <input id="CarDetailsHidden" type="hidden" />
     <input id="TransactionInformationHidden" type="hidden" />
     <input id="CustomerInfo" type="hidden" />
+    <input id="pagetypehidden" value="detail" />
     <asp:HiddenField ID="IdHiddenField" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="NamesAutocompleteHiddenField" ClientIDMode="Static" runat="server" />
     <div id="validation-messages">
