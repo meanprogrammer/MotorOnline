@@ -82,7 +82,7 @@
                 type="button" value="Reset" class="btn btn-default" /></td>
     </tr>
 </table>
-    <div id="searchresult">
+    <div id="searchresult" class="search-result">
     </div>
     <div id="progressbox">
         <h3 id="progress-message">

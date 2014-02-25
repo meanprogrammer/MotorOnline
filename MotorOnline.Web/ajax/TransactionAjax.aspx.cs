@@ -83,9 +83,30 @@ namespace MotorOnline.Web.ajax
                 case "updateendorsement":
                     HandleUpdateEndorsement();
                     break;
+                case "getallperilsdefaults":
+                    HandleGetAllPerilsDefaults();
+                    break;
+                case "posttransaction":
+                    HandlePostTransaction();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void HandlePostTransaction()
+        {
+            var id = Request.Form["transactionid"];
+            int result = data.PostTransaction(int.Parse(id));
+
+            Response.Write(result > 0 ? "1" : "0");
+            Response.End();
+        }
+
+        private void HandleGetAllPerilsDefaults()
+        {
+            List<PerilsDefault> defaults = data.GetAllPerilsDefaults();
+            Render<PerilsDefault>(defaults);
         }
 
 

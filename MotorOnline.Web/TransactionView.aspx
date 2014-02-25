@@ -276,6 +276,7 @@
                 $("#SaveButton").unbind("click");
                 $('#SaveButton').click(savetransaction);
                 $("#SaveButton").prop('value', 'Save');
+                $('#PrintButton,#PostButton,#endorsebutton').css('display', 'none');
             }
 
 
@@ -652,7 +653,7 @@
         <table border="0">
             <tr>
                 <td>
-                    <input id="InputCarDetailsButton" type="button" value="Input Car Details" />
+                    <input id="InputCarDetailsButton" type="button" value="Input Car Details" class="btn btn-primary btn-md" />
                 </td>
                 <td>
                     <span id="cardetails-span">* Input car details.</span>
@@ -1006,17 +1007,15 @@
         <table style="width: 550px">
             <tr>
                 <td>
-                    <asp:Button ID="CancelButton" runat="server" Text="Cancel" />&nbsp;
-                    <asp:Button ID="SaveButton" ClientIDMode="Static" runat="server" Text="Save" />&nbsp;
-                    <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" />&nbsp;
-                    <asp:Button ID="PostButton" runat="server" Text="Post" />
+                    <asp:Button ID="CancelButton" class="btn btn-default" runat="server" Text="Cancel" />
+                    <asp:Button ID="SaveButton" class="btn btn-primary" ClientIDMode="Static" runat="server" Text="Save" />
+                    <asp:Button ID="PrintButton" class="btn btn-success" ClientIDMode="Static" runat="server" Text="Print" />
+                    <asp:Button ID="PostButton" class="btn btn-default" ClientIDMode="Static" runat="server" Text="Post" />
 
-                    <% if (this.CurrentUser.UserRole.CanAmmendTransaction)
-                       { %>
-                    &nbsp;<% } %><% if (this.CurrentUser.UserRole.CanEndorse)
-                       { %><input id="endorsebutton" type="button" value="Endorse" />
+                    <% if (this.CurrentUser.UserRole.CanEndorse) { %>
+                       <input id="endorsebutton" type="button" class="btn btn-default" value="Endorse" />
                     <% } %>
-                    <input id="printendorsement" type="button" value="Print Endorsement" style="display:none;" /></td>
+                    <input id="printendorsement" type="button" class="btn btn-default" value="Print Endorsement" style="display:none;" /></td>
             </tr>
         </table>
     </div>

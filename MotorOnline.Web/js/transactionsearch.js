@@ -90,7 +90,7 @@ function searchtransactions() {
         },
         success: function (result) {
             var obj = JSON.parse(result);
-            html = '<table border="1" cellpadding="4"><tr>';
+            html = '<table class="table table-bordered table-striped"><tr>';
             html += '<th></th>';
 //            html += '<th></th>';
             html += '<th>Branch</th>';

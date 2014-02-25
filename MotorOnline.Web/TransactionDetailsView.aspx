@@ -19,10 +19,10 @@
 
             var id = $('#IdHiddenField').val();
             if (parseInt(id) > 0) {
-                $("#SaveButton").unbind("click");
-                $('#SaveButton').click(updatetransaction);
+//                $("#SaveButton").unbind("click");
+//                $('#SaveButton').click(updatetransaction);
 
-                $("#SaveButton").prop('value', 'Update');
+//                $("#SaveButton").prop('value', 'Update');
 
                 //Showing a loader
                 showloader('Loading Transaction ...');
@@ -42,11 +42,12 @@
                     }
                 });
             } else {
-                $("#SaveButton").unbind("click");
-                $('#SaveButton').click(savetransaction);
-                $("#SaveButton").prop('value', 'Save');
+//                $("#SaveButton").unbind("click");
+//                $('#SaveButton').click(savetransaction);
+//                $("#SaveButton").prop('value', 'Save');
             }
 
+            $('#PostButton').click(posttransaction);
 
             //Endorsement Section
             $('#endorsebutton').click(
@@ -83,6 +84,23 @@
             //Endorsement Section
         }
     );
+
+    function posttransaction(e) { 
+            e.preventDefault();
+            var id = $('#IdHiddenField').val();
+            $.ajax({
+                url: "ajax/TransactionAjax.aspx",
+                type: "post",
+                data: { "action": 'posttransaction', "transactionid": id },
+                success: function (result) {
+                    if(result == '1') {
+                        window.location.href = 'TransactionDetailsView.aspx?id=' + id;
+                    }
+                },
+                error: function () {
+                }
+            });
+        }
 
         function handleprint() {
             var id = $('#IdHiddenField').val();
@@ -629,15 +647,13 @@
         <table style="width: 500px">
             <tr>
                 <td>
-                    <asp:Button ID="CancelButton" runat="server" Text="Cancel" class="btn btn-default" />&nbsp;
-                    <asp:Button ID="SaveButton" ClientIDMode="Static" runat="server" Text="Save" class="btn btn-primary" />&nbsp;
-                    <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" class="btn btn-success" />&nbsp;
-                    <asp:Button ID="PostButton" runat="server" Text="Post" class="btn btn-default" />
+                    <asp:Button ID="CancelButton" runat="server" Text="Cancel" class="btn btn-default" />
+                    <%--<asp:Button ID="SaveButton" ClientIDMode="Static" runat="server" Text="Save" class="btn btn-primary" />&nbsp;--%>
+                    <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" class="btn btn-success" />
+                    <asp:Button ID="PostButton" runat="server" ClientIDMode="Static" Text="Post" class="btn btn-default" />
 
-                    <% if (this.CurrentUser.UserRole.CanAmmendTransaction)
-                       { %>
-                    &nbsp;<% } %><% if (this.CurrentUser.UserRole.CanEndorse)
-                       { %><input id="endorsebutton" type="button" value="Endorse" class="btn btn-default" />
+                    <% if (this.CurrentUser.UserRole.CanEndorse) { %>
+                        <input id="endorsebutton" type="button" value="Endorse" class="btn btn-default" />
                     <% } %>
                 </td>
             </tr>
@@ -646,7 +662,7 @@
     <input id="CarDetailsHidden" type="hidden" />
     <input id="TransactionInformationHidden" type="hidden" />
     <input id="CustomerInfo" type="hidden" />
-    <input id="pagetypehidden" value="detail" />
+    <input id="pagetypehidden" type="hidden" value="detail" />
     <asp:HiddenField ID="IdHiddenField" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="NamesAutocompleteHiddenField" ClientIDMode="Static" runat="server" />
     <div id="validation-messages">

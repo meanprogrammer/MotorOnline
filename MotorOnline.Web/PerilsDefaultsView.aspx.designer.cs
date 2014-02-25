@@ -10,6 +10,6 @@
 namespace MotorOnline.Web {
     
     
-    public partial class DefaultView {
+    public partial class PerilsDefaultsView {
     }
 }

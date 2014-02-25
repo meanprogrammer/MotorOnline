@@ -255,7 +255,6 @@ namespace MotorOnline.Web
                 int canViewTransactionIdx = reader.GetOrdinal("CanViewTransaction");
                 int canDeleteTransactionIdx = reader.GetOrdinal("CanDeleteTransaction");
                 int canPostTransactionIdx = reader.GetOrdinal("CanPostTransaction");
-                int canAmmendTransactionIdx = reader.GetOrdinal("CanAmmendTransaction");
                 int canAddUserIdx = reader.GetOrdinal("CanAddUser");
                 int canEditUserIdx = reader.GetOrdinal("CanEditUser");
                 int canDeleteUserIdx = reader.GetOrdinal("CanDeleteUser");
@@ -279,7 +278,7 @@ namespace MotorOnline.Web
                         CanViewTransaction = reader.GetBoolean(canViewTransactionIdx),
                         CanDeleteTransaction = reader.GetBoolean(canDeleteTransactionIdx),
                         CanPostTransaction = reader.GetBoolean(canPostTransactionIdx),
-                        CanAmmendTransaction = reader.GetBoolean(canAmmendTransactionIdx),
+ 
                         CanAddUser = reader.GetBoolean(canAddUserIdx),
                         CanEditUser = reader.GetBoolean(canEditUserIdx),
                         CanDeleteUser = reader.GetBoolean(canDeleteUserIdx),
@@ -1569,7 +1568,53 @@ namespace MotorOnline.Web
 
         }
 
+        public List<PerilsDefault> GetAllPerilsDefaults()
+        {
+            go_dah.uf_set_stored_procedure("sp_getallperilsdefaults", ref go_sqlConnection);
+            IDataReader reader = go_dah.uf_execute_reader();
+            List<PerilsDefault> defaults = new List<PerilsDefault>();
+            using (reader)
+            {
+                int perilIDIdx = reader.GetOrdinal("PerilID");
+	            int limitSIDefaultIdx = reader.GetOrdinal("LimitSIDefault");
+	            int limitSIEditableIdx = reader.GetOrdinal("LimitSIEditable");
+                int rateDefaultIdx = reader.GetOrdinal("RateDefault");
+	            int rateEditableIdx = reader.GetOrdinal("RateEditable");
+	            int rateShowTariffTextIdx = reader.GetOrdinal("RateShowTariffText");
+	            int premiumDefaultIdx = reader.GetOrdinal("PremiumDefault");
+	            int policyRateDefaultIdx = reader.GetOrdinal("PolicyRateDefault");
+	            int policyRateEditableIdx = reader.GetOrdinal("PolicyRateEditable");
+	            int policyRateShowTariffTextIdx = reader.GetOrdinal("PolicyRateShowTariffText");
+	            int policyPremiumDefaultIdx = reader.GetOrdinal("PolicyPremiumDefault");
+                int lastEditedByIdx = reader.GetOrdinal("LastEditedBy");
+                while (reader.Read())
+                {
+                    PerilsDefault pd = new PerilsDefault();
+                    pd.PerilID = reader.GetInt32(perilIDIdx);
+                    pd.LimitSIDefault = reader.GetDouble(limitSIDefaultIdx);
+                    pd.LimitSIEditable = reader.GetBoolean(limitSIEditableIdx);
+                    pd.RateDefault = reader.GetDouble(rateDefaultIdx);
+                    pd.RateEditable = reader.GetBoolean(rateEditableIdx);
+                    pd.RateShowTariffText = reader.GetBoolean(rateShowTariffTextIdx);
+                    pd.PremiumDefault = reader.GetDouble(premiumDefaultIdx);
+                    pd.PolicyRateDefault = reader.GetDouble(policyRateDefaultIdx);
+                    pd.PolicyRateEditable = reader.GetBoolean(policyRateEditableIdx);
+                    pd.PolicyRateShowTariffText = reader.GetBoolean(policyRateShowTariffTextIdx);
+                    pd.PolicyPremiumDefault = reader.GetDouble(policyPremiumDefaultIdx);
+                    pd.LastEditedBy = reader.GetInt32(lastEditedByIdx);
 
+                    defaults.Add(pd);
+                }
+            }
+            return defaults;
+        }
+
+        public int PostTransaction(int transactionId)
+        {
+            go_dah.uf_set_stored_procedure("sp_posttransaction", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@TransactionID", transactionId);
+            return go_dah.uf_execute_non_query();
+        }
     }
 }
 

@@ -10,7 +10,7 @@ function saveendorsement () {
     var transactionid = $('#IdHiddenField').val();
     var etext = $('#endorsementtext').val();
     var edate = $('#effectivitydate').val();
-    alert($('#pagetypehidden').val());
+
     var expdate = ($('#pagetypehidden').val() == 'detail' ? $('#policyperiodto').html() : $('#PeriodToTextbox').val());
 
     resetvalidations();

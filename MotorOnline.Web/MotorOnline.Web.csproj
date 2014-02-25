@@ -69,6 +69,8 @@
     <Content Include="Content\Images\RedWineHeader.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="EndorsementPrintOut.aspx" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="templates.htm" />
     <Content Include="TransactionDetailsView.aspx" />
     <Content Include="CreateKeys.aspx" />
     <Content Include="css\bootstrap.min.css" />
@@ -121,6 +123,7 @@
     <Content Include="AllTransactionsView.aspx" />
     <Content Include="DefaultView.aspx" />
     <Content Include="LoginView.aspx" />
+    <Content Include="PerilsDefaultsView.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ajax\TransactionAjax.aspx.cs">
@@ -233,6 +236,13 @@
     </Compile>
     <Compile Include="LoginView.aspx.designer.cs">
       <DependentUpon>LoginView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PerilsDefaultsView.aspx.cs">
+      <DependentUpon>PerilsDefaultsView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PerilsDefaultsView.aspx.designer.cs">
+      <DependentUpon>PerilsDefaultsView.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

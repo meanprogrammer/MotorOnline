@@ -445,6 +445,13 @@ function loadtransactiondetails(json, id) {
     $('#emailaddress').html(json.Customer.Email);
     $('#corporatemultiple').html(json.Customer.MultipleCorporateName);
     $('#CustomerInfo').val(json.CustomerID);
+
+    if (json.IsPosted == true) {
+        $('#endorsebutton').css('display', 'inline');
+    } else {
+        $('#endorsebutton').css('display', 'none');
+    }
+
     hideloader();
 }
 
@@ -632,8 +639,14 @@ function copynames() {
 }
 
 function copyaddress() {
-    var adds = $('#txtMailAdress').val();
-    $('#e_address').val(adds);
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype == 'detail') {
+        var adds = $('#address').html();
+        $('#e_address').val(adds);
+    } else {
+        var adds = $('#txtMailAdress').val();
+        $('#e_address').val(adds);
+    }
 }
 
 function copypolicyperiods() {

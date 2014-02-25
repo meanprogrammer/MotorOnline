@@ -9,71 +9,52 @@
     <link href="css/motoronline/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css" />
     <script src="js/jquery-1.8.3.js" type="text/javascript"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/json2.js" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    <script>
+    <script type="text/javascript">
+        $(document).ready(initialize);
+
+        function initialize() {
+            $('#signoutbutton').click(
+            function () {
+                window.location.href = "SignoutView.aspx";
+                }
+            );
+        }
+
         function renderwelcome(json) {
             var user = JSON.parse(json);
-            var text = 'Welcome, ' + user.Username;
-            $('#welcome').html(text);
-            $("#welcome").button()
-              .click(function () {
-                  alert("no actions yet.");
-              }).next()
-                        .button({
-                            text: false,
-                            icons: {
-                                primary: "ui-icon-triangle-1-s"
-                            }
-                        })
-                        .click(function () {
-                            var menu = $(this).parent().next().show().position({
-                                my: "left top",
-                                at: "left bottom",
-                                of: this
-                            });
-                        $(document).one("click", function () {
-                            menu.hide();
-                        });
-            return false;
-            })
-        .parent()
-          .buttonset()
-          .next()
-            .hide()
-            .menu();
+            $('#welcomebutton').val('Welcome, ' + user.Username);
         }
     </script>
     <style>
-        .ui-menu { position: absolute; width: 100px; }
+        .ui-menu
+        {
+            position: absolute;
+            width: 100px;
+        }
     </style>
 </head>
 <body runat="server" id="Body">
     <form id="form1" runat="server">
     <div id="container">
         <div class="mainheader headerPane">
-        <div class="loginControl">
-            <div>
-                <button id="welcome">
-                    Run last action</button>
-                <button id="select">
-                    Select an action</button>
+            <div class="btn-group header-right">
+                <input id="welcomebutton" type="button" value="button" class="btn btn-default" />
+                <input id="signoutbutton" type="button" value="Sign Out" class="btn btn-success" />
             </div>
-            <ul>
-                <li><a href="SignoutView.aspx">Sign Out</a></li>
-            </ul>
         </div>
-        </div>
-        
         <div id="navigation-container">
-        <ul class="nav nav-pills">
-            <li><a href="DefaultView.aspx">Home</a></li>
-            <li><a href="TransactionView.aspx">Apply Online</a></li>
-            <li><a href="AllTransactionsView.aspx">All Transactions</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Contact Us</a></li>
-        </ul>
+            <ul class="nav nav-pills">
+                <li><a href="DefaultView.aspx">Home</a></li>
+                <li><a href="TransactionView.aspx">Apply Online</a></li>
+                <li><a href="AllTransactionsView.aspx">All Transactions</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="PerilsDefaultsView.aspx">Perils Defaults</a></li>
+            </ul>
         </div>
         <div id="maincontent">
             <asp:ContentPlaceHolder ID="Content" runat="server">

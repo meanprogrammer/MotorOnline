@@ -26,7 +26,6 @@ namespace MotorOnline.Web
                 {
                     CanAddTransaction = true,
                     CanAddUser = true,
-                    CanAmmendTransaction = true,
                     CanDeleteTransaction = true,
                     CanDeleteUser = true,
                     CanEditPerils = true,

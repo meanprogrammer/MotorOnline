@@ -16,7 +16,6 @@ namespace MotorOnline.Library.Entity
         public bool CanViewTransaction { get; set; }
         public bool CanDeleteTransaction { get; set; }
         public bool CanPostTransaction { get; set; }
-        public bool CanAmmendTransaction { get; set; }
         public bool CanAddUser { get; set; }
         public bool CanEditUser { get; set; }
         public bool CanDeleteUser { get; set; }
