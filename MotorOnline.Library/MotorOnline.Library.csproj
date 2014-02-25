@@ -51,6 +51,7 @@
     <Compile Include="Entity\EncryptionKeys.cs" />
     <Compile Include="Entity\Endorsement.cs" />
     <Compile Include="Entity\EndorsementDetail.cs" />
+    <Compile Include="Entity\Mortgagee.cs" />
     <Compile Include="Entity\Perils.cs" />
     <Compile Include="Entity\PerilsDefault.cs" />
     <Compile Include="Entity\TariffRate.cs" />

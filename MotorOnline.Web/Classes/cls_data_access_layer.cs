@@ -112,6 +112,26 @@ namespace MotorOnline.Web
             return go_dah.uf_execute_data_table();
         }
 
+        public List<Mortgagee> GetAllMortgagee() {
+            go_dah.uf_set_stored_procedure("sp_pop_mMortgagee", ref go_sqlConnection);
+            IDataReader reader = go_dah.uf_execute_reader();
+            List<Mortgagee> mortgagees = new List<Mortgagee>();
+            using (reader)
+            {
+                int valueIdx = reader.GetOrdinal("VALUE");
+                int textIdx = reader.GetOrdinal("TEXT");
+                while (reader.Read())
+                {
+                    Mortgagee mg = new Mortgagee();
+                    mg.MortgageeID = reader.GetInt32(valueIdx);
+                    mg.MortgageeName = reader.GetString(textIdx);
+
+                    mortgagees.Add(mg);
+                }
+            }
+            return mortgagees;
+        }
+
         public DataTable sp_pop_mIntermediaries()
         {
             go_dah.uf_set_stored_procedure("sp_pop_mIntermediaries", ref go_sqlConnection);
