@@ -814,3 +814,7 @@ adding: 3px;
 #perils-defaults { padding:10px;width:960px; }
 .header-right { margin-right:10px;margin-top:10px;float:right; }
 .search-result { margin-top: 10px; }
+.clickable { cursor: pointer; }
+#search-footer { height: 30px; }
+.search-footer-a { float: left;height: 30px; }
+.search-footer-b { float: left; margin-top: -20px; margin-left:10px;height: 30px; }

@@ -281,16 +281,24 @@ namespace MotorOnline.Web.ajax
             string whereClause = BuildSQLWhereClause(creditingbranch, parno, policyno, subline, datecreated, policyperiodfrom,
                 policyperiodto, typeofcover, mortgagee, intermediary, carcompany, motortype, chassisno, engineno, firstname, lastname);
 
-            IEnumerable<TransactionSearchResultDTO> ts = 
-                PageSearchResult(data.SearchTransaction(whereClause), int.Parse(page), int.Parse(rowcount));
-            Render<IEnumerable<TransactionSearchResultDTO>>(ts);
+            int currentPage, totalPage = 0;
+            IEnumerable<TransactionSearchDTO> ts = 
+                PageSearchResult(data.SearchTransaction(whereClause), int.Parse(page),
+                    int.Parse(rowcount), out totalPage, out currentPage);
+            TransactionSearchResponseDTO response = new TransactionSearchResponseDTO();
+            response.Data = ts;
+            response.CurrentPage = currentPage;
+            response.PageCount = totalPage;
+            Render<TransactionSearchResponseDTO>(response);
         }
 
-        public IEnumerable<TransactionSearchResultDTO> PageSearchResult(
-            IEnumerable<TransactionSearchResultDTO> all, int page, int rowCount) {
-
-                List<List<TransactionSearchResultDTO>> pagedList =
-                    new List<List<TransactionSearchResultDTO>>();
+        public IEnumerable<TransactionSearchDTO> PageSearchResult(
+            IEnumerable<TransactionSearchDTO> all, int page, int rowCount, 
+            out int pages, out int currentPage) {
+                pages = 0;
+                currentPage = 0;
+                List<List<TransactionSearchDTO>> pagedList =
+                    new List<List<TransactionSearchDTO>>();
 
                 if (all.Count() <= rowCount)
                 {
@@ -310,6 +318,8 @@ namespace MotorOnline.Web.ajax
                     all = pagedList[page];
                 }
                 //this.view.DatabindSearchResult(persons, pagedList.Count, page + 1);
+                pages = pagedList.Count;
+                currentPage = page + 1;
                 return all;
         }
 

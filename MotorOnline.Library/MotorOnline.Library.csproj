@@ -47,7 +47,8 @@
     <Compile Include="Entity\CustomerInfo.cs" />
     <Compile Include="Entity\DropDownListItem.cs" />
     <Compile Include="Entity\DTO\DefaultTariffRateResponse.cs" />
-    <Compile Include="Entity\DTO\TransactionSearchResultDTO.cs" />
+    <Compile Include="Entity\DTO\TransactionSearchResponseDTO.cs" />
+    <Compile Include="Entity\DTO\TransactionSearchDTO.cs" />
     <Compile Include="Entity\EncryptionKeys.cs" />
     <Compile Include="Entity\Endorsement.cs" />
     <Compile Include="Entity\EndorsementDetail.cs" />

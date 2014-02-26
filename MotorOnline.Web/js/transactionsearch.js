@@ -1,6 +1,5 @@
 ﻿$(document).ready(initialize);
 
-
 function initialize() {
     $('#datecreatedfrom,#datecreated,#policyperiodfrom,#policyperiodto').datepicker({
         showOn: "button",
@@ -119,7 +118,7 @@ function searchtransactions(callback = null) {
             html += '<th>MiddleName</th>';
             html += '</tr>';
             if (obj != null) {
-                $.each(obj, function (key, value) {
+                $.each(obj.Data, function (key, value) {
                     html += '<tr>';
                     html += '<td><a href="TransactionDetailsView.aspx?id=' + value.TransactionID + '">Details</a></td>';
 //                    html += '<td><a href="TransactionView.aspx?id=' + value.TransactionID + '">Edit</a></td>';
@@ -145,6 +144,16 @@ function searchtransactions(callback = null) {
 
 
             $('#searchresult').html(html);
+
+            var pager = '';
+            for (var i = 1; i <= obj.PageCount; i++) {
+                var cssclass = '';
+                if(i === obj.CurrentPage) {
+                    cssclass = 'active';
+                }
+                pager += '<li class="clickable ' + cssclass + '"><a onclick="changepage('+ i +')">'+ (i) +'</a></li>';              
+            }
+            $('#search-pager').html(pager);
             hideloader();
 
             if(callback != null){

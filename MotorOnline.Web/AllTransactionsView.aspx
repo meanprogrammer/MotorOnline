@@ -19,6 +19,7 @@
 
         function changepage(page) {
             $('#pagehidden').val(page);
+            searchtransactions();
         }
     </script>
 </asp:Content>
@@ -108,19 +109,22 @@
         <h3 id="progress-message">
             Now Loading ...</h3>
     </div>
-    <div id="search-footer">
-    <strong>Rows Per Page:</strong>
-    <select id="rowsperpage">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="All">All</option>
-    </select>
-    <ul class="pagination pagination-sm">
-        <li><a></a></li>
-        <li><a></a></li>
-    </ul>
+    <div id="search-footer clearfix">
+    <div class="search-footer-a">
+        <strong>Rows Per Page:</strong>
+        <select id="rowsperpage">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="All">All</option>
+        </select>
+    </div>
+    <div class="search-footer-b">
+        <ul id="search-pager" class="pagination pagination-sm">
+
+        </ul>
+    </div>
     </div>
     
     <input id="pagehidden" type="hidden" />

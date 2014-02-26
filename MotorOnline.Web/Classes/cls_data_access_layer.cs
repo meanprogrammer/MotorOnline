@@ -1344,7 +1344,7 @@ namespace MotorOnline.Web
             return filters;
         }
 
-        public IEnumerable<TransactionSearchResultDTO> SearchTransaction(string whereClause)
+        public IEnumerable<TransactionSearchDTO> SearchTransaction(string whereClause)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append(
@@ -1373,7 +1373,7 @@ namespace MotorOnline.Web
             go_dah.uf_set_sql_statement(sql.ToString(), ref go_sqlConnection);
             IDataReader reader = go_dah.uf_execute_reader();
 
-            List<TransactionSearchResultDTO> ts = new List<TransactionSearchResultDTO>();
+            List<TransactionSearchDTO> ts = new List<TransactionSearchDTO>();
             using (reader)
             {
                 int transactionIdIdx = reader.GetOrdinal("TransactionID");
@@ -1399,7 +1399,7 @@ namespace MotorOnline.Web
 
                 while (reader.Read())
                 {
-                    TransactionSearchResultDTO t = new TransactionSearchResultDTO();
+                    TransactionSearchDTO t = new TransactionSearchDTO();
                     t.TransactionID = reader.IsDBNull(transactionIdIdx) ? 0 : reader.GetInt32(transactionIdIdx);
                     t.LastName = reader.IsDBNull(lastNameIdx) ? string.Empty : reader.GetString(lastNameIdx);
                     t.FirstName = reader.IsDBNull(firstNameIdx) ? string.Empty : reader.GetString(firstNameIdx);

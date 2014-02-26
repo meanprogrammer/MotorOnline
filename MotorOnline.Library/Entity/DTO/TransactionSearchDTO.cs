@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MotorOnline.Library.Entity
 {
-    public class TransactionSearchResultDTO
+    public class TransactionSearchDTO
     {
         public int TransactionID { get; set; }
         public string LastName { get; set; }
