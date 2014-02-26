@@ -201,7 +201,7 @@ function displayperilsedit(json, remarks) {
     html += '<br />';
 
     html += '<table cellpadding=4 WIDTH=70%>';
-    html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" class="btn btn-info" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" class="btn btn-info" /></td></tr>';
+    html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" class="btn btn-default" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" class="btn btn-default" /></td></tr>';
     html += '</table>';
 
     html += '<table>';
@@ -271,7 +271,6 @@ function displayperilsdetails(json, remarks, computations, customer) {
     if (json != null) {
 
         $.each(json, function (key, value) {
-            console.log(value);
             html += '<tr>';
             html += '<td>';
             html += value.PerilName;

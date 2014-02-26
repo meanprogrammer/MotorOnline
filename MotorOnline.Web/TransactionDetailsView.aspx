@@ -12,17 +12,10 @@
         $(document).ready(
         function () {
             $("#car-details").css('display', 'none');
-
-            //$(':button,:submit').button();
-
             $('#PrintButton').click(handleprint);
-
+            $('#editbutton').click(handleedit);
             var id = $('#IdHiddenField').val();
             if (parseInt(id) > 0) {
-//                $("#SaveButton").unbind("click");
-//                $('#SaveButton').click(updatetransaction);
-
-//                $("#SaveButton").prop('value', 'Update');
 
                 //Showing a loader
                 showloader('Loading Transaction ...');
@@ -41,10 +34,6 @@
                     error: function () {
                     }
                 });
-            } else {
-//                $("#SaveButton").unbind("click");
-//                $('#SaveButton').click(savetransaction);
-//                $("#SaveButton").prop('value', 'Save');
             }
 
             $('#PostButton').click(posttransaction);
@@ -85,6 +74,10 @@
         }
     );
 
+        function handleedit() {
+                window.location.href = 'TransactionView.aspx?id=' + $('#IdHiddenField').val();
+        }
+
     function posttransaction(e) { 
             e.preventDefault();
             var id = $('#IdHiddenField').val();
@@ -116,6 +109,77 @@
             var value = show ? 'block' : 'none';
             $('#CorporateMultipleLabel').css('display', value);
             $('#corporatemultiple').css('display', value);
+        }
+
+        function carcompanychange(event) {
+            var carcompanydropdownid = event.data.carcompanydropdownid;
+            var carmakedropdownid = event.data.carmakedropdownid;
+            var enginedropdownid = event.data.enginedropdownid;
+
+            var selectedCarCompany = $('#' + carcompanydropdownid).val();
+
+            if (parseInt(selectedCarCompany) <= 0) {
+                $('#' + carmakedropdownid).html('');
+                $('#' + enginedropdownid).html('');
+                return;
+            }
+
+            $.ajax({
+                url: "ajax/TransactionAjax.aspx",
+                type: "post",
+                data: { "action": 'filtercarmake', "compid": selectedCarCompany },
+                success: function (result) {
+                    var obj = JSON.parse(result);
+                    if (obj != null) {
+                        var html = '<option value="0">-- SELECT --</option>';
+                        $.each(obj, function (key, value) {
+                            html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+                        });
+                        //
+                        $('#' + carmakedropdownid).html(html);
+                    }
+
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+        function carmakechange(event) {
+            var carcompanydropdownid = event.data.carcompanydropdownid;
+            var carmakedropdownid = event.data.carmakedropdownid;
+            var enginedropdownid = event.data.enginedropdownid;
+
+            var selectedMake = $('#' + carmakedropdownid).val();
+            if (selectedMake === "0") {
+                $('#' + enginedropdownid).html('');
+                return;
+            }
+
+            var selectedCompany = $('#' + carcompanydropdownid).val();
+            var ids = selectedMake.split("|");
+            var carMakeId = ids[0];
+            var carSeriedId = ids[1];
+            $.ajax({
+                url: "ajax/TransactionAjax.aspx",
+                type: "post",
+                data: { "action": 'filterengine', "makeid": carMakeId, "compid": selectedCompany, "seriesid": carSeriedId },
+                success: function (result) {
+                    var obj = JSON.parse(result);
+                    if (obj != null) {
+                        var html = '<option value="0">-- SELECT --</option>';
+                        $.each(obj, function (key, value) {
+                            html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+                        });
+                        //
+                        $('#' + enginedropdownid).html(html);
+                    }
+
+                },
+                error: function () {
+                }
+            });
         }
     </script>
 </asp:Content>
@@ -648,10 +712,13 @@
             <tr>
                 <td>
                     <asp:Button ID="CancelButton" runat="server" Text="Cancel" class="btn btn-default" />
-                    <%--<asp:Button ID="SaveButton" ClientIDMode="Static" runat="server" Text="Save" class="btn btn-primary" />&nbsp;--%>
-                    <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" class="btn btn-success" />
-                    <asp:Button ID="PostButton" runat="server" ClientIDMode="Static" Text="Post" class="btn btn-default" />
-
+                    <% if(this.CurrentUser.UserRole.CanEditTransaction) { %>
+                        <input id="editbutton" type="button" class="btn btn-primary" value="Edit" />
+                    <% } %>
+                    <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" class="btn btn-default" />
+                    <% if (this.CurrentUser.UserRole.CanPostTransaction) { %>
+                        <asp:Button ID="PostButton" runat="server" ClientIDMode="Static" Text="Post" class="btn btn-default" />
+                    <% } %>
                     <% if (this.CurrentUser.UserRole.CanEndorse) { %>
                         <input id="endorsebutton" type="button" value="Endorse" class="btn btn-default" />
                     <% } %>
@@ -663,6 +730,10 @@
     <input id="TransactionInformationHidden" type="hidden" />
     <input id="CustomerInfo" type="hidden" />
     <input id="pagetypehidden" type="hidden" value="detail" />
+    <input id="mortgageehidden" type="hidden" />
+    <input id="carcompanycode" type="hidden" />
+    <input id="carmakecode" type="hidden" />
+    <input id="enginecode" type="hidden" />
     <asp:HiddenField ID="IdHiddenField" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="NamesAutocompleteHiddenField" ClientIDMode="Static" runat="server" />
     <div id="validation-messages">

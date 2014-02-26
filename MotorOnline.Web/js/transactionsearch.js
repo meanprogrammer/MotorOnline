@@ -28,6 +28,9 @@ function initialize() {
             var carcompany = obj["carcompanies"];
             buildfilter('carcompany', carcompany);
             hideloader();
+            searchtransactions(function(){
+                secondinitialize();
+            });
         },
         error: function () {
             hideloader();
@@ -47,7 +50,7 @@ function buildfilter(element, list) {
     $('#' + element).html(html);
 }
 
-function searchtransactions() {
+function searchtransactions(callback = null) {
     showloader();
     var creditingbranch = $('#creditingbranch').val();
     var parno = $('#parno').val();
@@ -65,6 +68,9 @@ function searchtransactions() {
     var engineno = $('#engineno').val();
     var firstname = $('#firstname').val();
     var lastname = $('#lastname').val();
+
+    var page = $('#pagehidden').val();
+    var rowcount = $('#rowcounthidden').val();
 
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
@@ -86,7 +92,9 @@ function searchtransactions() {
             chassisno: chassisno,
             engineno: engineno,
             firstname: firstname,
-            lastname: lastname
+            lastname: lastname,
+            page: page,
+            rowcount: rowcount
         },
         success: function (result) {
             var obj = JSON.parse(result);
@@ -138,6 +146,10 @@ function searchtransactions() {
 
             $('#searchresult').html(html);
             hideloader();
+
+            if(callback != null){
+                callback();
+            }
         },
         error: function () {
             hideloader();

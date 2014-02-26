@@ -89,9 +89,25 @@ namespace MotorOnline.Web.ajax
                 case "posttransaction":
                     HandlePostTransaction();
                     break;
+                case "loadmortgagee":
+                    HandleLoadMortgagee();
+                    break;
+                case "loadtypeofinsurance":
+                    HandleLoadTypeOfInsurance();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void HandleLoadTypeOfInsurance()
+        {
+           Render<TypeOfInsurance>(data.GetTypeOfInsurance());
+        }
+
+        private void HandleLoadMortgagee()
+        {
+            Render<Mortgagee>(data.GetAllMortgagee());
         }
 
         private void HandlePostTransaction()
@@ -251,11 +267,50 @@ namespace MotorOnline.Web.ajax
             var lastname = Request.Form["lastname"];
             var firstname = Request.Form["firstname"];
 
+            var page = Request.Form["page"];
+            var rowcount = Request.Form["rowcount"];
+            if (string.IsNullOrEmpty(page)) {
+                page = "0";
+            }
+
+            if (string.IsNullOrEmpty(rowcount))
+            {
+                rowcount = "10";
+            }
+
             string whereClause = BuildSQLWhereClause(creditingbranch, parno, policyno, subline, datecreated, policyperiodfrom,
                 policyperiodto, typeofcover, mortgagee, intermediary, carcompany, motortype, chassisno, engineno, firstname, lastname);
 
-            IEnumerable<TransactionSearchResultDTO> ts = data.SearchTransaction(whereClause);
+            IEnumerable<TransactionSearchResultDTO> ts = 
+                PageSearchResult(data.SearchTransaction(whereClause), int.Parse(page), int.Parse(rowcount));
             Render<IEnumerable<TransactionSearchResultDTO>>(ts);
+        }
+
+        public IEnumerable<TransactionSearchResultDTO> PageSearchResult(
+            IEnumerable<TransactionSearchResultDTO> all, int page, int rowCount) {
+
+                List<List<TransactionSearchResultDTO>> pagedList =
+                    new List<List<TransactionSearchResultDTO>>();
+
+                if (all.Count() <= rowCount)
+                {
+                    return all;
+                }
+                else
+                {
+                    pagedList = ListHelper.SplitList(all, rowCount, null);
+                    if (page > 0)
+                    {
+                        page = page - 1;
+                    }
+
+                    ////HACK for deleting the last item on the last page
+                    if (pagedList.Count() == page) { page = page - 1; }
+
+                    all = pagedList[page];
+                }
+                //this.view.DatabindSearchResult(persons, pagedList.Count, page + 1);
+                return all;
         }
 
         private string BuildSQLWhereClause(string creditingbranch,
@@ -581,10 +636,14 @@ namespace MotorOnline.Web.ajax
 
             transaction.Computations.NetComputationDetails = netDetails;
             transaction.Computations.GrossComputationDetails = grossDetails;
+            int newId = 0;
+            bool saveSuccess = dl.SaveTransaction(transaction, out newId);
 
-            bool saveSuccess = dl.SaveTransaction(transaction);
+            Dictionary<string, string> results = new Dictionary<string, string>();
+            results.Add("SaveSuccess", saveSuccess ? "1" : "0");
+            results.Add("TransactionID", newId.ToString());
 
-            Response.Write(saveSuccess ? "1" : "0");
+            Response.Write(new JavaScriptSerializer().Serialize(results));
             Response.End();
         }
 

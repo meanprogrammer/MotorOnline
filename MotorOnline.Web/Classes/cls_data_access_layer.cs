@@ -310,13 +310,13 @@ namespace MotorOnline.Web
             return user;
         }
 
-        public bool SaveTransaction(Transaction transaction) {
+        public bool SaveTransaction(Transaction transaction, out int transactionId) {
             int result = 0;
             int perilResult = 0;
             int computationResult = 0;
             int carDetailResult = 0;
             int customerInfoResult = 0;
-
+            transactionId = 0;
             using (go_sqlConnection) {
                 if (go_sqlConnection.State == ConnectionState.Closed)
                 {
@@ -397,6 +397,7 @@ namespace MotorOnline.Web
                     result = Convert.ToInt32(cmd.ExecuteScalar());
                     if (result > 0)
                     {
+                        transactionId = result;
                         SqlCommand carDetailCmd = go_sqlConnection.CreateCommand();
                         carDetailCmd.Connection = go_sqlConnection;
                         carDetailCmd.Transaction = dataTransaction;
@@ -1634,6 +1635,27 @@ namespace MotorOnline.Web
             go_dah.uf_set_stored_procedure("sp_posttransaction", ref go_sqlConnection);
             go_dah.uf_set_stored_procedure_param("@TransactionID", transactionId);
             return go_dah.uf_execute_non_query();
+        }
+
+        public List<TypeOfInsurance> GetTypeOfInsurance()
+        {
+            go_dah.uf_set_stored_procedure("sp_pop_typeOfInsurance", ref go_sqlConnection);
+            IDataReader reader = go_dah.uf_execute_reader();
+            List<TypeOfInsurance> insurances = new List<TypeOfInsurance>();
+            using (reader)
+            {
+                int valueIdx = reader.GetOrdinal("VALUE");
+                int textIdx = reader.GetOrdinal("TEXT");
+                while (reader.Read())
+                {
+                    TypeOfInsurance toi = new TypeOfInsurance();
+                    toi.TypeOfInsuranceID = reader.GetInt32(valueIdx);
+                    toi.TypeOfInsuranceName = reader.GetString(textIdx);
+
+                    insurances.Add(toi);
+                }
+            }
+            return insurances;
         }
     }
 }

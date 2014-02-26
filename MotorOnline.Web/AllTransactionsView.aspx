@@ -1,6 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Root.Master" AutoEventWireup="true" CodeBehind="AllTransactionsView.aspx.cs" Inherits="MotorOnline.Web.AllTransactionsView" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="js/transactionsearch.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function secondinitialize() {
+            initpaging();
+            $('#rowsperpage').change(rowsperpagechange);
+        }
+
+        function rowsperpagechange() {
+            initpaging();
+            $('#rowcounthidden').val($('#rowsperpage').val());
+            searchtransactions(null);
+        }
+
+        function initpaging() {
+            $('#pagehidden').val('0');
+        }
+
+        function changepage(page) {
+            $('#pagehidden').val(page);
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">
 <table border="0" cellpadding="2">
@@ -88,4 +108,21 @@
         <h3 id="progress-message">
             Now Loading ...</h3>
     </div>
+    <div id="search-footer">
+    <strong>Rows Per Page:</strong>
+    <select id="rowsperpage">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="All">All</option>
+    </select>
+    <ul class="pagination pagination-sm">
+        <li><a></a></li>
+        <li><a></a></li>
+    </ul>
+    </div>
+    
+    <input id="pagehidden" type="hidden" />
+    <input id="rowcounthidden" type="hidden" />
 </asp:Content>

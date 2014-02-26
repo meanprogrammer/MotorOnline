@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationHelper.cs" />
+    <Compile Include="ListHelper.cs" />
     <Compile Include="PasswordHelper.cs" />
     <Compile Include="SerializationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

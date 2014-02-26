@@ -419,3 +419,351 @@ function handlesaveendorsement(result) {
         alert('endorsement failed!');
     }
 }
+
+function onendorsementselectchanged() {
+    var s = $(this).val();
+    //check if the selected is valid, if not dont do ajax call
+    //just reset the values
+    if (s == '0') {
+        $('#endorsement-controls').html('');
+        $('#endorsementtext').val('');
+        return;
+    }
+
+    $.ajax({
+        url: "ajax/TransactionAjax.aspx",
+        type: "post",
+        data: {
+            "action": 'getendorsementbycode',
+            "ecode": s
+        },
+        success: function (result) {
+            var json = JSON.parse(result);
+            if (json != null) {
+                $('#endorsementtext').html(json.EndorsementText);
+                html = '';
+                switch (json.EndorsementCode) {
+                    case 15:
+                        html += '<table cellpadding="8"> <tr> <td> Last Name </td> <td> <input id="e_lastname" type="text" /> </td> </tr> <tr> <td> First Name </td> <td> <input id="e_firstname" type="text" /> </td> </tr> <tr> <td> MI Name </td> <td> <input id="e_mi" type="text" /> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copynames();
+                        break;
+                    case 17:
+                    case 19:
+                        html += '<table cellpadding="8"> <tr> <td> Address </td> <td> <input id="e_address" type="text" style="width:300px;" /> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copyaddress();
+                        break;
+                    case 20:
+                        html += '<table cellpadding="8"> <tr> <td> Mortgagee </td> <td> <select id="e_mortgagee"> </select> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copymortgagee();
+                        copymortgageeselected();
+                        break;
+                    case 22:
+                        html += '<table cellpadding="8"> <tr> <td> Mortgagee </td> <td> <select id="e_mortgagee"> </select> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copymortgagee();
+                        break;
+                    case 21:
+                        html += '<h3>Saving will delete the mortgagee for this transaction.</h3>';
+                        $('#endorsement-controls').html(html);
+                        break;
+                    case 3:
+                        html += ' <table cellpadding="8"> <tr> <td> COC No </td> <td> <input id="e_cocno" type="text" /> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copycocno();
+                        break;
+                    case 25:
+                        html += ' <table cellpadding="8"> <tr> <td> Policy Period From </td> <td> <input id="e_policyperiodfrom" type="text" /> </td> </tr> <tr> <td> Policy Period To </td> <td> <input id="e_policyperiodto" type="text" readonly="readonly" /> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copypolicyperiods();
+                        $('#e_policyperiodfrom').datepicker({
+                            showOn: "button",
+                            buttonImage: "images/Calendar-icon.png",
+                            buttonImageOnly: true,
+                            onSelect: handlecalendarselectendorsement
+                        });
+                        break;
+                    case 33:
+                        html += '<table cellpadding="8"> <tr> <td> Car Company </td> <td> </asp:DropDownList> <select id="e_carcompanydropdown" style="width: 200px;"> </select> <span class="required-field">*</span> </td> </tr> <tr> <td> Make </td> <td> <select id="e_carmakedropdown" style="width: 200px;"> </select> <span class="required-field">*</span> </td> </tr> <tr> <td> Engine </td> <td> <select id="e_enginedropdown"> </select> <span class="required-field">*</span> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copycarcompanies();
+                        break;
+                    case 23:
+                        html += '<table cellpadding="8"> <tr> <td> <strong>Type of insurance</strong> </td> <td colspan="3"> <select id="e_typeofinsurance"> <option></option> </select> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>Designation:</strong> </td> <td> <select id="e_designation"> <option value="Mr.">Mr.</option> <option value="Mrs.">Mrs.</option> </select> &nbsp;<span class="required-field">*</span> </td> <td> <strong><span id="e_multinamecorporatelabel" style="display:none;"></span></strong></td> <td> <input id="e_multinamecorporatetext" type="text" style="display:none;" /></td> </tr> <tr> <td> <strong>Last Name:</strong> </td> <td colspan="3"> <input id="e_lastname" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>First Name:</strong> </td> <td colspan="3"> <input id="e_firstname" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> <tr> <td> <strong>M.I.:</strong> </td> <td colspan="3"> <input id="e_mi" type="text" /> &nbsp;<span class="required-field">*</span> </td> </tr> </table>';
+                        $('#endorsement-controls').html(html);
+                        copytypeofinsurance();
+                        $('#e_typeofinsurance').change(function () {
+                            var selectedValue = $('#e_typeofinsurance').val();
+                            //multiname
+                            if (selectedValue == 2) {
+                                $('#e_multinamecorporatelabel').html('Multiple Name');
+                                $('#e_multinamecorporatetext').show();
+                                $('#e_multinamecorporatelabel').show();
+                            } else if
+                            //corporate
+                            (selectedValue == 3) {
+                                $('#e_multinamecorporatelabel').html('Corporate Name');
+                                $('#e_multinamecorporatetext').show();
+                                $('#e_multinamecorporatelabel').show();
+                            } else {
+                                $('#e_multinamecorporatetext').hide();
+                                $('#e_multinamecorporatelabel').hide();
+                            }
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+function copytypeofinsurance() {
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype == 'detail') {
+        $.ajax({
+            url: "ajax/TransactionAjax.aspx",
+            type: "post",
+            cache: true,
+            data: {
+                action: "loadtypeofinsurance"
+            },
+            success: function (result) {
+                var obj = JSON.parse(result);
+                if (obj != null) {
+                    html = '<option value="0">Select Type Of Insurance</option>';
+                    $.each(obj, function (key, value) {
+                        html += '<option value="' + value.TypeOfInsuranceID + '">' + value.TypeOfInsuranceName + '</option>';
+                    });
+                    $('#e_typeofinsurance').html(html);
+                }
+            },
+            error: function () {
+                hideloader();
+            }
+        });
+    } else {
+        var insurances = $('#TypeOfInsuranceDropdown').html();
+        $('#e_typeofinsurance').html(insurances);
+    }
+}
+
+function copymortgagee() {
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype == 'detail') {
+        $.ajax({
+            url: "ajax/TransactionAjax.aspx",
+            type: "post",
+            cache: true,
+            data: {
+                action: "loadmortgagee"
+            },
+            success: function (result) {
+                var obj = JSON.parse(result);
+                if (obj != null) {
+                    html = '<option value="0">Select Mortgagee</option>';
+                    $.each(obj, function (key, value) {
+                        html += '<option value="' + value.MortgageeID + '">' + value.MortgageeName + '</option>';
+                    });
+                    $('#e_mortgagee').html(html);
+                    $('#e_mortgagee').val($('#mortgageehidden').val());
+                }
+            },
+            error: function () {
+                hideloader();
+            }
+        });
+    } else {
+        var motgagee = $('#ddlMortgagee').html();
+        $('#e_mortgagee').html(motgagee);
+    }
+}
+
+function copymortgageeselected() {
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype != 'detail') {
+        var orig_motgagee_selected = $('#ddlMortgagee').val();
+        $('#e_mortgagee').val(orig_motgagee_selected);
+    }
+}
+
+function copycocno() {
+    var cocno = $('#lblCOCNo').html();
+    $('#e_cocno').val(cocno);
+}
+
+function copynames() {
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype == 'detail') {
+        var lname = $('#lastname').html();
+        var fname = $('#firstname').html();
+        var mi = $('#middlename').html();
+
+
+        $('#e_lastname').val(lname);
+        $('#e_firstname').val(fname);
+        $('#e_mi').val(mi);
+    } else {
+        var lname = $('#txtLastName').val();
+        var fname = $('#txtFirstName').val();
+        var miname = $('#txtMI').val();
+
+        $('#e_lastname').val(lname);
+        $('#e_firstname').val(fname);
+        $('#e_mi').val(miname);
+    }
+}
+
+function copyaddress() {
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype == 'detail') {
+        var adds = $('#address').html();
+        $('#e_address').val(adds);
+    } else {
+        var adds = $('#txtMailAdress').val();
+        $('#e_address').val(adds);
+    }
+}
+
+function copypolicyperiods() {
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype == 'detail') {
+        var from = $('#policyperiodfrom').html();
+        var to = $('#policyperiodto').html();
+
+        $('#e_policyperiodfrom').val(from);
+        $('#e_policyperiodto').val(to);
+    } else {
+        var from = $('#PeriodFromTextbox').val();
+        var to = $('#PeriodToTextbox').val();
+
+        $('#e_policyperiodfrom').val(from);
+        $('#e_policyperiodto').val(to);
+    }
+}
+
+function copycarcompanies() {
+    var pagetype = $('#pagetypehidden').val();
+    if (pagetype == 'detail') {
+        $.ajax({
+            url: "ajax/TransactionAjax.aspx",
+            type: "post",
+            cache: true,
+            data: {
+                action: "getcarcompanies"
+            },
+            success: function (result) {
+                var obj = JSON.parse(result);
+                if (obj != null) {
+                    html = '<option value="0">Select Car Company</option>';
+                    $.each(obj, function (key, value) {
+                        html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+                    });
+                    $('#e_carcompanydropdown').html(html);
+                    var company = $('#carcompanycode').val();
+                    $('#e_carcompanydropdown').val(company);
+                    loadcarmake(company);
+
+                }
+            },
+            error: function () {
+                hideloader();
+            },
+        });
+    } else {
+        var companies = $('#CarCompaniesDropdown').html();
+        var selectedcompany = $('#CarCompaniesDropdown').val();
+        $('#e_carcompanydropdown').html(companies);
+        $('#e_carcompanydropdown').val(selectedcompany);
+
+        var carmakes = $('#CarMakeDropdown').html();
+        var selectedcarmake = $('#CarMakeDropdown').val();
+        $('#e_carmakedropdown').html(carmakes);
+        $('#e_carmakedropdown').val(selectedcarmake);
+
+        var carengines = $('#EngineDropdown').html();
+        var selectedengine = $('#EngineDropdown').val();
+        $('#e_enginedropdown').html(carengines);
+        $('#e_enginedropdown').val(selectedengine);
+
+    }
+
+    $('#e_carcompanydropdown').change({
+        carcompanydropdownid: 'e_carcompanydropdown',
+        carmakedropdownid: 'e_carmakedropdown',
+        enginedropdownid: 'e_enginedropdown'
+    }, carcompanychange);
+    $('#e_carmakedropdown').change({
+        carcompanydropdownid: 'e_carcompanydropdown',
+        carmakedropdownid: 'e_carmakedropdown',
+        enginedropdownid: 'e_enginedropdown'
+    }, carmakechange);
+}
+
+
+function loadcarmake(companyid){
+    $.ajax({
+            url: "ajax/TransactionAjax.aspx",
+            type: "post",
+            cache: true,
+            data: {
+                action: "filtercarmake",
+                compid: companyid
+            },
+            success: function (result) {
+                var obj = JSON.parse(result);
+                if (obj != null) {
+                    html = '<option value="0">Select Car Make/Series</option>';
+                    $.each(obj, function (key, value) {
+                        html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+                    });
+                    $('#e_carmakedropdown').html(html);
+                    var carmakecode = $('#carmakecode').val();
+                    $('#e_carmakedropdown').val(carmakecode);
+                    loadengine(companyid, carmakecode);
+                }
+            },
+            error: function () {
+                hideloader();
+            },
+     });
+}
+
+function loadengine(companyid, makeandseries){
+            var ids = makeandseries.split("|");
+            var carMakeId = ids[0];
+            var carSeriedId = ids[1];
+    $.ajax({
+            url: "ajax/TransactionAjax.aspx",
+            type: "post",
+            cache: true,
+            data: {
+                action: "filterengine",
+                compid: companyid,
+                makeid: carMakeId,
+                seriesid: carSeriedId
+            },
+            success: function (result) {
+                var obj = JSON.parse(result);
+                if (obj != null) {
+                    html = '<option value="0">Select Engine</option>';
+                    $.each(obj, function (key, value) {
+                        html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+                    });
+                    $('#e_enginedropdown').html(html);
+                    $('#e_enginedropdown').val($('#enginecode').val());
+
+
+                }
+            },
+            error: function () {
+                hideloader();
+            },
+     });
+}
