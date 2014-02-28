@@ -36,7 +36,10 @@ function initialize() {
         }
     });
 
-    $('#searchbutton').click(searchtransactions);
+    $('#searchbutton').click(function () {
+        initpaging();
+        searchtransactions();
+    });
     $('#resetbutton').click(resetsearch);
     
 }
@@ -49,7 +52,7 @@ function buildfilter(element, list) {
     $('#' + element).html(html);
 }
 
-function searchtransactions(callback = null) {
+function searchtransactions(callback) {
     showloader();
     var creditingbranch = $('#creditingbranch').val();
     var parno = $('#parno').val();
@@ -154,9 +157,10 @@ function searchtransactions(callback = null) {
                 pager += '<li class="clickable ' + cssclass + '"><a onclick="changepage('+ i +')">'+ (i) +'</a></li>';              
             }
             $('#search-pager').html(pager);
+            $('#search-pager').show();
             hideloader();
 
-            if(callback != null){
+            if(callback != null && (callback instanceof Function)){
                 callback();
             }
         },
@@ -184,6 +188,8 @@ function resetsearch() {
     $('#firstname').val('');
     $('#lastname').val('');
     $('#searchresult').html('');
+
+    $('#search-pager').hide();
 }
 
 
