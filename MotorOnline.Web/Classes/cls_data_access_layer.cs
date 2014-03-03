@@ -1657,6 +1657,26 @@ namespace MotorOnline.Web
             }
             return insurances;
         }
+
+        public bool UpdatePerilDefault(PerilsDefault peril)
+        {
+            go_dah.uf_set_stored_procedure("sp_updateperildefault", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@PerilID", peril.PerilID);
+            go_dah.uf_set_stored_procedure_param("@LimitSIDefault", peril.LimitSIDefault);
+            go_dah.uf_set_stored_procedure_param("@LimitSIEditable", peril.LimitSIEditable);
+            go_dah.uf_set_stored_procedure_param("@RateDefault", peril.RateDefault);
+            go_dah.uf_set_stored_procedure_param("@RateEditable", peril.RateEditable);
+            go_dah.uf_set_stored_procedure_param("@RateShowTariffText", peril.RateShowTariffText);
+            go_dah.uf_set_stored_procedure_param("@PremiumDefault", peril.PremiumDefault);
+            go_dah.uf_set_stored_procedure_param("@PolicyRateDefault", peril.PolicyRateDefault);
+            go_dah.uf_set_stored_procedure_param("@PolicyRateEditable", peril.PolicyRateEditable);
+            go_dah.uf_set_stored_procedure_param("@PolicyRateShowTariffText", peril.PolicyRateShowTariffText);
+            go_dah.uf_set_stored_procedure_param("@PolicyPremiumDefault", peril.PolicyPremiumDefault);
+            go_dah.uf_set_stored_procedure_param("@LastEditedBy", peril.LastEditedBy);
+
+            return go_dah.uf_execute_non_query() > 0;
+        }
     }
 }
+
 

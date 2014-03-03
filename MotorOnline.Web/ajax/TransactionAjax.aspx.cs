@@ -95,9 +95,50 @@ namespace MotorOnline.Web.ajax
                 case "loadtypeofinsurance":
                     HandleLoadTypeOfInsurance();
                     break;
+                case "updateperildefault":
+                    HandleUpdatePerilDefault();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void HandleUpdatePerilDefault()
+        {
+            var limitsi = Request.Form["limitsi"];
+            var limitsieditable = Request.Form["limitsieditable"];
+            var rate = Request.Form["rate"];
+            var rateeditable = Request.Form["rateeditable"];
+            var rateshowtariff = Request.Form["rateshowtariff"];
+            var premium = Request.Form["premium"];
+            var policyrate =  Request.Form["policyrate"];
+            var policyrateeditable = Request.Form["policyrateeditable"];
+            var policyrateshowtariff =  Request.Form["policyrateshowtariff"];
+            var policypremium = Request.Form["policypremium"];
+            var id = Request.Form["id"];
+
+            PerilsDefault pd = new PerilsDefault()
+            {
+                LimitSIDefault = ChangeTypeHelper.SafeParseToDouble(limitsi),
+                LimitSIEditable = Convert.ToBoolean(limitsieditable),
+                RateDefault = ChangeTypeHelper.SafeParseToDouble(rate),
+                RateEditable = Convert.ToBoolean(rateeditable),
+                RateShowTariffText = Convert.ToBoolean(rateshowtariff),
+                PremiumDefault = ChangeTypeHelper.SafeParseToDouble(premium),
+                PolicyRateDefault = ChangeTypeHelper.SafeParseToDouble(policyrate),
+                PolicyRateEditable = Convert.ToBoolean(policyrateeditable),
+                PolicyRateShowTariffText = Convert.ToBoolean(policyrateshowtariff),
+                PolicyPremiumDefault = ChangeTypeHelper.SafeParseToDouble(policypremium),
+                //TODO: When users are done change this
+                LastEditedBy = 1,
+                PerilID = ChangeTypeHelper.SafeParseToInt32(id)
+            };
+
+            bool result = data.UpdatePerilDefault(pd);
+            Dictionary<string, string> rd = new Dictionary<string, string>();
+            rd.Add("Result", result.ToString().ToLower());
+
+            Render<Dictionary<string, string>>(rd);
         }
 
         private void HandleLoadTypeOfInsurance()
