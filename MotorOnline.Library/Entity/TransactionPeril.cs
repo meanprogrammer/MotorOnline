@@ -13,6 +13,12 @@ namespace MotorOnline.Library.Entity
         public double NewPolicyRate { get; set; }
         public double NewPolicyPremium { get; set; }
 
+        public bool LimitSIEditable { get; set; }
+        public bool RateEditable { get; set; }
+        public bool RateShowTariffText { get; set; }
+        public bool PolicyRateEditable { get; set; }
+        public bool PolicyRateShowTariffText { get; set; }
+        
         public int TransactionID { get; set; }
     }
 }

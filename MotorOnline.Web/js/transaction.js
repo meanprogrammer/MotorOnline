@@ -282,80 +282,143 @@ function validateString(text) {
 
 
 function loadtransaction(json, id) {
-    
-    $('#ddlCreditingBranch').val(json.CreditingBranch);
-    $('#lblParNo').html(json.ParNo);
-    $('#lblPolicyNo').html(json.PolicyNo);
-    $('#lblGeniisysNo').html(json.GeniisysNo);
-    $('#lblCurrentDate').html(json.DateCreatedText);
-    $('#PeriodFromTextbox').val(json.PolicyPeriodFromText);
-    $('#PeriodToTextbox').val(json.PolicyPeriodToText);
-    $('#ddBusinessType').val(json.BussinessType);
-    $('#lblPolicyStatus').html(json.PolicyStatus);
-    $('#SublineDropdown').val(json.SubLineCode);
-    $('#ddlMortgagee').val(json.MortgageCode);
+    var transaction = json.Transaction;
+    var companies = json.CarCompanies;
+    var carmakes = json.CarMakes;
+    var engines = json.CarEngines;
+    $('#ddlCreditingBranch').val(transaction.CreditingBranch);
+    $('#lblParNo').html(transaction.ParNo);
+    $('#lblPolicyNo').html(transaction.PolicyNo);
+    $('#lblGeniisysNo').html(transaction.GeniisysNo);
+    $('#lblCurrentDate').html(transaction.DateCreatedText);
+    $('#PeriodFromTextbox').val(transaction.PolicyPeriodFromText);
+    $('#PeriodToTextbox').val(transaction.PolicyPeriodToText);
+    $('#ddBusinessType').val(transaction.BussinessType);
+    $('#lblPolicyStatus').html(transaction.PolicyStatus);
+    $('#SublineDropdown').val(transaction.SubLineCode);
+    $('#ddlMortgagee').val(transaction.MortgageCode);
 
-    $('#ddInterMediary').val(json.IntermediaryCode);
+    $('#ddInterMediary').val(transaction.IntermediaryCode);
 
-    $('#TypeOfInsuranceDropdown').val(json.TypeOfInsurance);
+    $('#TypeOfInsuranceDropdown').val(transaction.TypeOfInsurance);
 
-    $('#TypeOfCoverDropdown').val(json.CarDetail.TypeOfCover);
-    $('#CarCompaniesDropdown').val(json.CarDetail.CarCompany);
+    $('#TypeOfCoverDropdown').val(transaction.CarDetail.TypeOfCover);
+    renderdropdown(companies, 'CarCompaniesDropdown');
+    $('#CarCompaniesDropdown').val(transaction.CarDetail.CarCompany);
+    renderdropdown(carmakes, 'CarMakeDropdown');
+    $('#CarMakeDropdown').val(transaction.CarMakeAndSeriesText);
+    renderdropdown(engines, 'EngineDropdown');
+    $('#EngineDropdown').val(json.CarEngineText);
+
+    var cardetail = createcardetails();
+    populatecardetaildisplay(cardetail);
+
+    $('#CarDetailsHidden').val(JSON.stringify(cardetail));
+
+    displayperilsedit(transaction.Perils, 
+                      transaction.Remarks,
+                      json.Tariff);
+
+    //NOTE: This is for edit mode, if the transaction is loaded and
+    //the current selected type of insurance must show the hidden controls
+    var loadedTypeOfIns = $('#TypeOfInsuranceDropdown').val();
+
+    if (parseInt(loadedTypeOfIns) > 1) {
+        loadedTypeOfIns == 2 ? $('#CorporateMultipleLabel').html('Multiple Name') :
+                                $('#CorporateMultipleLabel').html('Corporate Name');
+        toggleaddtionaltextbox(true);
+
+    }
+
 
     //TODO: Change this! It sucks!
     //NOTE: This is nested because we wait for the ajax call to finish, 
     //we need the result to continue populating the edit view
-    carcompanychangewithcallback(function () {
-        $('#CarMakeDropdown').val(json.CarMakeAndSeriesText);
-        carmakechangewithcallback(function () {
-            $('#EngineDropdown').val(json.CarEngineText);
+//    carcompanychangewithcallback(function () {
+//        
+//        carmakechangewithcallback(function () {
+//            
 
-            var cardetail = createcardetails();
-            populatecardetaildisplay(cardetail);
+//            var cardetail = createcardetails();
+//            populatecardetaildisplay(cardetail);
 
-            $('#CarDetailsHidden').val(JSON.stringify(cardetail));
+//            $('#CarDetailsHidden').val(JSON.stringify(cardetail));
 
-            displayperilsedit(json.Perils, json.Remarks);
+//            displayperilsedit(json.Perils, json.Remarks);
 
-            //NOTE: This is for edit mode, if the transaction is loaded and
-            //the current selected type of insurance must show the hidden controls
-            var loadedTypeOfIns = $('#TypeOfInsuranceDropdown').val();
+//            //NOTE: This is for edit mode, if the transaction is loaded and
+//            //the current selected type of insurance must show the hidden controls
+//            var loadedTypeOfIns = $('#TypeOfInsuranceDropdown').val();
 
-            if (parseInt(loadedTypeOfIns) > 1) {
-                loadedTypeOfIns == 2 ? $('#CorporateMultipleLabel').html('Multiple Name') :
-                                        $('#CorporateMultipleLabel').html('Corporate Name');
-                toggleaddtionaltextbox(true);
+//            if (parseInt(loadedTypeOfIns) > 1) {
+//                loadedTypeOfIns == 2 ? $('#CorporateMultipleLabel').html('Multiple Name') :
+//                                        $('#CorporateMultipleLabel').html('Corporate Name');
+//                toggleaddtionaltextbox(true);
 
-            }
-            //HACK
-            hideloader();
+//            }
+//            //HACK
+//            hideloader();
 
-            //END NOTE
-        });
-    });
+//            //END NOTE
+//        });
+//    });
     //END NOTE
 
-    $('#txtEngine').val(json.CarDetail.EngineNo);
-    $('#txtColor').val(json.CarDetail.Color);
-    $('#txtConductionNo').val(json.CarDetail.ConductionNo);
-    $('#txtChasis').val(json.CarDetail.ChassisNo);
-    $('#txtPlateNo').val(json.CarDetail.PlateNo);
-    $('#txtAccesories').val(json.CarDetail.Accessories);
-    $('#YearDropdown').val(json.CarDetail.CarYear);
-    $('#TypeOfBodyDropdown').val(json.CarDetail.CarTypeOfBodyID);
-    $('#txtAuthenticationNo').val(json.CarDetail.AuthenticationNo);
-    $('#txtCOCNo').val(json.CarDetail.COCNo);
+    $('#txtEngine').val(transaction.CarDetail.EngineNo);
+    $('#txtColor').val(transaction.CarDetail.Color);
+    $('#txtConductionNo').val(transaction.CarDetail.ConductionNo);
+    $('#txtChasis').val(transaction.CarDetail.ChassisNo);
+    $('#txtPlateNo').val(transaction.CarDetail.PlateNo);
+    $('#txtAccesories').val(transaction.CarDetail.Accessories);
+    $('#YearDropdown').val(transaction.CarDetail.CarYear);
+    $('#TypeOfBodyDropdown').val(transaction.CarDetail.CarTypeOfBodyID);
+    $('#txtAuthenticationNo').val(transaction.CarDetail.AuthenticationNo);
+    $('#txtCOCNo').val(transaction.CarDetail.COCNo);
 
-    $('#ddDesignation').val(json.Customer.Designation);
-    $('#txtLastName').val(json.Customer.LastName);
-    $('#txtFirstName').val(json.Customer.FirstName);
-    $('#txtMI').val(json.Customer.MiddleName);
-    $('#txtMailAdress').val(json.Customer.Address);
-    $('#txtTelephone').val(json.Customer.Telephone);
-    $('#txtMobileNo').val(json.Customer.MobileNo);
-    $('#txtEmailAdd').val(json.Customer.Email);
-    $('#CorporateMultipleTextbox').val(json.Customer.MultipleCorporateName);
-    $('#CustomerInfo').val(json.CustomerID);
+    $('#ddDesignation').val(transaction.Customer.Designation);
+    $('#txtLastName').val(transaction.Customer.LastName);
+    $('#txtFirstName').val(transaction.Customer.FirstName);
+    $('#txtMI').val(transaction.Customer.MiddleName);
+    $('#txtMailAdress').val(transaction.Customer.Address);
+    $('#txtTelephone').val(transaction.Customer.Telephone);
+    $('#txtMobileNo').val(transaction.Customer.MobileNo);
+    $('#txtEmailAdd').val(transaction.Customer.Email);
+    $('#CorporateMultipleTextbox').val(transaction.Customer.MultipleCorporateName);
+    $('#CustomerInfo').val(transaction.CustomerID);
+
+    hideloader();
+}
+
+function rendercarcompanies(companies) {
+    var html = '<option value="0">-- SELECT --</option>';
+    $.each(companies, function (key, value) {
+        html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+    });
+    $('#CarMakeDropdown').html(html);
+}
+
+function rendercarmakes(carmakes) {
+    var html = '<option value="0">-- SELECT --</option>';
+    $.each(carmakes, function (key, value) {
+        html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+    });
+    $('#EngineDropdown').html(html);
+}
+
+function rendercarengines(engines) {
+    var html = '<option value="0">-- SELECT --</option>';
+    $.each(engines, function (key, value) {
+        html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+    });
+    $('#CarMakeDropdown').html(html);
+}
+
+function renderdropdown(data, key) {
+    var html = '<option value="0">-- SELECT --</option>';
+    $.each(data, function (key, value) {
+        html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+    });
+    $('#'+key).html(html);
 }
 
 function loadtransactiondetails(json, id) {

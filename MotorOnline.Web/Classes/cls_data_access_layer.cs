@@ -1066,6 +1066,55 @@ namespace MotorOnline.Web
             return t;
         }
 
+        public Dictionary<string, EndorsementHistory> GetEndorsementHistory(int transactionId)
+        {
+            Dictionary<string, EndorsementHistory> history = new Dictionary<string, EndorsementHistory>();
+            go_dah.uf_set_stored_procedure("sp_getendorsementhistory", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@CurrentTransactionID", transactionId);
+            IDataReader reader = go_dah.uf_execute_reader();
+            using (reader) 
+            {
+                int parentIdIdx = reader.GetOrdinal("ParentTransactionID");
+                int newIdIdx = reader.GetOrdinal("NewTransactionID");
+                int eTextIdx = reader.GetOrdinal("EndorsementText");
+                int dateEndorsedId = reader.GetOrdinal("DateEndorsed");
+                int effectivityDateIdx = reader.GetOrdinal("EffectivityDate");
+                int expDateIdx = reader.GetOrdinal("ExpiryDate");
+                int endorsementTypeIdx = reader.GetOrdinal("EndorsementType");
+                int endorsementTitleIdx = reader.GetOrdinal("endtTitle");
+
+                while (reader.Read())
+                {
+                    EndorsementHistory parent = new EndorsementHistory();
+                    parent.Endorsement.ParentTransactionID = reader.GetInt32(parentIdIdx);
+                    parent.Endorsement.NewTransactionID = reader.GetInt32(newIdIdx);
+                    parent.Endorsement.EndorsementText = reader.GetString(eTextIdx);
+                    parent.Endorsement.DateEndorsed = reader.GetDateTime(dateEndorsedId);
+                    parent.Endorsement.EffectivityDate = reader.GetDateTime(effectivityDateIdx);
+                    parent.Endorsement.ExpiryDate = reader.GetDateTime(expDateIdx);
+                    parent.Endorsement.EndorsementType = reader.GetInt32(endorsementTypeIdx);
+                    parent.EndorsementTitle = reader.GetString(endorsementTitleIdx);
+                    history.Add("Parent", parent);
+                }
+                reader.NextResult();
+                while (reader.Read())
+                {
+                    EndorsementHistory child = new EndorsementHistory();
+                    child.Endorsement.ParentTransactionID = reader.GetInt32(parentIdIdx);
+                    child.Endorsement.NewTransactionID = reader.GetInt32(newIdIdx);
+                    child.Endorsement.EndorsementText = reader.GetString(eTextIdx);
+                    child.Endorsement.DateEndorsed = reader.GetDateTime(dateEndorsedId);
+                    child.Endorsement.EffectivityDate = reader.GetDateTime(effectivityDateIdx);
+                    child.Endorsement.ExpiryDate = reader.GetDateTime(expDateIdx);
+                    child.Endorsement.EndorsementType = reader.GetInt32(endorsementTypeIdx);
+                    child.EndorsementTitle = reader.GetString(endorsementTitleIdx);
+                    history.Add("Child", child);
+                }
+                
+            }
+            return history;
+        }
+
         private CarDetail GetCarDetailByTransactionID(int transactionId) 
         {
             go_dah.uf_set_stored_procedure("sp_get_cardetailbytransactionid", ref go_sqlConnection);
@@ -1131,10 +1180,16 @@ namespace MotorOnline.Web
             List<TransactionPeril> perils = new List<TransactionPeril>();
             using (reader)
             {
+                int limitsiEditableIdx = reader.GetOrdinal("LimitSIEditable");
+                int rateEditableIdx = reader.GetOrdinal("RateEditable");
+                int rateShowTariffIdx = reader.GetOrdinal("RateShowTariffText");
+                int policyrateEditableIdx = reader.GetOrdinal("PolicyRateEditable");
+                int policyrateShowTariffEditableIdx = reader.GetOrdinal("PolicyRateShowTariffText");
+
                 while (reader.Read())
                 {
                     TransactionPeril tp = new TransactionPeril();
-
+                    
                     tp.TransactionID = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
                     tp.PerilID = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
                     tp.NewLimitSI = reader.IsDBNull(3) ? 0 : reader.GetDouble(3);
@@ -1169,6 +1224,12 @@ namespace MotorOnline.Web
                     tp.CVHeavy = reader.IsDBNull(29) ? 0 : reader.GetInt32(29);
 
                     tp.PerilType = reader.IsDBNull(30) ? string.Empty : reader.GetString(30);
+
+                    tp.LimitSIEditable = reader.GetBoolean(limitsiEditableIdx);
+                    tp.RateEditable = reader.GetBoolean(rateEditableIdx);
+                    tp.RateShowTariffText = reader.GetBoolean(rateShowTariffIdx);
+                    tp.PolicyRateEditable = reader.GetBoolean(policyrateEditableIdx);
+                    tp.PolicyRateShowTariffText = reader.GetBoolean(policyrateShowTariffEditableIdx);
 
                     perils.Add(tp);
                 }
@@ -1544,7 +1605,8 @@ namespace MotorOnline.Web
 
         public bool SaveEndorsementDetails(int transactionId, int newTransactionId,
                             string endorsementText, DateTime dateEndorsed,
-                            DateTime effectivityDate, DateTime expiryDate)
+                            DateTime effectivityDate, DateTime expiryDate,
+                            int endorsementType)
         {
             go_dah.uf_set_stored_procedure("sp_saveendorsementdetails", ref go_sqlConnection);
             go_dah.uf_set_stored_procedure_param("@ParentTransactionID", transactionId);
@@ -1553,7 +1615,7 @@ namespace MotorOnline.Web
             go_dah.uf_set_stored_procedure_param("@DateEndorsed", dateEndorsed);
             go_dah.uf_set_stored_procedure_param("@EffectivityDate", effectivityDate);
             go_dah.uf_set_stored_procedure_param("@ExpiryDate", expiryDate);
-
+            go_dah.uf_set_stored_procedure_param("@EndorsementType", endorsementType);
             return go_dah.uf_execute_non_query() > 0;
 
         }
@@ -1573,7 +1635,7 @@ namespace MotorOnline.Web
                 int dateEndorsedId = reader.GetOrdinal("DateEndorsed");
                 int effectivityDateIdx = reader.GetOrdinal("EffectivityDate");
                 int expDateIdx = reader.GetOrdinal("ExpiryDate");
-
+                int endorsementTypeIdx = reader.GetOrdinal("EndorsementType");
                 while (reader.Read())
                 {
                     endorsementDetail = new EndorsementDetail();
@@ -1583,6 +1645,7 @@ namespace MotorOnline.Web
                     endorsementDetail.DateEndorsed = reader.GetDateTime(dateEndorsedId);
                     endorsementDetail.EffectivityDate = reader.GetDateTime(effectivityDateIdx);
                     endorsementDetail.ExpiryDate = reader.GetDateTime(expDateIdx);
+                    endorsementDetail.EndorsementType = reader.GetInt32(endorsementTypeIdx);
                 }
             }
             return endorsementDetail;
@@ -1676,6 +1739,50 @@ namespace MotorOnline.Web
 
             return go_dah.uf_execute_non_query() > 0;
         }
+
+        public List<PerilsDefault> GetPerilDefaults()
+        {
+            go_dah.uf_set_stored_procedure("sp_getallperildefault", ref go_sqlConnection);
+            IDataReader reader = go_dah.uf_execute_reader();
+            List<PerilsDefault> pDefaults = new List<PerilsDefault>();
+            using (reader)
+            {
+                int perilIdIdx = reader.GetOrdinal("PerilID");
+                int limitSiDefaultIdx = reader.GetOrdinal("LimitSIDefault");
+                int limitSiEditableIdx = reader.GetOrdinal("LimitSIEditable");
+                int rateDefaultIdx = reader.GetOrdinal("RateDefault");
+                int rateEditableIdx = reader.GetOrdinal("RateEditable");
+                int rateShowTariffIdx = reader.GetOrdinal("RateShowTariffText");
+                int premiumDefaultIdx = reader.GetOrdinal("PremiumDefault");
+                int policyRateDefaultIdx = reader.GetOrdinal("PolicyRateDefault");
+                int policyRateEditableIdx = reader.GetOrdinal("PolicyRateEditable");
+                int policyRateShowTariffIdx = reader.GetOrdinal("PolicyRateShowTariffText");
+                int policyPremiumIdx = reader.GetOrdinal("PolicyPremiumDefault");
+                int lastEditedByIdx = reader.GetOrdinal("LastEditedBy");
+
+                while (reader.Read())
+                {
+                    PerilsDefault pd = new PerilsDefault();
+                    pd.PerilID = reader.GetInt32(perilIdIdx);
+                    pd.LimitSIDefault = reader.GetDouble(limitSiDefaultIdx);
+                    pd.LimitSIEditable = reader.GetBoolean(limitSiEditableIdx);
+                    pd.RateDefault = reader.GetDouble(rateDefaultIdx);
+                    pd.RateEditable = reader.GetBoolean(rateEditableIdx);
+                    pd.RateShowTariffText = reader.GetBoolean(rateShowTariffIdx);
+                    pd.PremiumDefault = reader.GetDouble(premiumDefaultIdx);
+                    pd.PolicyRateDefault = reader.GetDouble(policyRateDefaultIdx);
+                    pd.PolicyRateEditable = reader.GetBoolean(policyRateEditableIdx);
+                    pd.PolicyRateShowTariffText = reader.GetBoolean(policyRateShowTariffIdx);
+                    pd.PolicyPremiumDefault = reader.GetDouble(policyPremiumIdx);
+                    pd.LastEditedBy = reader.GetInt32(lastEditedByIdx);
+
+                    pDefaults.Add(pd);
+                }
+            }
+            return pDefaults;
+        }
+
+
     }
 }
 

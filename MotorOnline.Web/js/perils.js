@@ -68,10 +68,19 @@ associatedcontrols[274] = { "limitsi": "thefttextbox",
 //This is used for add mode
 function displayperils() {
     var selectedType = $('#TypeOfCoverDropdown').val();
+    var subline = $('#SublineDropdown').val();
+    var motortype = $('#MotorTypeDropdown').val();
+    var ids = [194, 195];
     $.ajax({
         url: "ajax/TransactionAjax.aspx",
         type: "post",
-        data: { "action": 'getperils', "type": selectedType },
+        data: {
+            "action": 'getperils',
+            "type": selectedType,
+            "subline": subline,
+            "motortype": motortype,
+            ids: JSON.stringify(ids)
+        },
         success: function (result) {
             var obj = JSON.parse(result);
             var html = '<table class="computation-table" cellpadding=4 WIDTH=70%>';
@@ -85,7 +94,8 @@ function displayperils() {
             html += '</tr>';
             if (obj != null) {
 
-                $.each(obj, function (key, value) {
+                $.each(obj.Perils, function (key, value) {
+                    console.log(value);
                     html += '<tr>';
                     html += '<td>';
                     html += value.PerilName;
@@ -97,19 +107,19 @@ function displayperils() {
                     html += '</td>';
 
                     html += '<td>';
-                    html += '<input class="fixed-width-100" id="' + associatedcontrols[value.PerilID].rate + '" type="text" value="' + value.Rate + '" />';
+                    html += '<input class="fixed-width-100" id="' + associatedcontrols[value.PerilID].rate + '" type="text" />';
                     html += '</td>';
 
                     html += '<td>';
-                    html += createpremiumtemplate(value.Premium, value.PerilID);
+                    html += createpremiumtemplate(0, value.PerilID);
                     html += '</td>';
 
                     html += '<td>';
-                    html += '<input class="fixed-width-100" id="' + associatedcontrols[value.PerilID].policyrate + '" type="text" value="' + value.PolicyRate + '" />';
+                    html += '<input class="fixed-width-100" id="' + associatedcontrols[value.PerilID].policyrate + '" type="text" />';
                     html += '</td>';
 
                     html += '<td>';
-                    html += createpolicypremiumtemplate(value.PolicyPremium, value.PerilID);
+                    html += createpolicypremiumtemplate(0, value.PerilID);
                     html += '</td>';
 
                     html += '</tr>';
@@ -119,7 +129,6 @@ function displayperils() {
             html += '<tr><td colspan="2"><input id="computebutton" type="button" value="Compute" /></td>';
             html += '<td align="right"><strong>Basic Premium Net:</strong></td><td><span id="basic-premiumnettext"></span></td>';
             html += '<td align="right"><strong>Basic Premium Gross:</strong></td><td><span id="basic-premiumgrosstext"></span></td></tr>';
-            //            html += '<tr><td colspan="2"><strong>Basic Premium Net:</strong><span id="basic-premiumnettext"></span></td><td colspan="2"><strong>Basic Premium Gross:</strong><span id="basic-premiumgrosstext"></span></td></tr>';
             html += '</table>';
             html += '<br />';
 
@@ -131,13 +140,12 @@ function displayperils() {
             html += '<tr><td><strong>Remarks</strong></td><td colspan="3"><textarea id="remarks" cols="50" name="S1" rows="2"></textarea></td></tr>';
             html += '</table>';
             $('#perils-table').html(html);
-            initializebuttons();
-            handledefaultvalue();
-            populatevtplcontrols();
+            handledefaultvalue(obj.PerilDefaults);
+            populatevtpls(obj.Tariff, ids);
             handlebindingofthefttextboxkeyup();
             initializeinputmasks();
             $('#computebutton').click(handlecompute);
-            disablevtplrates();
+            //disablevtplrates();
             $('#netcomputationbutton').click(handleshowcomputation);
             $('#grosscomputationbutton').click(handleshowcomputation);
         },
@@ -147,8 +155,44 @@ function displayperils() {
     });
 }
 
+function populatevtpls(tariffrates, ids) {
+    $.each(ids, function (key, value) {
+        var html = '';
+        html += '<option value="0">-- SELECT --</option>';
+        $.each(tariffrates.DropdownValues[value], function (resultKey, resultValue) {
+            html += '<option value="' + resultValue.Value + '" >' + parseFloat(resultValue.Text).toFixed(2) + '</option>';
+        });
+        $('#' + associatedcontrols[value].limitsi).html(html);
+    });
+
+    insertctpldefault(tariffrates);
+
+    $('#vtplbodilydropdown').unbind('change', vtplbodyinjurychange);
+    $('#vtplbodilydropdown').change(vtplbodyinjurychange);
+    $('#vtplpropertydropdown').unbind('change', vtplpropertychange);
+    $('#vtplpropertydropdown').change(vtplpropertychange);
+}
+
+function insertctpldefault(obj) {
+    var id = 187;
+    var ctpldefault = parseFloat(obj.CTPLDefault);
+    $('#' + associatedcontrols[id].premium).html(ctpldefault);
+    $('#' + associatedcontrols[id].policypremium).html(ctpldefault);
+}
+
+function getperildefaultbykey(list, key) {
+    var pd;
+    $.each(list, function (k, v) {
+        if (v.PerilID == key) {
+            pd = v;
+            return false;
+        }
+    });
+    return pd;
+}
+
 ///This is used for the edit mode
-function displayperilsedit(json, remarks) {
+function displayperilsedit(json, remarks, tariffrates) {
     var selectedType = $('#TypeOfCoverDropdown').val();
     var transactionId = $('#IdHiddenField').val();
 
@@ -208,52 +252,100 @@ function displayperilsedit(json, remarks) {
     html += '<tr><td><strong>Remarks</strong></td><td colspan="3"><textarea id="remarks" cols="50" name="S1" rows="2">'+ remarks +'</textarea></td></tr>';
     html += '</table>';
     $('#perils-table').html(html);
-    initializebuttons();
     handlebindingofthefttextboxkeyup();
     initializeinputmasks();
     //handledefaultvalue();
-    populatevtplcontrolswithcallback(
-    function () {
-        if (json != null) {
-            $.each(json, function (key, value) {
-                if (parseInt(value.PerilID) === 194) {
-                    $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
-                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
-                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
-                }
-            });
-        }
-    },
-    function () {
-        if (json != null) {
-            $.each(json, function (key, value) {
-                if (parseInt(value.PerilID) !== 194 && parseInt(value.PerilID) !== 195) {
-                    //NOTE:  blur() is called to trigger the formatting to currency
-                    $('#' + associatedcontrols[value.PerilID].limitsi).val(value.NewLimitSI);
-                    $('#' + associatedcontrols[value.PerilID].limitsi).blur();
-                    $('#' + associatedcontrols[value.PerilID].rate).val(value.NewRate);
-                    $('#' + associatedcontrols[value.PerilID].rate).blur();
-                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
-                    $('#' + associatedcontrols[value.PerilID].policyrate).val(value.NewPolicyRate);
-                    $('#' + associatedcontrols[value.PerilID].policyrate).blur();
-                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
-                } else if (parseInt(value.PerilID) === 195) {
+//    populatevtplcontrolswithcallback(
+//    function () {
+//        if (json != null) {
+//            $.each(json, function (key, value) {
+//                if (parseInt(value.PerilID) === 194) {
+//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
+//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+//                }
+//            });
+//        }
+//    },
+//    function () {
+//        if (json != null) {
+//            $.each(json, function (key, value) {
+//                if (parseInt(value.PerilID) !== 194 && parseInt(value.PerilID) !== 195) {
+//                    //NOTE:  blur() is called to trigger the formatting to currency
+//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(value.NewLimitSI);
+//                    $('#' + associatedcontrols[value.PerilID].limitsi).blur();
+//                    $('#' + associatedcontrols[value.PerilID].rate).val(value.NewRate);
+//                    $('#' + associatedcontrols[value.PerilID].rate).blur();
+//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+//                    $('#' + associatedcontrols[value.PerilID].policyrate).val(value.NewPolicyRate);
+//                    $('#' + associatedcontrols[value.PerilID].policyrate).blur();
+//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+//                } else if (parseInt(value.PerilID) === 195) {
 
-                    $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
-                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
-                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
-                } else {
-                }
-            });
-            handlecompute();
-        }
-    });
+//                    $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
+//                    $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+//                    $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+//                } else {
+//                }
+//            });
+//            
+//        }
+//    });
 
 
+    renderdropdown(tariffrates.DropdownValues[194], associatedcontrols[194].limitsi);
+    renderdropdown(tariffrates.DropdownValues[195], associatedcontrols[195].limitsi);
+    if (json != null && json != undefined) {
+        $.each(json, function (key, value) {
+            //            if (parseInt(value.PerilID) === 194) {
+            //                $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
+            //                $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+            //                $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+            //            }
+            if (parseInt(value.PerilID) !== 194 && parseInt(value.PerilID) !== 195) {
+                //NOTE:  blur() is called to trigger the formatting to currency
+                $('#' + associatedcontrols[value.PerilID].limitsi).val(value.NewLimitSI);
+                $('#' + associatedcontrols[value.PerilID].limitsi).blur();
+                $('#' + associatedcontrols[value.PerilID].rate).val(value.NewRate);
+                $('#' + associatedcontrols[value.PerilID].rate).blur();
+                $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+                $('#' + associatedcontrols[value.PerilID].policyrate).val(value.NewPolicyRate);
+                $('#' + associatedcontrols[value.PerilID].policyrate).blur();
+                $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+            } else {
+
+                $('#' + associatedcontrols[value.PerilID].limitsi).val(parseInt(value.NewPremium));
+                $('#' + associatedcontrols[value.PerilID].premium).html(parseFloat(value.NewPremium).toFixed(2));
+                $('#' + associatedcontrols[value.PerilID].policypremium).html(parseFloat(value.NewPolicyPremium).toFixed(2));
+            }
+
+            $('#' + associatedcontrols[value.PerilID].limitsi).prop('disabled', !value.LimitSIEditable);
+            $('#' + associatedcontrols[value.PerilID].rate).prop('disabled', !value.RateEditable);
+            if (value.RateShowTariffText) {
+                $('#' + associatedcontrols[value.PerilID].rate).val('tariff');
+            }
+            $('#' + associatedcontrols[value.PerilID].policyrate).prop('disabled', !value.PolicyRateEditable);
+
+            if (value.PolicyRateShowTariffText) {
+                $('#' + associatedcontrols[value.PerilID].policyrate).val('tariff');
+            }
+
+        });
+        handlecompute();
+    }
+    
+    
     $('#computebutton').click(handlecompute);
-    disablevtplrates();
     $('#netcomputationbutton').click(handleshowcomputation);
     $('#grosscomputationbutton').click(handleshowcomputation);
+}
+
+function renderdropdown(data, key) {
+    var html = '<option value="0">-- SELECT --</option>';
+    $.each(data, function (key, value) {
+        html += '<option value="' + value.Value + '">' + value.Text + '</option>';
+    });
+    $('#' + key).html(html);
 }
 
 function displayperilsdetails(json, remarks, computations, customer) {
@@ -326,13 +418,6 @@ function displayperilsdetails(json, remarks, computations, customer) {
                     covertype: customer.TypeOfCover
                 },
                     handleshowcomputationdetails);
-}
-
-
-function initializebuttons() {
-//    $('#computebutton').button();
-//    $('#netcomputationbutton').button();
-//    $('#grosscomputationbutton').button();
 }
 
 
@@ -665,26 +750,25 @@ function vtplpropertychange() {
     $('#' + associatedcontrols[195].policypremium).html(parseFloat(premiumValue).toFixed(2));
 }
 
-function populatevtplcontrols() {
-    buildvtplcontrols([194, 195]);
-    $('#vtplbodilydropdown').unbind('change', vtplbodyinjurychange);
-    $('#vtplbodilydropdown').change(vtplbodyinjurychange);
-//    buildvtplcontrols(195, associatedcontrols[195].limitsi);
-    $('#vtplpropertydropdown').unbind('change', vtplpropertychange);
-    $('#vtplpropertydropdown').change(vtplpropertychange);
-}
+//function populatevtplcontrols() {
+//    buildvtplcontrols([194, 195]);
+//    $('#vtplbodilydropdown').unbind('change', vtplbodyinjurychange);
+//    $('#vtplbodilydropdown').change(vtplbodyinjurychange);
+//    $('#vtplpropertydropdown').unbind('change', vtplpropertychange);
+//    $('#vtplpropertydropdown').change(vtplpropertychange);
+//}
 
-function populatevtplcontrolswithcallback(callback194, callback195) {
-    buildvtplcontrols([194, 195], function () {
-        if (callback194 != null && callback194 != undefined) { callback194(); }
-        if (callback195 != null && callback195 != undefined) { callback195(); }
-    });
-    $('#vtplbodilydropdown').unbind('change', vtplbodyinjurychange);
-    $('#vtplbodilydropdown').change(vtplbodyinjurychange);
-//    buildvtplcontrols(195, associatedcontrols[195].limitsi, callback195);
-    $('#vtplpropertydropdown').unbind('change', vtplpropertychange);
-    $('#vtplpropertydropdown').change(vtplpropertychange);
-}
+//function populatevtplcontrolswithcallback(callback194, callback195) {
+//    buildvtplcontrols([194, 195], function () {
+//        if (callback194 != null && callback194 != undefined) { callback194(); }
+//        if (callback195 != null && callback195 != undefined) { callback195(); }
+//    });
+//    $('#vtplbodilydropdown').unbind('change', vtplbodyinjurychange);
+//    $('#vtplbodilydropdown').change(vtplbodyinjurychange);
+////    buildvtplcontrols(195, associatedcontrols[195].limitsi, callback195);
+//    $('#vtplpropertydropdown').unbind('change', vtplpropertychange);
+//    $('#vtplpropertydropdown').change(vtplpropertychange);
+//}
 
 function handlelimitsicontrol(id) {
     if (id === 194 || id === 195) {
@@ -695,75 +779,71 @@ function handlelimitsicontrol(id) {
     return '';
 }
 
-function buildvtplcontrols(ids,callback) {
-    var subline = $('#SublineDropdown').val();
-    var motortype = $('#MotorTypeDropdown').val();
+//function buildvtplcontrols(ids,callback) {
+//    var subline = $('#SublineDropdown').val();
+//    var motortype = $('#MotorTypeDropdown').val();
 
-    $.ajax({
-        url: "ajax/TransactionAjax.aspx",
-        type: "post",
-        data: { "action": 'gettariffrates', "subline": subline, "motortype": motortype, "ids": JSON.stringify(ids) },
-        success: function (result) {
-            var obj = JSON.parse(result);
-            if (obj != null) {
-                //populating the two dropdown
-                $.each(ids, function (key, value) {
-                    var html = '';
-                    html += '<option value="0">-- SELECT --</option>';
-                    $.each(obj.DropdownValues[value], function (resultKey, resultValue) {
-                        html += '<option value="' + resultValue.Value + '" >' + parseFloat(resultValue.Text).toFixed(2) + '</option>';
-                    });
-                    $('#' + associatedcontrols[value].limitsi).html(html);
-                });
+//    $.ajax({
+//        url: "ajax/TransactionAjax.aspx",
+//        type: "post",
+//        data: { "action": 'gettariffrates', "subline": subline, "motortype": motortype, "ids": JSON.stringify(ids) },
+//        success: function (result) {
+//            var obj = JSON.parse(result);
+//            if (obj != null) {
+//                //populating the two dropdown
+//                $.each(ids, function (key, value) {
+//                    var html = '';
+//                    html += '<option value="0">-- SELECT --</option>';
+//                    $.each(obj.DropdownValues[value], function (resultKey, resultValue) {
+//                        html += '<option value="' + resultValue.Value + '" >' + parseFloat(resultValue.Text).toFixed(2) + '</option>';
+//                    });
+//                    $('#' + associatedcontrols[value].limitsi).html(html);
+//                });               
 
-                //populating the default for ctpl
-                var ctpldefault = parseFloat(obj.CTPLDefault);
-                $('#' + associatedcontrols[187].premium).html(ctpldefault);
-                $('#' + associatedcontrols[187].policypremium).html(ctpldefault);
-                //disable ctpl textbox, rate and policy rate
-                $('#' + associatedcontrols[187].limitsi).attr('disabled', true);
-                $('#' + associatedcontrols[187].rate).attr('disabled', true);
-                $('#' + associatedcontrols[187].policyrate).attr('disabled', true);
-                $('#' + associatedcontrols[187].policyrate).val('tariff');
-                $('#' + associatedcontrols[187].rate).val('tariff');
-                
+//                if (callback != null && callback != undefined) {
+//                    callback();
+//                }
+//            }
+//        },
+//        error: function () {
 
-                if (callback != null && callback != undefined) {
-                    callback();
-                }
+//        }
+//    });
+//    //return html;
+//}
+
+function handledefaultvalue(defaults) {
+    var type = $('#TypeOfCoverDropdown').val();
+
+    $.each(computationmatrix[type].ids, function (k, v) {
+        var pd = getperildefaultbykey(defaults, v);
+        if (pd != undefined || pd != null) {
+            $('#' + associatedcontrols[v].limitsi).val(pd.LimitSIDefault);
+            $('#' + associatedcontrols[v].limitsi).prop('disabled', !pd.LimitSIEditable);
+            $('#' + associatedcontrols[v].rate).val(pd.RateDefault);
+            $('#' + associatedcontrols[v].rate).prop('disabled', !pd.RateEditable);
+            if (pd.RateShowTariffText) {
+                $('#' + associatedcontrols[v].rate).val('tariff');
             }
-        },
-        error: function () {
-
+            $('#' + associatedcontrols[v].premium).html(pd.PremiumDefault);
+            $('#' + associatedcontrols[v].policyrate).val(pd.PolicyRateDefault);
+            $('#' + associatedcontrols[v].policyrate).prop('disabled', !pd.PolicyRateEditable);
+            if (pd.PolicyRateShowTariffText) {
+                $('#' + associatedcontrols[v].policyrate).val('tariff');
+            }
+            $('#' + associatedcontrols[v].policypremium).html(pd.PolicyPremiumDefault);
         }
     });
-    //return html;
-}
-
-function handledefaultvalue() {
-    var value = $('#TypeOfCoverDropdown').val();
-    if (value == '1' || value == '2') {
-        $('#ctpltextbox').val(100000);
-    }
-
-    if (value == '2' || value == '3') {
-        $('#autopatextbox').val(50000);
-    }
-
-    if (value == '2' || value == '3') {
-        $('#' + associatedcontrols[191].rate).val('.25');
-        $('#' + associatedcontrols[191].policyrate).val('.25');
-    }
 }
 
 function handlebindingofthefttextboxkeyup() {
     var value = $('#TypeOfCoverDropdown').val();
     if (value == '2' || value == '3') {
         $('#thefttextbox').keyup(
-                                function (e) {
-                                    $('#actsofnaturetextbox').val($('#thefttextbox').val());
-                                    $('#striketextbox').val($('#thefttextbox').val());
-                                }
-                            );
+            function (e) {
+                $('#actsofnaturetextbox').val($('#thefttextbox').val());
+                $('#striketextbox').val($('#thefttextbox').val());
+            }
+        );
     }
 }

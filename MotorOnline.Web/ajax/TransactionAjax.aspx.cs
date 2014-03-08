@@ -67,6 +67,9 @@ namespace MotorOnline.Web.ajax
                 case "gettransactionbyid":
                     HandleGetTransaction();
                     break;
+                case "gettransactionbyidextended":
+                    HandleGetTransactionExtended();
+                    break;
                 case "loadsearchfilters":
                     HandleLoadSearchFilters();
                     break;
@@ -98,9 +101,54 @@ namespace MotorOnline.Web.ajax
                 case "updateperildefault":
                     HandleUpdatePerilDefault();
                     break;
+                case "gettransactionbyidwithhistory":
+                    HandleGetTransactionWithEndorsementHistory();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void HandleGetTransactionWithEndorsementHistory()
+        {
+            var id = Request.Form["transactionid"];
+
+            TransactionWithEndorsementHistoryDTO dto = new TransactionWithEndorsementHistoryDTO();
+            dto.Transaction = GetTransactionById(id);
+            dto.History = GetEndorsementHistory(ChangeTypeHelper.SafeParseToInt32(id));
+
+            Render<TransactionWithEndorsementHistoryDTO>(dto);
+        }
+
+        private Dictionary<string, EndorsementHistory> GetEndorsementHistory(int transactionId)
+        {
+            return data.GetEndorsementHistory(transactionId);
+        }
+
+        private void HandleGetTransactionExtended()
+        {
+            var id = Request.Form["transactionid"];
+            TransactionExtendedDTO transactionExt = new TransactionExtendedDTO();
+            
+            Transaction t = GetTransactionById(id);
+            
+            List<int> parameters = new List<int>();
+            parameters.Add(194);
+            parameters.Add(195);
+            DefaultTariffRateResponse tariff = GetTariffRates(t.SubLineCode, 
+                t.CarDetail.MotorType, 
+                parameters);
+
+            transactionExt.Transaction = t;
+            transactionExt.Tariff = tariff;
+
+            transactionExt.CarCompanies = GetCarCompanies();
+            transactionExt.CarMakes = FilterCarMake(t.CarDetail.CarCompany);
+            transactionExt.CarEngines = FilterEngine(
+                                            t.CarDetail.CarCompany,
+                                            ChangeTypeHelper.SafeParseToInt32(t.CarDetail.CarMake),
+                                            t.CarDetail.CarSeries);
+            Render<TransactionExtendedDTO>(transactionExt);
         }
 
         private void HandleUpdatePerilDefault()
@@ -258,7 +306,7 @@ namespace MotorOnline.Web.ajax
                 DateTime effectDate = DateTime.Parse(ChangeDateFormat(effectivityDate));
                 DateTime expDate = DateTime.Parse(ChangeDateFormatWithTime(expireDate));
                 data.SaveEndorsementDetails(int.Parse(transactionId), newId,
-                        endorsementText, DateTime.Now, effectDate, expDate);
+                        endorsementText, DateTime.Now, effectDate, expDate, int.Parse(type));
             }
 
             Dictionary<string, string> res = new Dictionary<string, string>();
@@ -550,9 +598,13 @@ namespace MotorOnline.Web.ajax
         private void HandleGetTransaction()
         {
             var tId = Request.Form["transactionid"];
-            
+            Transaction t = GetTransactionById(tId);
+            Render<Transaction>(t);
+        }
+
+        private Transaction GetTransactionById(string id) {
             cls_data_access_layer dl = new cls_data_access_layer();
-            Transaction t = dl.GetTransactionById(ChangeTypeHelper.SafeParseToInt32(tId));
+            Transaction t = dl.GetTransactionById(ChangeTypeHelper.SafeParseToInt32(id));
 
             List<TransactionPeril> arrangedPerils = t.Perils;
             switch (t.CarDetail.TypeOfCover)
@@ -567,7 +619,7 @@ namespace MotorOnline.Web.ajax
                     break;
             }
             t.Perils = arrangedPerils;
-            Render<Transaction>(t);
+            return t;
         }
 
         private void HandleGetCarDetailsOptions()
@@ -779,9 +831,60 @@ namespace MotorOnline.Web.ajax
             Render<DefaultTariffRateResponse>(response);
         }
 
+        private DefaultTariffRateResponse GetTariffRates(string subline, 
+                                            string motortype, IList<int> parameters) {
+            DefaultTariffRateResponse tResponse = new DefaultTariffRateResponse();
+            if (parameters.Count > 0)
+            {
+                foreach (int parameter in parameters)
+                {
+                    IDataReader reader = data.sp_getRatesByPerilID(parameter);
+                    using (reader)
+                    {
+                        List<TariffRate> rates = ReaderToEntity.ConvertToListOfTariffRate(reader);
+                        List<DropDownListItem> items = new List<DropDownListItem>();
+                        foreach (TariffRate r in rates)
+                        {
+                            DropDownListItem i = new DropDownListItem();
+                            i.Text = r.Limit.ToString();
+                            string value = string.Empty;
+                            if (subline.Trim().ToUpper() == "PC")
+                            {
+                                value = r.PC.ToString();
+                            }
+                            else
+                            {
+                                if (motortype.ToUpper().Trim() == "LIGHT" || motortype.ToUpper().Trim() == "MEDIUM")
+                                {
+                                    value = r.CVLightMedium.ToString();
+                                }
+                                else
+                                {
+                                    value = r.CVHeavy.ToString();
+                                }
+                            }
+                            i.Value = value;
+                            items.Add(i);
+                        }
+                        tResponse.DropdownValues.Add(parameter.ToString(), items);
+                    }
+
+                }
+            }
+
+            double ctplDefault = data.GetCtplDefault(subline);
+            tResponse.CTPLDefault = ctplDefault.ToString();
+
+            return tResponse;
+
+        }
+
         private void HandleGetPerils()
         {
             var type = Request.Form["type"];
+            var subline = Request.Form["subline"];
+            var motortype = Request.Form["motortype"];
+            var ids = Request.Form["ids"];
             cls_data_access_layer dl = new cls_data_access_layer();
             IDataReader reader = dl.sp_getPerilsByTypeOfCover(int.Parse(type));
             //convert
@@ -799,7 +902,18 @@ namespace MotorOnline.Web.ajax
                     break;
             }
             //json encode
-            Render<Perils>(arrangedPerils);
+
+            List<PerilsDefault> pDefaults = dl.GetPerilDefaults();
+            PerilsResponseDTO response = new PerilsResponseDTO();
+            response.PerilDefaults = pDefaults;
+            response.Perils = arrangedPerils;
+
+
+            IList<int> parameters = SerializationHelper.Deserialize<IList<int>>(ids);
+            response.Tariff = GetTariffRates(subline, motortype, parameters);
+            
+
+            Render<PerilsResponseDTO>(response);
         }
 
         private void HandleFilterExistingPolicy()
@@ -826,8 +940,17 @@ namespace MotorOnline.Web.ajax
             var makeId = Request.Form["makeid"];
             var companyId = Request.Form["compid"];
             var seriesId = Request.Form["seriesid"];
+            List<DropDownListItem> items = FilterEngine(
+                ChangeTypeHelper.SafeParseToInt32(companyId),
+                ChangeTypeHelper.SafeParseToInt32(makeId),
+                ChangeTypeHelper.SafeParseToInt32(seriesId));
+            RenderDropDownListItem(items);
+        }
+
+        private List<DropDownListItem> FilterEngine(int company, int make, int series)
+        {
             cls_data_access_layer dl = new cls_data_access_layer();
-            DataTable dt = dl.FilterCarEngineByCarSeries(int.Parse(makeId), int.Parse(companyId), int.Parse(seriesId));
+            DataTable dt = dl.FilterCarEngineByCarSeries(make, company, series);
             List<DropDownListItem> items = new List<DropDownListItem>();
             foreach (DataRow row in dt.Rows)
             {
@@ -836,32 +959,21 @@ namespace MotorOnline.Web.ajax
                 li.Text = row["engineSeries"].ToString();
                 items.Add(li);
             }
-            RenderDropDownListItem(items);
-        }
-
-        private void HandleFilterCarSeries()
-        {
-            var makeId = Request.Form["makeid"];
-            var companyId = Request.Form["compid"];
-            cls_data_access_layer dl = new cls_data_access_layer();
-            DataTable dt = dl.FilterCarSeriesByCarMake(int.Parse(makeId), int.Parse(companyId));
-            List<DropDownListItem> items = new List<DropDownListItem>();
-            foreach (DataRow row in dt.Rows)
-            {
-                DropDownListItem li = new DropDownListItem();
-                li.Value = row["seriesCode"].ToString();
-                li.Text = row["seriesCode"].ToString();
-                items.Add(li);
-            }
-            RenderDropDownListItem(items);
-
+            return items;
         }
 
         private void HandleFilterCarMake()
         {
             var id = Request.Form["compid"];
+            List<DropDownListItem> items = FilterCarMake(ChangeTypeHelper.SafeParseToInt32(id));
+            RenderDropDownListItem(items);
+        }
+
+        private List<DropDownListItem> FilterCarMake(int company) 
+        {
+            
             cls_data_access_layer dl = new cls_data_access_layer();
-            DataTable dt = dl.FilterCarMakeByCarCompany(int.Parse(id));
+            DataTable dt = dl.FilterCarMakeByCarCompany(company);
             List<DropDownListItem> items = new List<DropDownListItem>();
             foreach (DataRow row in dt.Rows)
             {
@@ -870,11 +982,16 @@ namespace MotorOnline.Web.ajax
                 li.Text = row["makeAndSeries"].ToString();
                 items.Add(li);
             }
-            RenderDropDownListItem(items);
+            return items;
         }
 
         private void HandleGetCarCompanies()
         {
+            List<DropDownListItem> items = GetCarCompanies();
+            RenderDropDownListItem(items);
+        }
+
+        private List<DropDownListItem> GetCarCompanies() {
             cls_data_access_layer dl = new cls_data_access_layer();
             DataTable dt = dl.PopulateCarCompanies();
             List<DropDownListItem> items = new List<DropDownListItem>();
@@ -885,8 +1002,7 @@ namespace MotorOnline.Web.ajax
                 li.Text = row["TEXT"].ToString();
                 items.Add(li);
             }
-            RenderDropDownListItem(items);
-
+            return items;
         }
 
         private void RenderDropDownListItem(List<DropDownListItem> items)

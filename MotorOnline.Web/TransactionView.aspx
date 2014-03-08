@@ -43,9 +43,6 @@
             if (!validatecardetails()) {
                 return;
             }
-
-
-
             var cardetail = createcardetails();
             populatecardetaildisplay(cardetail);
 
@@ -255,17 +252,22 @@
                 $.ajax({
                     url: "ajax/TransactionAjax.aspx",
                     type: "post",
-                    data: { "action": 'gettransactionbyid', "transactionid": id },
+                    data: { "action": 'gettransactionbyidextended', "transactionid": id },
                     success: function (result) {
                         var obj = JSON.parse(result);
                         if (obj != null) {
 
                             loadtransaction(obj, id);
-                            if (obj.HasEndorsement == true) {
+                            if (obj.Transaction.HasEndorsement == true) {
                                 $('#printendorsement').css('display', 'inline');
                             }
-                            if (obj.IsEndorsed == true) {
+
+                            if (obj.Transaction.IsEndorsed == true) {
                                 $('#endorsebutton').css('display', 'none');
+                            } else {
+                                if (obj.Transaction.IsPosted == false) {
+                                    $('#endorsebutton').css('display', 'none');
+                                }
                             }
                         }
                     },
@@ -791,7 +793,7 @@
                 </tr>
                 <tr>
                     <td align="right" colspan="4">
-                        <asp:Button ID="SaveCarDetailsButton" ClientIDMode="Static" runat="server" Text="Save" />
+                        <asp:Button ID="SaveCarDetailsButton" class="btn btn-primary" ClientIDMode="Static" runat="server" Text="Save" />
                     </td>
                 </tr>
             </table>

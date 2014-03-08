@@ -24,6 +24,8 @@ namespace MotorOnline.Data {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class SprocCreator : global::System.Data.DataSet {
         
+        private mTransactionPerilsDefaultsDataTable tablemTransactionPerilsDefaults;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -52,6 +54,9 @@ namespace MotorOnline.Data {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
+                if ((ds.Tables["mTransactionPerilsDefaults"] != null)) {
+                    base.Tables.Add(new mTransactionPerilsDefaultsDataTable(ds.Tables["mTransactionPerilsDefaults"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -68,6 +73,16 @@ namespace MotorOnline.Data {
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
             base.Tables.CollectionChanged += schemaChangedHandler;
             this.Relations.CollectionChanged += schemaChangedHandler;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public mTransactionPerilsDefaultsDataTable mTransactionPerilsDefaults {
+            get {
+                return this.tablemTransactionPerilsDefaults;
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -137,6 +152,9 @@ namespace MotorOnline.Data {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
+                if ((ds.Tables["mTransactionPerilsDefaults"] != null)) {
+                    base.Tables.Add(new mTransactionPerilsDefaultsDataTable(ds.Tables["mTransactionPerilsDefaults"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -170,6 +188,12 @@ namespace MotorOnline.Data {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
+            this.tablemTransactionPerilsDefaults = ((mTransactionPerilsDefaultsDataTable)(base.Tables["mTransactionPerilsDefaults"]));
+            if ((initTable == true)) {
+                if ((this.tablemTransactionPerilsDefaults != null)) {
+                    this.tablemTransactionPerilsDefaults.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -180,6 +204,14 @@ namespace MotorOnline.Data {
             this.Namespace = "http://tempuri.org/SprocCreator.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
+            this.tablemTransactionPerilsDefaults = new mTransactionPerilsDefaultsDataTable();
+            base.Tables.Add(this.tablemTransactionPerilsDefaults);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializemTransactionPerilsDefaults() {
+            return false;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -235,6 +267,1548 @@ namespace MotorOnline.Data {
             }
             xs.Add(dsSchema);
             return type;
+        }
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void mTransactionPerilsDefaultsRowChangeEventHandler(object sender, mTransactionPerilsDefaultsRowChangeEvent e);
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class mTransactionPerilsDefaultsDataTable : global::System.Data.TypedTableBase<mTransactionPerilsDefaultsRow> {
+            
+            private global::System.Data.DataColumn columnRecordID;
+            
+            private global::System.Data.DataColumn columnPerilID;
+            
+            private global::System.Data.DataColumn columnLimitSIDefault;
+            
+            private global::System.Data.DataColumn columnLimitSIEditable;
+            
+            private global::System.Data.DataColumn columnRateDefault;
+            
+            private global::System.Data.DataColumn columnRateEditable;
+            
+            private global::System.Data.DataColumn columnRateShowTariffText;
+            
+            private global::System.Data.DataColumn columnPremiumDefault;
+            
+            private global::System.Data.DataColumn columnPolicyRateDefault;
+            
+            private global::System.Data.DataColumn columnPolicyRateEditable;
+            
+            private global::System.Data.DataColumn columnPolicyRateShowTariffText;
+            
+            private global::System.Data.DataColumn columnPolicyPremiumDefault;
+            
+            private global::System.Data.DataColumn columnLastEditedBy;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public mTransactionPerilsDefaultsDataTable() {
+                this.TableName = "mTransactionPerilsDefaults";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal mTransactionPerilsDefaultsDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected mTransactionPerilsDefaultsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RecordIDColumn {
+                get {
+                    return this.columnRecordID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PerilIDColumn {
+                get {
+                    return this.columnPerilID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LimitSIDefaultColumn {
+                get {
+                    return this.columnLimitSIDefault;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LimitSIEditableColumn {
+                get {
+                    return this.columnLimitSIEditable;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RateDefaultColumn {
+                get {
+                    return this.columnRateDefault;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RateEditableColumn {
+                get {
+                    return this.columnRateEditable;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RateShowTariffTextColumn {
+                get {
+                    return this.columnRateShowTariffText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PremiumDefaultColumn {
+                get {
+                    return this.columnPremiumDefault;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PolicyRateDefaultColumn {
+                get {
+                    return this.columnPolicyRateDefault;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PolicyRateEditableColumn {
+                get {
+                    return this.columnPolicyRateEditable;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PolicyRateShowTariffTextColumn {
+                get {
+                    return this.columnPolicyRateShowTariffText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PolicyPremiumDefaultColumn {
+                get {
+                    return this.columnPolicyPremiumDefault;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LastEditedByColumn {
+                get {
+                    return this.columnLastEditedBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public mTransactionPerilsDefaultsRow this[int index] {
+                get {
+                    return ((mTransactionPerilsDefaultsRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event mTransactionPerilsDefaultsRowChangeEventHandler mTransactionPerilsDefaultsRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event mTransactionPerilsDefaultsRowChangeEventHandler mTransactionPerilsDefaultsRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event mTransactionPerilsDefaultsRowChangeEventHandler mTransactionPerilsDefaultsRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event mTransactionPerilsDefaultsRowChangeEventHandler mTransactionPerilsDefaultsRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddmTransactionPerilsDefaultsRow(mTransactionPerilsDefaultsRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public mTransactionPerilsDefaultsRow AddmTransactionPerilsDefaultsRow(int PerilID, double LimitSIDefault, bool LimitSIEditable, double RateDefault, bool RateEditable, bool RateShowTariffText, double PremiumDefault, double PolicyRateDefault, bool PolicyRateEditable, bool PolicyRateShowTariffText, double PolicyPremiumDefault, int LastEditedBy) {
+                mTransactionPerilsDefaultsRow rowmTransactionPerilsDefaultsRow = ((mTransactionPerilsDefaultsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        PerilID,
+                        LimitSIDefault,
+                        LimitSIEditable,
+                        RateDefault,
+                        RateEditable,
+                        RateShowTariffText,
+                        PremiumDefault,
+                        PolicyRateDefault,
+                        PolicyRateEditable,
+                        PolicyRateShowTariffText,
+                        PolicyPremiumDefault,
+                        LastEditedBy};
+                rowmTransactionPerilsDefaultsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowmTransactionPerilsDefaultsRow);
+                return rowmTransactionPerilsDefaultsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public mTransactionPerilsDefaultsRow FindByRecordID(int RecordID) {
+                return ((mTransactionPerilsDefaultsRow)(this.Rows.Find(new object[] {
+                            RecordID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                mTransactionPerilsDefaultsDataTable cln = ((mTransactionPerilsDefaultsDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new mTransactionPerilsDefaultsDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnRecordID = base.Columns["RecordID"];
+                this.columnPerilID = base.Columns["PerilID"];
+                this.columnLimitSIDefault = base.Columns["LimitSIDefault"];
+                this.columnLimitSIEditable = base.Columns["LimitSIEditable"];
+                this.columnRateDefault = base.Columns["RateDefault"];
+                this.columnRateEditable = base.Columns["RateEditable"];
+                this.columnRateShowTariffText = base.Columns["RateShowTariffText"];
+                this.columnPremiumDefault = base.Columns["PremiumDefault"];
+                this.columnPolicyRateDefault = base.Columns["PolicyRateDefault"];
+                this.columnPolicyRateEditable = base.Columns["PolicyRateEditable"];
+                this.columnPolicyRateShowTariffText = base.Columns["PolicyRateShowTariffText"];
+                this.columnPolicyPremiumDefault = base.Columns["PolicyPremiumDefault"];
+                this.columnLastEditedBy = base.Columns["LastEditedBy"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnRecordID = new global::System.Data.DataColumn("RecordID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRecordID);
+                this.columnPerilID = new global::System.Data.DataColumn("PerilID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPerilID);
+                this.columnLimitSIDefault = new global::System.Data.DataColumn("LimitSIDefault", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLimitSIDefault);
+                this.columnLimitSIEditable = new global::System.Data.DataColumn("LimitSIEditable", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLimitSIEditable);
+                this.columnRateDefault = new global::System.Data.DataColumn("RateDefault", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRateDefault);
+                this.columnRateEditable = new global::System.Data.DataColumn("RateEditable", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRateEditable);
+                this.columnRateShowTariffText = new global::System.Data.DataColumn("RateShowTariffText", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRateShowTariffText);
+                this.columnPremiumDefault = new global::System.Data.DataColumn("PremiumDefault", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPremiumDefault);
+                this.columnPolicyRateDefault = new global::System.Data.DataColumn("PolicyRateDefault", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPolicyRateDefault);
+                this.columnPolicyRateEditable = new global::System.Data.DataColumn("PolicyRateEditable", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPolicyRateEditable);
+                this.columnPolicyRateShowTariffText = new global::System.Data.DataColumn("PolicyRateShowTariffText", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPolicyRateShowTariffText);
+                this.columnPolicyPremiumDefault = new global::System.Data.DataColumn("PolicyPremiumDefault", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPolicyPremiumDefault);
+                this.columnLastEditedBy = new global::System.Data.DataColumn("LastEditedBy", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLastEditedBy);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnRecordID}, true));
+                this.columnRecordID.AutoIncrement = true;
+                this.columnRecordID.AutoIncrementSeed = -1;
+                this.columnRecordID.AutoIncrementStep = -1;
+                this.columnRecordID.AllowDBNull = false;
+                this.columnRecordID.ReadOnly = true;
+                this.columnRecordID.Unique = true;
+                this.columnPerilID.AllowDBNull = false;
+                this.columnLimitSIDefault.AllowDBNull = false;
+                this.columnLimitSIEditable.AllowDBNull = false;
+                this.columnRateDefault.AllowDBNull = false;
+                this.columnRateEditable.AllowDBNull = false;
+                this.columnRateShowTariffText.AllowDBNull = false;
+                this.columnPremiumDefault.AllowDBNull = false;
+                this.columnPolicyRateDefault.AllowDBNull = false;
+                this.columnPolicyRateEditable.AllowDBNull = false;
+                this.columnPolicyRateShowTariffText.AllowDBNull = false;
+                this.columnPolicyPremiumDefault.AllowDBNull = false;
+                this.columnLastEditedBy.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public mTransactionPerilsDefaultsRow NewmTransactionPerilsDefaultsRow() {
+                return ((mTransactionPerilsDefaultsRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new mTransactionPerilsDefaultsRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(mTransactionPerilsDefaultsRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.mTransactionPerilsDefaultsRowChanged != null)) {
+                    this.mTransactionPerilsDefaultsRowChanged(this, new mTransactionPerilsDefaultsRowChangeEvent(((mTransactionPerilsDefaultsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.mTransactionPerilsDefaultsRowChanging != null)) {
+                    this.mTransactionPerilsDefaultsRowChanging(this, new mTransactionPerilsDefaultsRowChangeEvent(((mTransactionPerilsDefaultsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.mTransactionPerilsDefaultsRowDeleted != null)) {
+                    this.mTransactionPerilsDefaultsRowDeleted(this, new mTransactionPerilsDefaultsRowChangeEvent(((mTransactionPerilsDefaultsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.mTransactionPerilsDefaultsRowDeleting != null)) {
+                    this.mTransactionPerilsDefaultsRowDeleting(this, new mTransactionPerilsDefaultsRowChangeEvent(((mTransactionPerilsDefaultsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemovemTransactionPerilsDefaultsRow(mTransactionPerilsDefaultsRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                SprocCreator ds = new SprocCreator();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "mTransactionPerilsDefaultsDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class mTransactionPerilsDefaultsRow : global::System.Data.DataRow {
+            
+            private mTransactionPerilsDefaultsDataTable tablemTransactionPerilsDefaults;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal mTransactionPerilsDefaultsRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablemTransactionPerilsDefaults = ((mTransactionPerilsDefaultsDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int RecordID {
+                get {
+                    return ((int)(this[this.tablemTransactionPerilsDefaults.RecordIDColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.RecordIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int PerilID {
+                get {
+                    return ((int)(this[this.tablemTransactionPerilsDefaults.PerilIDColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.PerilIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double LimitSIDefault {
+                get {
+                    return ((double)(this[this.tablemTransactionPerilsDefaults.LimitSIDefaultColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.LimitSIDefaultColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool LimitSIEditable {
+                get {
+                    return ((bool)(this[this.tablemTransactionPerilsDefaults.LimitSIEditableColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.LimitSIEditableColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double RateDefault {
+                get {
+                    return ((double)(this[this.tablemTransactionPerilsDefaults.RateDefaultColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.RateDefaultColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool RateEditable {
+                get {
+                    return ((bool)(this[this.tablemTransactionPerilsDefaults.RateEditableColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.RateEditableColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool RateShowTariffText {
+                get {
+                    return ((bool)(this[this.tablemTransactionPerilsDefaults.RateShowTariffTextColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.RateShowTariffTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double PremiumDefault {
+                get {
+                    return ((double)(this[this.tablemTransactionPerilsDefaults.PremiumDefaultColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.PremiumDefaultColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double PolicyRateDefault {
+                get {
+                    return ((double)(this[this.tablemTransactionPerilsDefaults.PolicyRateDefaultColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.PolicyRateDefaultColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool PolicyRateEditable {
+                get {
+                    return ((bool)(this[this.tablemTransactionPerilsDefaults.PolicyRateEditableColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.PolicyRateEditableColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool PolicyRateShowTariffText {
+                get {
+                    return ((bool)(this[this.tablemTransactionPerilsDefaults.PolicyRateShowTariffTextColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.PolicyRateShowTariffTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double PolicyPremiumDefault {
+                get {
+                    return ((double)(this[this.tablemTransactionPerilsDefaults.PolicyPremiumDefaultColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.PolicyPremiumDefaultColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int LastEditedBy {
+                get {
+                    return ((int)(this[this.tablemTransactionPerilsDefaults.LastEditedByColumn]));
+                }
+                set {
+                    this[this.tablemTransactionPerilsDefaults.LastEditedByColumn] = value;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class mTransactionPerilsDefaultsRowChangeEvent : global::System.EventArgs {
+            
+            private mTransactionPerilsDefaultsRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public mTransactionPerilsDefaultsRowChangeEvent(mTransactionPerilsDefaultsRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public mTransactionPerilsDefaultsRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+    }
+}
+namespace MotorOnline.Data.SprocCreatorTableAdapters {
+    
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class mTransactionPerilsDefaultsTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public mTransactionPerilsDefaultsTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "mTransactionPerilsDefaults";
+            tableMapping.ColumnMappings.Add("RecordID", "RecordID");
+            tableMapping.ColumnMappings.Add("PerilID", "PerilID");
+            tableMapping.ColumnMappings.Add("LimitSIDefault", "LimitSIDefault");
+            tableMapping.ColumnMappings.Add("LimitSIEditable", "LimitSIEditable");
+            tableMapping.ColumnMappings.Add("RateDefault", "RateDefault");
+            tableMapping.ColumnMappings.Add("RateEditable", "RateEditable");
+            tableMapping.ColumnMappings.Add("RateShowTariffText", "RateShowTariffText");
+            tableMapping.ColumnMappings.Add("PremiumDefault", "PremiumDefault");
+            tableMapping.ColumnMappings.Add("PolicyRateDefault", "PolicyRateDefault");
+            tableMapping.ColumnMappings.Add("PolicyRateEditable", "PolicyRateEditable");
+            tableMapping.ColumnMappings.Add("PolicyRateShowTariffText", "PolicyRateShowTariffText");
+            tableMapping.ColumnMappings.Add("PolicyPremiumDefault", "PolicyPremiumDefault");
+            tableMapping.ColumnMappings.Add("LastEditedBy", "LastEditedBy");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[mTransactionPerilsDefaults] WHERE (([RecordID] = @Original_RecordID) AND ([PerilID] = @Original_PerilID) AND ([LimitSIDefault] = @Original_LimitSIDefault) AND ([LimitSIEditable] = @Original_LimitSIEditable) AND ([RateDefault] = @Original_RateDefault) AND ([RateEditable] = @Original_RateEditable) AND ([RateShowTariffText] = @Original_RateShowTariffText) AND ([PremiumDefault] = @Original_PremiumDefault) AND ([PolicyRateDefault] = @Original_PolicyRateDefault) AND ([PolicyRateEditable] = @Original_PolicyRateEditable) AND ([PolicyRateShowTariffText] = @Original_PolicyRateShowTariffText) AND ([PolicyPremiumDefault] = @Original_PolicyPremiumDefault) AND ([LastEditedBy] = @Original_LastEditedBy))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RecordID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecordID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PerilID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PerilID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LimitSIDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LimitSIDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LimitSIEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LimitSIEditable", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RateDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RateEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateEditable", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RateShowTariffText", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateShowTariffText", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PremiumDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PremiumDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PolicyRateDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PolicyRateEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateEditable", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PolicyRateShowTariffText", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateShowTariffText", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PolicyPremiumDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyPremiumDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LastEditedBy", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastEditedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[mTransactionPerilsDefaults] ([PerilID], [LimitSIDefault], [LimitSIEditable], [RateDefault], [RateEditable], [RateShowTariffText], [PremiumDefault], [PolicyRateDefault], [PolicyRateEditable], [PolicyRateShowTariffText], [PolicyPremiumDefault], [LastEditedBy]) VALUES (@PerilID, @LimitSIDefault, @LimitSIEditable, @RateDefault, @RateEditable, @RateShowTariffText, @PremiumDefault, @PolicyRateDefault, @PolicyRateEditable, @PolicyRateShowTariffText, @PolicyPremiumDefault, @LastEditedBy);
+SELECT RecordID, PerilID, LimitSIDefault, LimitSIEditable, RateDefault, RateEditable, RateShowTariffText, PremiumDefault, PolicyRateDefault, PolicyRateEditable, PolicyRateShowTariffText, PolicyPremiumDefault, LastEditedBy FROM mTransactionPerilsDefaults WHERE (RecordID = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PerilID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PerilID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LimitSIDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LimitSIDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LimitSIEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LimitSIEditable", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RateDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RateEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateEditable", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RateShowTariffText", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateShowTariffText", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PremiumDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PremiumDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PolicyRateDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PolicyRateEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateEditable", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PolicyRateShowTariffText", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateShowTariffText", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PolicyPremiumDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyPremiumDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastEditedBy", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastEditedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[mTransactionPerilsDefaults] SET [PerilID] = @PerilID, [LimitSIDefault] = @LimitSIDefault, [LimitSIEditable] = @LimitSIEditable, [RateDefault] = @RateDefault, [RateEditable] = @RateEditable, [RateShowTariffText] = @RateShowTariffText, [PremiumDefault] = @PremiumDefault, [PolicyRateDefault] = @PolicyRateDefault, [PolicyRateEditable] = @PolicyRateEditable, [PolicyRateShowTariffText] = @PolicyRateShowTariffText, [PolicyPremiumDefault] = @PolicyPremiumDefault, [LastEditedBy] = @LastEditedBy WHERE (([RecordID] = @Original_RecordID) AND ([PerilID] = @Original_PerilID) AND ([LimitSIDefault] = @Original_LimitSIDefault) AND ([LimitSIEditable] = @Original_LimitSIEditable) AND ([RateDefault] = @Original_RateDefault) AND ([RateEditable] = @Original_RateEditable) AND ([RateShowTariffText] = @Original_RateShowTariffText) AND ([PremiumDefault] = @Original_PremiumDefault) AND ([PolicyRateDefault] = @Original_PolicyRateDefault) AND ([PolicyRateEditable] = @Original_PolicyRateEditable) AND ([PolicyRateShowTariffText] = @Original_PolicyRateShowTariffText) AND ([PolicyPremiumDefault] = @Original_PolicyPremiumDefault) AND ([LastEditedBy] = @Original_LastEditedBy));
+SELECT RecordID, PerilID, LimitSIDefault, LimitSIEditable, RateDefault, RateEditable, RateShowTariffText, PremiumDefault, PolicyRateDefault, PolicyRateEditable, PolicyRateShowTariffText, PolicyPremiumDefault, LastEditedBy FROM mTransactionPerilsDefaults WHERE (RecordID = @RecordID)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PerilID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PerilID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LimitSIDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LimitSIDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LimitSIEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LimitSIEditable", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RateDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RateEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateEditable", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RateShowTariffText", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateShowTariffText", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PremiumDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PremiumDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PolicyRateDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PolicyRateEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateEditable", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PolicyRateShowTariffText", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateShowTariffText", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PolicyPremiumDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyPremiumDefault", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastEditedBy", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastEditedBy", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RecordID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecordID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PerilID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PerilID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LimitSIDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LimitSIDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LimitSIEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LimitSIEditable", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RateDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RateEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateEditable", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RateShowTariffText", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RateShowTariffText", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PremiumDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PremiumDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PolicyRateDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PolicyRateEditable", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateEditable", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PolicyRateShowTariffText", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyRateShowTariffText", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PolicyPremiumDefault", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PolicyPremiumDefault", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LastEditedBy", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastEditedBy", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RecordID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "RecordID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::MotorOnline.Data.Properties.Settings.Default.FpacMotorCarConnectionString2;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = @"SELECT RecordID, PerilID, LimitSIDefault, LimitSIEditable, RateDefault, RateEditable, RateShowTariffText, PremiumDefault, PolicyRateDefault, PolicyRateEditable, PolicyRateShowTariffText, PolicyPremiumDefault, LastEditedBy FROM dbo.mTransactionPerilsDefaults";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "dbo.sp_getallperildefault";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(SprocCreator.mTransactionPerilsDefaultsDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual SprocCreator.mTransactionPerilsDefaultsDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            SprocCreator.mTransactionPerilsDefaultsDataTable dataTable = new SprocCreator.mTransactionPerilsDefaultsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillBy(SprocCreator.mTransactionPerilsDefaultsDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual SprocCreator.mTransactionPerilsDefaultsDataTable GetDataBy() {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            SprocCreator.mTransactionPerilsDefaultsDataTable dataTable = new SprocCreator.mTransactionPerilsDefaultsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(SprocCreator.mTransactionPerilsDefaultsDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(SprocCreator dataSet) {
+            return this.Adapter.Update(dataSet, "mTransactionPerilsDefaults");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int Original_RecordID, int Original_PerilID, double Original_LimitSIDefault, bool Original_LimitSIEditable, double Original_RateDefault, bool Original_RateEditable, bool Original_RateShowTariffText, double Original_PremiumDefault, double Original_PolicyRateDefault, bool Original_PolicyRateEditable, bool Original_PolicyRateShowTariffText, double Original_PolicyPremiumDefault, int Original_LastEditedBy) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_RecordID));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_PerilID));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((double)(Original_LimitSIDefault));
+            this.Adapter.DeleteCommand.Parameters[3].Value = ((bool)(Original_LimitSIEditable));
+            this.Adapter.DeleteCommand.Parameters[4].Value = ((double)(Original_RateDefault));
+            this.Adapter.DeleteCommand.Parameters[5].Value = ((bool)(Original_RateEditable));
+            this.Adapter.DeleteCommand.Parameters[6].Value = ((bool)(Original_RateShowTariffText));
+            this.Adapter.DeleteCommand.Parameters[7].Value = ((double)(Original_PremiumDefault));
+            this.Adapter.DeleteCommand.Parameters[8].Value = ((double)(Original_PolicyRateDefault));
+            this.Adapter.DeleteCommand.Parameters[9].Value = ((bool)(Original_PolicyRateEditable));
+            this.Adapter.DeleteCommand.Parameters[10].Value = ((bool)(Original_PolicyRateShowTariffText));
+            this.Adapter.DeleteCommand.Parameters[11].Value = ((double)(Original_PolicyPremiumDefault));
+            this.Adapter.DeleteCommand.Parameters[12].Value = ((int)(Original_LastEditedBy));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(int PerilID, double LimitSIDefault, bool LimitSIEditable, double RateDefault, bool RateEditable, bool RateShowTariffText, double PremiumDefault, double PolicyRateDefault, bool PolicyRateEditable, bool PolicyRateShowTariffText, double PolicyPremiumDefault, int LastEditedBy) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(PerilID));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((double)(LimitSIDefault));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((bool)(LimitSIEditable));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((double)(RateDefault));
+            this.Adapter.InsertCommand.Parameters[4].Value = ((bool)(RateEditable));
+            this.Adapter.InsertCommand.Parameters[5].Value = ((bool)(RateShowTariffText));
+            this.Adapter.InsertCommand.Parameters[6].Value = ((double)(PremiumDefault));
+            this.Adapter.InsertCommand.Parameters[7].Value = ((double)(PolicyRateDefault));
+            this.Adapter.InsertCommand.Parameters[8].Value = ((bool)(PolicyRateEditable));
+            this.Adapter.InsertCommand.Parameters[9].Value = ((bool)(PolicyRateShowTariffText));
+            this.Adapter.InsertCommand.Parameters[10].Value = ((double)(PolicyPremiumDefault));
+            this.Adapter.InsertCommand.Parameters[11].Value = ((int)(LastEditedBy));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(
+                    int PerilID, 
+                    double LimitSIDefault, 
+                    bool LimitSIEditable, 
+                    double RateDefault, 
+                    bool RateEditable, 
+                    bool RateShowTariffText, 
+                    double PremiumDefault, 
+                    double PolicyRateDefault, 
+                    bool PolicyRateEditable, 
+                    bool PolicyRateShowTariffText, 
+                    double PolicyPremiumDefault, 
+                    int LastEditedBy, 
+                    int Original_RecordID, 
+                    int Original_PerilID, 
+                    double Original_LimitSIDefault, 
+                    bool Original_LimitSIEditable, 
+                    double Original_RateDefault, 
+                    bool Original_RateEditable, 
+                    bool Original_RateShowTariffText, 
+                    double Original_PremiumDefault, 
+                    double Original_PolicyRateDefault, 
+                    bool Original_PolicyRateEditable, 
+                    bool Original_PolicyRateShowTariffText, 
+                    double Original_PolicyPremiumDefault, 
+                    int Original_LastEditedBy, 
+                    int RecordID) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(PerilID));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((double)(LimitSIDefault));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((bool)(LimitSIEditable));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((double)(RateDefault));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((bool)(RateEditable));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((bool)(RateShowTariffText));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((double)(PremiumDefault));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((double)(PolicyRateDefault));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((bool)(PolicyRateEditable));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((bool)(PolicyRateShowTariffText));
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((double)(PolicyPremiumDefault));
+            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(LastEditedBy));
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(Original_RecordID));
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Original_PerilID));
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((double)(Original_LimitSIDefault));
+            this.Adapter.UpdateCommand.Parameters[15].Value = ((bool)(Original_LimitSIEditable));
+            this.Adapter.UpdateCommand.Parameters[16].Value = ((double)(Original_RateDefault));
+            this.Adapter.UpdateCommand.Parameters[17].Value = ((bool)(Original_RateEditable));
+            this.Adapter.UpdateCommand.Parameters[18].Value = ((bool)(Original_RateShowTariffText));
+            this.Adapter.UpdateCommand.Parameters[19].Value = ((double)(Original_PremiumDefault));
+            this.Adapter.UpdateCommand.Parameters[20].Value = ((double)(Original_PolicyRateDefault));
+            this.Adapter.UpdateCommand.Parameters[21].Value = ((bool)(Original_PolicyRateEditable));
+            this.Adapter.UpdateCommand.Parameters[22].Value = ((bool)(Original_PolicyRateShowTariffText));
+            this.Adapter.UpdateCommand.Parameters[23].Value = ((double)(Original_PolicyPremiumDefault));
+            this.Adapter.UpdateCommand.Parameters[24].Value = ((int)(Original_LastEditedBy));
+            this.Adapter.UpdateCommand.Parameters[25].Value = ((int)(RecordID));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(
+                    int PerilID, 
+                    double LimitSIDefault, 
+                    bool LimitSIEditable, 
+                    double RateDefault, 
+                    bool RateEditable, 
+                    bool RateShowTariffText, 
+                    double PremiumDefault, 
+                    double PolicyRateDefault, 
+                    bool PolicyRateEditable, 
+                    bool PolicyRateShowTariffText, 
+                    double PolicyPremiumDefault, 
+                    int LastEditedBy, 
+                    int Original_RecordID, 
+                    int Original_PerilID, 
+                    double Original_LimitSIDefault, 
+                    bool Original_LimitSIEditable, 
+                    double Original_RateDefault, 
+                    bool Original_RateEditable, 
+                    bool Original_RateShowTariffText, 
+                    double Original_PremiumDefault, 
+                    double Original_PolicyRateDefault, 
+                    bool Original_PolicyRateEditable, 
+                    bool Original_PolicyRateShowTariffText, 
+                    double Original_PolicyPremiumDefault, 
+                    int Original_LastEditedBy) {
+            return this.Update(PerilID, LimitSIDefault, LimitSIEditable, RateDefault, RateEditable, RateShowTariffText, PremiumDefault, PolicyRateDefault, PolicyRateEditable, PolicyRateShowTariffText, PolicyPremiumDefault, LastEditedBy, Original_RecordID, Original_PerilID, Original_LimitSIDefault, Original_LimitSIEditable, Original_RateDefault, Original_RateEditable, Original_RateShowTariffText, Original_PremiumDefault, Original_PolicyRateDefault, Original_PolicyRateEditable, Original_PolicyRateShowTariffText, Original_PolicyPremiumDefault, Original_LastEditedBy, Original_RecordID);
+        }
+    }
+    
+    /// <summary>
+    ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerDesigner, Microsoft.VSD" +
+        "esigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapterManager")]
+    public partial class TableAdapterManager : global::System.ComponentModel.Component {
+        
+        private UpdateOrderOption _updateOrder;
+        
+        private mTransactionPerilsDefaultsTableAdapter _mTransactionPerilsDefaultsTableAdapter;
+        
+        private bool _backupDataSetBeforeUpdate;
+        
+        private global::System.Data.IDbConnection _connection;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public UpdateOrderOption UpdateOrder {
+            get {
+                return this._updateOrder;
+            }
+            set {
+                this._updateOrder = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public mTransactionPerilsDefaultsTableAdapter mTransactionPerilsDefaultsTableAdapter {
+            get {
+                return this._mTransactionPerilsDefaultsTableAdapter;
+            }
+            set {
+                this._mTransactionPerilsDefaultsTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool BackupDataSetBeforeUpdate {
+            get {
+                return this._backupDataSetBeforeUpdate;
+            }
+            set {
+                this._backupDataSetBeforeUpdate = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        public global::System.Data.IDbConnection Connection {
+            get {
+                if ((this._connection != null)) {
+                    return this._connection;
+                }
+                if (((this._mTransactionPerilsDefaultsTableAdapter != null) 
+                            && (this._mTransactionPerilsDefaultsTableAdapter.Connection != null))) {
+                    return this._mTransactionPerilsDefaultsTableAdapter.Connection;
+                }
+                return null;
+            }
+            set {
+                this._connection = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        public int TableAdapterInstanceCount {
+            get {
+                int count = 0;
+                if ((this._mTransactionPerilsDefaultsTableAdapter != null)) {
+                    count = (count + 1);
+                }
+                return count;
+            }
+        }
+        
+        /// <summary>
+        ///Update rows in top-down order.
+        ///</summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private int UpdateUpdatedRows(SprocCreator dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+            int result = 0;
+            if ((this._mTransactionPerilsDefaultsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.mTransactionPerilsDefaults.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._mTransactionPerilsDefaultsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            return result;
+        }
+        
+        /// <summary>
+        ///Insert rows in top-down order.
+        ///</summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private int UpdateInsertedRows(SprocCreator dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+            int result = 0;
+            if ((this._mTransactionPerilsDefaultsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.mTransactionPerilsDefaults.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._mTransactionPerilsDefaultsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            return result;
+        }
+        
+        /// <summary>
+        ///Delete rows in bottom-up order.
+        ///</summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private int UpdateDeletedRows(SprocCreator dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+            int result = 0;
+            if ((this._mTransactionPerilsDefaultsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.mTransactionPerilsDefaults.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._mTransactionPerilsDefaultsTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            return result;
+        }
+        
+        /// <summary>
+        ///Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+        ///</summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private global::System.Data.DataRow[] GetRealUpdatedRows(global::System.Data.DataRow[] updatedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+            if (((updatedRows == null) 
+                        || (updatedRows.Length < 1))) {
+                return updatedRows;
+            }
+            if (((allAddedRows == null) 
+                        || (allAddedRows.Count < 1))) {
+                return updatedRows;
+            }
+            global::System.Collections.Generic.List<global::System.Data.DataRow> realUpdatedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
+            for (int i = 0; (i < updatedRows.Length); i = (i + 1)) {
+                global::System.Data.DataRow row = updatedRows[i];
+                if ((allAddedRows.Contains(row) == false)) {
+                    realUpdatedRows.Add(row);
+                }
+            }
+            return realUpdatedRows.ToArray();
+        }
+        
+        /// <summary>
+        ///Update all changes to the dataset.
+        ///</summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public virtual int UpdateAll(SprocCreator dataSet) {
+            if ((dataSet == null)) {
+                throw new global::System.ArgumentNullException("dataSet");
+            }
+            if ((dataSet.HasChanges() == false)) {
+                return 0;
+            }
+            if (((this._mTransactionPerilsDefaultsTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._mTransactionPerilsDefaultsTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
+                        "tring.");
+            }
+            global::System.Data.IDbConnection workConnection = this.Connection;
+            if ((workConnection == null)) {
+                throw new global::System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana" +
+                        "ger TableAdapter property to a valid TableAdapter instance.");
+            }
+            bool workConnOpened = false;
+            if (((workConnection.State & global::System.Data.ConnectionState.Broken) 
+                        == global::System.Data.ConnectionState.Broken)) {
+                workConnection.Close();
+            }
+            if ((workConnection.State == global::System.Data.ConnectionState.Closed)) {
+                workConnection.Open();
+                workConnOpened = true;
+            }
+            global::System.Data.IDbTransaction workTransaction = workConnection.BeginTransaction();
+            if ((workTransaction == null)) {
+                throw new global::System.ApplicationException("The transaction cannot begin. The current data connection does not support transa" +
+                        "ctions or the current state is not allowing the transaction to begin.");
+            }
+            global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
+            global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
+            global::System.Collections.Generic.List<global::System.Data.Common.DataAdapter> adaptersWithAcceptChangesDuringUpdate = new global::System.Collections.Generic.List<global::System.Data.Common.DataAdapter>();
+            global::System.Collections.Generic.Dictionary<object, global::System.Data.IDbConnection> revertConnections = new global::System.Collections.Generic.Dictionary<object, global::System.Data.IDbConnection>();
+            int result = 0;
+            global::System.Data.DataSet backupDataSet = null;
+            if (this.BackupDataSetBeforeUpdate) {
+                backupDataSet = new global::System.Data.DataSet();
+                backupDataSet.Merge(dataSet);
+            }
+            try {
+                // ---- Prepare for update -----------
+                //
+                if ((this._mTransactionPerilsDefaultsTableAdapter != null)) {
+                    revertConnections.Add(this._mTransactionPerilsDefaultsTableAdapter, this._mTransactionPerilsDefaultsTableAdapter.Connection);
+                    this._mTransactionPerilsDefaultsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._mTransactionPerilsDefaultsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._mTransactionPerilsDefaultsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._mTransactionPerilsDefaultsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._mTransactionPerilsDefaultsTableAdapter.Adapter);
+                    }
+                }
+                // 
+                //---- Perform updates -----------
+                //
+                if ((this.UpdateOrder == UpdateOrderOption.UpdateInsertDelete)) {
+                    result = (result + this.UpdateUpdatedRows(dataSet, allChangedRows, allAddedRows));
+                    result = (result + this.UpdateInsertedRows(dataSet, allAddedRows));
+                }
+                else {
+                    result = (result + this.UpdateInsertedRows(dataSet, allAddedRows));
+                    result = (result + this.UpdateUpdatedRows(dataSet, allChangedRows, allAddedRows));
+                }
+                result = (result + this.UpdateDeletedRows(dataSet, allChangedRows));
+                // 
+                //---- Commit updates -----------
+                //
+                workTransaction.Commit();
+                if ((0 < allAddedRows.Count)) {
+                    global::System.Data.DataRow[] rows = new System.Data.DataRow[allAddedRows.Count];
+                    allAddedRows.CopyTo(rows);
+                    for (int i = 0; (i < rows.Length); i = (i + 1)) {
+                        global::System.Data.DataRow row = rows[i];
+                        row.AcceptChanges();
+                    }
+                }
+                if ((0 < allChangedRows.Count)) {
+                    global::System.Data.DataRow[] rows = new System.Data.DataRow[allChangedRows.Count];
+                    allChangedRows.CopyTo(rows);
+                    for (int i = 0; (i < rows.Length); i = (i + 1)) {
+                        global::System.Data.DataRow row = rows[i];
+                        row.AcceptChanges();
+                    }
+                }
+            }
+            catch (global::System.Exception ex) {
+                workTransaction.Rollback();
+                // ---- Restore the dataset -----------
+                if (this.BackupDataSetBeforeUpdate) {
+                    global::System.Diagnostics.Debug.Assert((backupDataSet != null));
+                    dataSet.Clear();
+                    dataSet.Merge(backupDataSet);
+                }
+                else {
+                    if ((0 < allAddedRows.Count)) {
+                        global::System.Data.DataRow[] rows = new System.Data.DataRow[allAddedRows.Count];
+                        allAddedRows.CopyTo(rows);
+                        for (int i = 0; (i < rows.Length); i = (i + 1)) {
+                            global::System.Data.DataRow row = rows[i];
+                            row.AcceptChanges();
+                            row.SetAdded();
+                        }
+                    }
+                }
+                throw ex;
+            }
+            finally {
+                if (workConnOpened) {
+                    workConnection.Close();
+                }
+                if ((this._mTransactionPerilsDefaultsTableAdapter != null)) {
+                    this._mTransactionPerilsDefaultsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._mTransactionPerilsDefaultsTableAdapter]));
+                    this._mTransactionPerilsDefaultsTableAdapter.Transaction = null;
+                }
+                if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
+                    global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];
+                    adaptersWithAcceptChangesDuringUpdate.CopyTo(adapters);
+                    for (int i = 0; (i < adapters.Length); i = (i + 1)) {
+                        global::System.Data.Common.DataAdapter adapter = adapters[i];
+                        adapter.AcceptChangesDuringUpdate = true;
+                    }
+                }
+            }
+            return result;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected virtual void SortSelfReferenceRows(global::System.Data.DataRow[] rows, global::System.Data.DataRelation relation, bool childFirst) {
+            global::System.Array.Sort<global::System.Data.DataRow>(rows, new SelfReferenceComparer(relation, childFirst));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected virtual bool MatchTableAdapterConnection(global::System.Data.IDbConnection inputConnection) {
+            if ((this._connection != null)) {
+                return true;
+            }
+            if (((this.Connection == null) 
+                        || (inputConnection == null))) {
+                return true;
+            }
+            if (string.Equals(this.Connection.ConnectionString, inputConnection.ConnectionString, global::System.StringComparison.Ordinal)) {
+                return true;
+            }
+            return false;
+        }
+        
+        /// <summary>
+        ///Update Order Option
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public enum UpdateOrderOption {
+            
+            InsertUpdateDelete = 0,
+            
+            UpdateInsertDelete = 1,
+        }
+        
+        /// <summary>
+        ///Used to sort self-referenced table's rows
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private class SelfReferenceComparer : object, global::System.Collections.Generic.IComparer<global::System.Data.DataRow> {
+            
+            private global::System.Data.DataRelation _relation;
+            
+            private int _childFirst;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal SelfReferenceComparer(global::System.Data.DataRelation relation, bool childFirst) {
+                this._relation = relation;
+                if (childFirst) {
+                    this._childFirst = -1;
+                }
+                else {
+                    this._childFirst = 1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private global::System.Data.DataRow GetRoot(global::System.Data.DataRow row, out int distance) {
+                global::System.Diagnostics.Debug.Assert((row != null));
+                global::System.Data.DataRow root = row;
+                distance = 0;
+
+                global::System.Collections.Generic.IDictionary<global::System.Data.DataRow, global::System.Data.DataRow> traversedRows = new global::System.Collections.Generic.Dictionary<global::System.Data.DataRow, global::System.Data.DataRow>();
+                traversedRows[row] = row;
+
+                global::System.Data.DataRow parent = row.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
+                for (
+                ; ((parent != null) 
+                            && (traversedRows.ContainsKey(parent) == false)); 
+                ) {
+                    distance = (distance + 1);
+                    root = parent;
+                    traversedRows[parent] = parent;
+                    parent = parent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
+                }
+
+                if ((distance == 0)) {
+                    traversedRows.Clear();
+                    traversedRows[row] = row;
+                    parent = row.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original);
+                    for (
+                    ; ((parent != null) 
+                                && (traversedRows.ContainsKey(parent) == false)); 
+                    ) {
+                        distance = (distance + 1);
+                        root = parent;
+                        traversedRows[parent] = parent;
+                        parent = parent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original);
+                    }
+                }
+
+                return root;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Compare(global::System.Data.DataRow row1, global::System.Data.DataRow row2) {
+                if (object.ReferenceEquals(row1, row2)) {
+                    return 0;
+                }
+                if ((row1 == null)) {
+                    return -1;
+                }
+                if ((row2 == null)) {
+                    return 1;
+                }
+
+                int distance1 = 0;
+                global::System.Data.DataRow root1 = this.GetRoot(row1, out distance1);
+
+                int distance2 = 0;
+                global::System.Data.DataRow root2 = this.GetRoot(row2, out distance2);
+
+                if (object.ReferenceEquals(root1, root2)) {
+                    return (this._childFirst * distance1.CompareTo(distance2));
+                }
+                else {
+                    global::System.Diagnostics.Debug.Assert(((root1.Table != null) 
+                                    && (root2.Table != null)));
+                    if ((root1.Table.Rows.IndexOf(root1) < root2.Table.Rows.IndexOf(root2))) {
+                        return -1;
+                    }
+                    else {
+                        return 1;
+                    }
+                }
+            }
         }
     }
 }

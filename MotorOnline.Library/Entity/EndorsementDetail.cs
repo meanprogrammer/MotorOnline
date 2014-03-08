@@ -13,5 +13,12 @@ namespace MotorOnline.Library.Entity
         public DateTime DateEndorsed { get; set; }
         public DateTime EffectivityDate { get; set; }
         public DateTime ExpiryDate { get; set; }
+        public int EndorsementType { get; set; }
+
+        public string DateEndorsedText {
+            get {
+                return this.DateEndorsed.ToShortDateString();
+            }
+        }
     }
 }

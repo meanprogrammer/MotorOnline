@@ -23,17 +23,59 @@
                 $.ajax({
                     url: "ajax/TransactionAjax.aspx",
                     type: "post",
-                    data: { "action": 'gettransactionbyid', "transactionid": id },
+                    data: { "action": 'gettransactionbyidwithhistory', "transactionid": id },
                     success: function (result) {
                         var obj = JSON.parse(result);
                         if (obj != null) {
-                            loadtransactiondetails(obj, id);
+                            loadtransactiondetails(obj.Transaction, id);
+                            if (obj.HasEndorsement == true) {
+                                $('#printendorsement').css('display', 'inline');
+                            }
 
+                            if (obj.IsEndorsed == true) {
+                                $('#endorsebutton').css('display', 'none');
+                            }
+
+                            if (obj.IsPosted == true) {
+                                $('#PostButton').css('display', 'none');
+                            }
+
+                            var html = '<table class="table table-bordered">';
+                            html += '<tr><th width="150">Transaction</th><th  width="150">Endorsement Type</th><th>Endorsement Text</th><th width="150">Date Endorsed</th></tr>'
+                            html += '<tr><th colspan="4">Parent Transaction</th></tr>';
+                            if (obj.History["Parent"] != null) {
+                                var parent = obj.History["Parent"];
+                                html += '<tr>';
+                                html += '<td><a href="TransactionDetailsView.aspx?id=' + parent.Endorsement.ParentTransactionID + '">Details</a></td>';
+                                html += '<td>' + parent.EndorsementTitle + '</td>';
+                                html += '<td>' + parent.Endorsement.EndorsementText + '</td>';
+                                html += '<td>' + parent.Endorsement.DateEndorsedText + '</td>';
+                                html += '</tr>';
+                            } else {
+                                html += '<tr><td colspan="4">No Parent Transaction</td></tr>';
+                            }
+
+                            html += '<tr><th colspan="4">Child Transaction</th></tr>';
+                            if (obj.History["Child"] != null) {
+                                var child = obj.History["Child"];
+                                html += '<tr>';
+                                html += '<td><a href="TransactionDetailsView.aspx?id=' + child.Endorsement.NewTransactionID + '">Details</a></td>';
+                                html += '<td>' + child.EndorsementTitle + '</td>';
+                                html += '<td>' + child.Endorsement.EndorsementText + '</td>';
+                                html += '<td>' + child.Endorsement.DateEndorsedText + '</td>';
+                                html += '</tr>';
+                            } else {
+                                html += '<tr><td colspan="4">No Child Transaction</td></tr>';
+                            }
+                            html += '</table>';
+                            $('#endorsement-history').replaceWith(html);
                         }
                     },
                     error: function () {
                     }
                 });
+            } else {
+                $('#PrintButton,#PostButton,#endorsebutton').css('display', 'none');
             }
 
             $('#PostButton').click(posttransaction);
@@ -669,7 +711,7 @@
                     <td>
                         Type of Endorsement</td>
                     <td>
-                        <asp:DropDownList ID="EndorsementDropdown" ClientIDMode="Static" runat="server">
+                        <asp:DropDownList ID="EndorsementDropdown" ClientIDMode="Static" class="form-control" runat="server">
                             <asp:ListItem Value="0" Text="-- SELECT --"></asp:ListItem>
                         </asp:DropDownList>
                         </td>
@@ -679,13 +721,13 @@
                     <td>
                         Effectivity date</td>
                     <td>
-                        <input id="effectivitydate" type="text" /></td>
+                        <input id="effectivitydate" class="form-control input-sm" type="text" /></td>
                     <td><span class="required-field">*</span></td>
                 </tr>
                 <tr>
                     <td colspan="3">
                         <textarea id="endorsementtext" cols="60" 
-                            name="endorsementtext" rows="10"></textarea></td>
+                            name="endorsementtext"class="form-control input-sm" rows="10"></textarea></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -699,13 +741,18 @@
                     <td>
                         &nbsp;</td>
                     <td>
-                        <input id="endsavebutton" type="button" value="Save" />&nbsp;
-                        <input id="endcancelbutton" type="button" value="Cancel" />
+                        <input id="endsavebutton" type="button" class="btn btn-primary" value="Save" />&nbsp;
+                        <input id="endcancelbutton" type="button" value="Cancel"  class="btn btn-default"  />
                         </td>
                     <td>
                         &nbsp;</td>
                 </tr>
             </table>
+        </div>
+        <div class="panel panel-primary endorsement-history-container">
+          <div class="panel-heading">Endorsement History</div>
+          <div id="endorsement-history" class="panel-body">
+          </div>
         </div>
         <hr />
         <table style="width: 500px">
@@ -722,7 +769,9 @@
                     <% if (this.CurrentUser.UserRole.CanEndorse) { %>
                         <input id="endorsebutton" type="button" value="Endorse" class="btn btn-default" />
                     <% } %>
+                    <input id="printendorsement" type="button" class="btn btn-default" value="Print Endorsement" style="display:none;" />
                 </td>
+                
             </tr>
         </table>
     </div>
