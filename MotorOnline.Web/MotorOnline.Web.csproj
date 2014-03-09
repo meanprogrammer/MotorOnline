@@ -124,6 +124,7 @@
     <Content Include="DefaultView.aspx" />
     <Content Include="LoginView.aspx" />
     <Content Include="PerilsDefaultsView.aspx" />
+    <Content Include="Users.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ajax\TransactionAjax.aspx.cs">
@@ -243,6 +244,13 @@
     </Compile>
     <Compile Include="PerilsDefaultsView.aspx.designer.cs">
       <DependentUpon>PerilsDefaultsView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Users.aspx.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

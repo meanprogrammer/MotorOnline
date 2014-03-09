@@ -54,6 +54,7 @@
                 <li><a href="#">FAQ</a></li>
                 <li><a href="#">Contact Us</a></li>
                 <li><a href="PerilsDefaultsView.aspx">Perils Defaults</a></li>
+                <li><a href="Users.aspx">Users</a></li>
             </ul>
         </div>
         <div id="maincontent">

@@ -6,12 +6,16 @@
     <script src="js/login.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">
-    <div id="login">
-        <h3>Login</h3>
-        <div id="loginMessage" runat="server">
-             <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
-        </div>
-        <div class="login-form">
+<%--    <div id="login">
+        <h3>Login</h3>--%>
+        <br />
+        <div class="panel panel-primary" style="width: 450px;margin:0 auto;">
+          <div class="panel-heading">
+            <h3 class="panel-title">Login</h3>
+          </div>
+          <div class="panel-body">
+                 <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
+        <%--<div class="login-form">--%>
             <table cellpadding="8" align="center" class="login-table">
             <tr>
                 <td colspan="2">
@@ -55,6 +59,8 @@
                 </td>
             </tr>
         </table>
-        </div>
-    </div>
+          </div>
+</div>
+  <%--      </div>
+    </div>--%>
 </asp:Content>

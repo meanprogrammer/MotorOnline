@@ -28,15 +28,15 @@
                         var obj = JSON.parse(result);
                         if (obj != null) {
                             loadtransactiondetails(obj.Transaction, id);
-                            if (obj.HasEndorsement == true) {
+                            if (obj.Transaction.HasEndorsement == true) {
                                 $('#printendorsement').css('display', 'inline');
                             }
 
-                            if (obj.IsEndorsed == true) {
+                            if (obj.Transaction.IsEndorsed == true) {
                                 $('#endorsebutton').css('display', 'none');
                             }
 
-                            if (obj.IsPosted == true) {
+                            if (obj.Transaction.IsPosted == true) {
                                 $('#PostButton').css('display', 'none');
                             }
 
@@ -103,7 +103,15 @@
             );
 
             $('#EndorsementDropdown').change(onendorsementselectchanged);
-            $('#effectivitydate').datepicker();
+            $('#effectivitydate').datepicker({
+                onSelect: function (date) {
+                    if (Date.parse(date) < new Date()) {
+                        alert('Effectivity date cannot be a past date.');
+                        $('#effectivitydate').val('');
+                        return false;
+                    }
+                }
+            });
 
             $('#printendorsement').click(
                 function () {

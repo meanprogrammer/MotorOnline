@@ -1654,7 +1654,7 @@ namespace MotorOnline.Web
 
         public List<PerilsDefault> GetAllPerilsDefaults()
         {
-            go_dah.uf_set_stored_procedure("sp_getallperilsdefaults", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure("sp_getallperildefault", ref go_sqlConnection);
             IDataReader reader = go_dah.uf_execute_reader();
             List<PerilsDefault> defaults = new List<PerilsDefault>();
             using (reader)

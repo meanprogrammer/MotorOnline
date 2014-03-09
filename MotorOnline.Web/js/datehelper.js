@@ -94,6 +94,13 @@ function handlecalendarselectendorsement() {
     }
 }
 
+function handleeffectivitydateselect() {
+    var value = $('#effectivitydate').val();
+    if (Date.parse(value) < Date.parse(new Date())) {
+        return;
+    }
+}
+
 function addzero(enddate) {
     if (parseInt(enddate) < 10) {
         enddate = "0" + enddate;

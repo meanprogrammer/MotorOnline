@@ -102,7 +102,7 @@ function searchtransactions(callback) {
             var obj = JSON.parse(result);
             html = '<table class="table table-bordered table-striped"><tr>';
             html += '<th></th>';
-//            html += '<th></th>';
+            //            html += '<th></th>';
             html += '<th>Branch</th>';
             html += '<th>Par No</th>';
             html += '<th>Policy No</th>';
@@ -124,7 +124,7 @@ function searchtransactions(callback) {
                 $.each(obj.Data, function (key, value) {
                     html += '<tr>';
                     html += '<td><a href="TransactionDetailsView.aspx?id=' + value.TransactionID + '">Details</a></td>';
-//                    html += '<td><a href="TransactionView.aspx?id=' + value.TransactionID + '">Edit</a></td>';
+                    //                    html += '<td><a href="TransactionView.aspx?id=' + value.TransactionID + '">Edit</a></td>';
                     html += '<td>' + value.CreditingBranch + '</td>';
                     html += '<td>' + value.ParNo + '</td>';
                     html += '<td>' + value.PolicyNo + '</td>';
@@ -143,6 +143,12 @@ function searchtransactions(callback) {
                     html += '<td>' + value.MiddleName + '</td>';
                     html += '</tr>';
                 });
+
+                if (obj.Data.length <= 0) {
+                    $('#rowsperpage').prop('disabled', true);
+                } else {
+                    $('#rowsperpage').prop('disabled', false);
+                }
             }
 
 
@@ -151,16 +157,16 @@ function searchtransactions(callback) {
             var pager = '';
             for (var i = 1; i <= obj.PageCount; i++) {
                 var cssclass = '';
-                if(i === obj.CurrentPage) {
+                if (i === obj.CurrentPage) {
                     cssclass = 'active';
                 }
-                pager += '<li class="clickable ' + cssclass + '"><a onclick="changepage('+ i +')">'+ (i) +'</a></li>';              
+                pager += '<li class="clickable ' + cssclass + '"><a onclick="changepage(' + i + ')">' + (i) + '</a></li>';
             }
             $('#search-pager').html(pager);
             $('#search-pager').show();
             hideloader();
 
-            if(callback != null && (callback instanceof Function)){
+            if (callback != null && (callback instanceof Function)) {
                 callback();
             }
         },
@@ -190,6 +196,7 @@ function resetsearch() {
     $('#searchresult').html('');
 
     $('#search-pager').hide();
+    $('#rowsperpage').prop('disabled', true);
 }
 
 
