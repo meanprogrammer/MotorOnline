@@ -1782,7 +1782,84 @@ namespace MotorOnline.Web
             return pDefaults;
         }
 
+        public List<User> GetAllUsers() {
+            go_dah.uf_set_stored_procedure("sp_getallusers", ref go_sqlConnection);
+            List<User> users = new List<User>();
 
+            IDataReader reader = go_dah.uf_execute_reader();
+            User user = null;
+            using (reader)
+            {
+                int userIdIdx = reader.GetOrdinal("UserID");
+                int usernameIdx = reader.GetOrdinal("Username");
+                //int userIdIdx = reader.GetOrdinal("Password");
+                int firsnameIdx = reader.GetOrdinal("FirstName");
+                int miIdx = reader.GetOrdinal("MI");
+                int lastnameIdx = reader.GetOrdinal("LastName");
+                int lastactivityIdx = reader.GetOrdinal("LastActivityDate");
+
+                int roleNameIdx = reader.GetOrdinal("RoleName");
+                int canAddTransactionIdx = reader.GetOrdinal("CanAddTransaction");
+                int canEditTransactionIdx = reader.GetOrdinal("CanEditTransaction");
+                int canViewTransactionIdx = reader.GetOrdinal("CanViewTransaction");
+                int canDeleteTransactionIdx = reader.GetOrdinal("CanDeleteTransaction");
+                int canPostTransactionIdx = reader.GetOrdinal("CanPostTransaction");
+                int canAddUserIdx = reader.GetOrdinal("CanAddUser");
+                int canEditUserIdx = reader.GetOrdinal("CanEditUser");
+                int canDeleteUserIdx = reader.GetOrdinal("CanDeleteUser");
+                int canEditPerilsIdx = reader.GetOrdinal("CanEditPerils");
+                int canEndorseIdx = reader.GetOrdinal("CanEndorse");
+
+                while (reader.Read())
+                {
+                    user = new User();
+                    user.UserID = reader.GetInt32(userIdIdx);
+                    user.Username = reader.GetString(usernameIdx);
+                    user.FirstName = reader.IsDBNull(firsnameIdx) ? string.Empty : reader.GetString(firsnameIdx);
+                    user.LastName = reader.IsDBNull(lastactivityIdx) ? string.Empty : reader.GetString(lastnameIdx);
+                    user.MI = reader.IsDBNull(miIdx) ? string.Empty : reader.GetString(miIdx);
+                    user.LastActivityDate = reader.GetDateTime(lastactivityIdx);
+                    user.UserRole = new UserRole()
+                    {
+                        RoleName = reader.GetString(roleNameIdx),
+                        CanAddTransaction = reader.GetBoolean(canAddTransactionIdx),
+                        CanEditTransaction = reader.GetBoolean(canEditTransactionIdx),
+                        CanViewTransaction = reader.GetBoolean(canViewTransactionIdx),
+                        CanDeleteTransaction = reader.GetBoolean(canDeleteTransactionIdx),
+                        CanPostTransaction = reader.GetBoolean(canPostTransactionIdx),
+
+                        CanAddUser = reader.GetBoolean(canAddUserIdx),
+                        CanEditUser = reader.GetBoolean(canEditUserIdx),
+                        CanDeleteUser = reader.GetBoolean(canDeleteUserIdx),
+                        CanEditPerils = reader.GetBoolean(canEditPerilsIdx),
+                        CanEndorse = reader.GetBoolean(canEndorseIdx)
+                    };
+                    users.Add(user);
+                }
+            }
+            return users;
+        }
+
+
+        public List<DropDownListItem> GetRolesOptions() {
+            go_dah.uf_set_stored_procedure("sp_getrolesoption", ref go_sqlConnection);
+            IDataReader reader = go_dah.uf_execute_reader();
+            List<DropDownListItem> roles = new List<DropDownListItem>();
+            using (reader)
+            {
+                int valueIdx = reader.GetOrdinal("VALUE");
+                int textIdx = reader.GetOrdinal("TEXT");
+                while (reader.Read())
+                {
+                    DropDownListItem mg = new DropDownListItem();
+                    mg.Value = reader.GetInt32(valueIdx).ToString();
+                    mg.Text = reader.GetString(textIdx);
+
+                    roles.Add(mg);
+                }
+            }
+            return roles;
+        }
     }
 }
 

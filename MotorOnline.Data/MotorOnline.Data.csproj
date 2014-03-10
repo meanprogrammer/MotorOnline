@@ -51,6 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SprocCreator.xsd</DependentUpon>
     </Compile>
+    <Compile Include="UsersData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -70,6 +70,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="EndorsementPrintOut.aspx" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\users.js" />
     <Content Include="templates.htm" />
     <Content Include="TransactionDetailsView.aspx" />
     <Content Include="CreateKeys.aspx" />

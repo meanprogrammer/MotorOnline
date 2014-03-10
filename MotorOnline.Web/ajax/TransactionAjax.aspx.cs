@@ -104,9 +104,48 @@ namespace MotorOnline.Web.ajax
                 case "gettransactionbyidwithhistory":
                     HandleGetTransactionWithEndorsementHistory();
                     break;
+                case "gelallusers":
+                    HandleGetAllUsers();
+                    break;
+                case "saveuser":
+                    HandleSaveUser();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void HandleSaveUser()
+        {
+            var username = Request.Form["username"];
+            var password = Request.Form["password"];
+            var lastname = Request.Form["lastname"];
+            var firstname = Request.Form["firstname"];
+            var middlename = Request.Form["middlename"];
+            var role = Request.Form["role"];
+                
+            User u = new Library.Entity.User(){
+                Username = username,
+                Password = password,
+                LastName = lastname,
+                FirstName = firstname,
+                MI = middlename,
+                RoleID = int.Parse(role),
+                LastActivityDate = DateTime.Now
+            };
+
+            bool result = data.SaveUser(u);
+            Dictionary<string, string> resultsTable = new Dictionary<string, string>();
+            resultsTable.Add("Result", result.ToString().ToLower());
+            Render<Dictionary<string, string>>(resultsTable);
+        }
+
+        private void HandleGetAllUsers()
+        {
+            UsersGetResponse response = new UsersGetResponse();
+            response.Users = data.GetAllUsers();
+            response.Roles = data.GetRolesOptions();
+            Render<UsersGetResponse>(response);
         }
 
         private void HandleGetTransactionWithEndorsementHistory()

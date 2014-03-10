@@ -52,6 +52,7 @@
     <Compile Include="Entity\DTO\TransactionSearchResponseDTO.cs" />
     <Compile Include="Entity\DTO\TransactionSearchDTO.cs" />
     <Compile Include="Entity\DTO\TransactionWithEndorsementHistoryDTO.cs" />
+    <Compile Include="Entity\DTO\UsersGetResponse.cs" />
     <Compile Include="Entity\EncryptionKeys.cs" />
     <Compile Include="Entity\Endorsement.cs" />
     <Compile Include="Entity\EndorsementDetail.cs" />

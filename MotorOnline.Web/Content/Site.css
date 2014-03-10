@@ -598,7 +598,8 @@ html, body
 {
     background-color: #3C4F8F;
     width: 100%;
-    height: 70px; background-image: url('images/CarHeader.png');
+    height: 70px; 
+    /*background-image: url('images/CarHeader.png');*/
 }
 
 /* NEW */
@@ -819,3 +820,4 @@ adding: 3px;
 .search-footer-a { float: left;height: 30px; }
 .search-footer-b { float: left; margin-top: -20px; margin-left:10px;height: 30px; }
 .endorsement-history-container { width: 80%;} 
+.width-800 { width: 800px !important; }
