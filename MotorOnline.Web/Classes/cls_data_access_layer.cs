@@ -1797,7 +1797,7 @@ namespace MotorOnline.Web
                 int miIdx = reader.GetOrdinal("MI");
                 int lastnameIdx = reader.GetOrdinal("LastName");
                 int lastactivityIdx = reader.GetOrdinal("LastActivityDate");
-
+                int roleIdIdx = reader.GetOrdinal("RoleID");
                 int roleNameIdx = reader.GetOrdinal("RoleName");
                 int canAddTransactionIdx = reader.GetOrdinal("CanAddTransaction");
                 int canEditTransactionIdx = reader.GetOrdinal("CanEditTransaction");
@@ -1819,6 +1819,7 @@ namespace MotorOnline.Web
                     user.LastName = reader.IsDBNull(lastactivityIdx) ? string.Empty : reader.GetString(lastnameIdx);
                     user.MI = reader.IsDBNull(miIdx) ? string.Empty : reader.GetString(miIdx);
                     user.LastActivityDate = reader.GetDateTime(lastactivityIdx);
+                    user.RoleID = reader.GetInt32(roleIdIdx);
                     user.UserRole = new UserRole()
                     {
                         RoleName = reader.GetString(roleNameIdx),
@@ -1859,6 +1860,18 @@ namespace MotorOnline.Web
                 }
             }
             return roles;
+        }
+
+        public bool UpdateUser(User user)
+        {
+            go_dah.uf_set_stored_procedure("sp_updateuser", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@Username", user.Username);
+            go_dah.uf_set_stored_procedure_param("@LastName", user.LastName);
+            go_dah.uf_set_stored_procedure_param("@FirstName", user.FirstName);
+            go_dah.uf_set_stored_procedure_param("@MI", user.MI);
+            go_dah.uf_set_stored_procedure_param("@RoleID", user.RoleID);
+            go_dah.uf_set_stored_procedure_param("@UserID", user.UserID);
+            return go_dah.uf_execute_non_query() > 0;
         }
     }
 }

@@ -110,9 +110,42 @@ namespace MotorOnline.Web.ajax
                 case "saveuser":
                     HandleSaveUser();
                     break;
+                case "updateuser":
+                    HandleUpdateUser();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void HandleUpdateUser()
+        {
+            var username = Request.Form["username"];
+            var lastname = Request.Form["lastname"];
+            var firstname = Request.Form["firstname"];
+            var middlename = Request.Form["middlename"];
+            var role = Request.Form["role"];
+            var userid = Request.Form["userid"];
+            User u = new Library.Entity.User()
+            {
+                Username = username,
+                LastName = lastname,
+                FirstName = firstname,
+                MI = middlename,
+                RoleID = int.Parse(role),
+                LastActivityDate = DateTime.Now
+            };
+
+
+            if (!string.IsNullOrEmpty(userid))
+            {
+                u.UserID = int.Parse(userid);
+            }
+
+            bool result = data.UpdateUser(u);
+            Dictionary<string, string> resultsTable = new Dictionary<string, string>();
+            resultsTable.Add("Result", result.ToString().ToLower());
+            Render<Dictionary<string, string>>(resultsTable);
         }
 
         private void HandleSaveUser()
@@ -131,7 +164,7 @@ namespace MotorOnline.Web.ajax
                 FirstName = firstname,
                 MI = middlename,
                 RoleID = int.Parse(role),
-                LastActivityDate = DateTime.Now
+                LastActivityDate = DateTime.Now,
             };
 
             bool result = data.SaveUser(u);

@@ -69,6 +69,8 @@
     <Content Include="Content\Images\RedWineHeader.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="EndorsementPrintOut.aspx" />
+    <Content Include="images\delete-icon.png" />
+    <Content Include="images\tick-icon.png" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\users.js" />
     <Content Include="templates.htm" />

@@ -46,6 +46,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SprocCreator.cs">
+      <DependentUpon>SprocCreator.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SprocCreator.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

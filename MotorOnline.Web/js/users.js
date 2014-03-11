@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     loadusers();
     $('#adduserbutton').click(function () {
+        clearusermodal();
         $('#user-modal').modal({ keyboard: false });
     });
     $('#saveuserbutton').click(function () {
@@ -12,28 +13,42 @@ function clearusermodal() {
     $('#usernametext').val('');
     $('#passwordtext').val('');
     $('#retypepasswordtext').val('');
+    $('#passwordtext').prop('disabled', false);
+    $('#retypepasswordtext').prop('disabled', false);
     $('#lastnametext').val('');
     $('#firstnametext').val('');
     $('#middlenametext').val('');
     $('#roledropdown').val(0);
+    $('#saveuserbutton').val('Save');
+    $('#saveuserbutton').html('Save');
 }
 
 function showuserroledetails(id) {
     var data = $('#userhidden' + id).val();
     var user = JSON.parse(data);
-    $('#canaddtransaction').prop('checked', user.UserRole.CanAddTransaction);
-    $('#canedittransaction').prop('checked', user.UserRole.CanEditTransaction);
-    $('#canviewtransaction').prop('checked', user.UserRole.CanViewTransaction);
-    $('#candeletetransaction').prop('checked', user.UserRole.CanDeleteTransaction);
-    $('#canposttransaction').prop('checked', user.UserRole.CanPostTransaction);
-    $('#canendorsetransaction').prop('checked', user.UserRole.CanEndorse);
-    $('#canadduser').prop('checked', user.UserRole.CanAddUser);
-    $('#canedituser').prop('checked', user.UserRole.CanEditUser);
-    $('#candeleteuser').prop('checked', user.UserRole.CanDeleteUser);
-    $('#caneditperils').prop('checked', user.UserRole.CanEditPerils);
+    $('#canaddtransaction').prop('src', showicon(user.UserRole.CanAddTransaction));
+    $('#canedittransaction').prop('src', showicon(user.UserRole.CanEditTransaction));
+    $('#canviewtransaction').prop('src', showicon(user.UserRole.CanViewTransaction));
+    $('#candeletetransaction').prop('src', showicon(user.UserRole.CanDeleteTransaction));
+    $('#canposttransaction').prop('src', showicon(user.UserRole.CanPostTransaction));
+    $('#canendorsetransaction').prop('src', showicon(user.UserRole.CanEndorse));
+    $('#canadduser').prop('src', showicon(user.UserRole.CanAddUser));
+    $('#canedituser').prop('src', showicon(user.UserRole.CanEditUser));
+    $('#candeleteuser').prop('src', showicon(user.UserRole.CanDeleteUser));
+    $('#caneditperils').prop('src', showicon(user.UserRole.CanEditPerils));
 
     $('#rolenamelabel').html(user.UserRole.RoleName);
     $('#userrole-details').modal({keyboard:false});
+}
+
+function showicon(checked) {
+    var src = '';
+    if (checked) {
+        src = 'images/tick-icon.png';
+    } else {
+        src = 'images/delete-icon.png';
+    }
+    return src;
 }
 
 function saveuser() {
@@ -43,17 +58,20 @@ function saveuser() {
    var firstname = $('#firstnametext').val();
    var middlename = $('#middlenametext').val();
    var role = $('#roledropdown').val();
+   var userid = $('#currentuserid').val();
+   var action = ($('#saveuserbutton').val() == 'Save' ? 'saveuser' : 'updateuser');
    $.ajax({
        url: "ajax/TransactionAjax.aspx",
        type: "post",
        data: {
-           "action": 'saveuser',
+           "action": action,
            "username": username,
            "password": password,
            "lastname": lastname,
            "firstname": firstname,
            "middlename": middlename,
-           "role": role
+           "role": role,
+           "userid": userid
        },
        success: function (result) {
            var obj = JSON.parse(result);
@@ -87,7 +105,7 @@ function loadusers() {
             if (obj != null) {
                 $.each(obj.Users, function (key, value) {
                     html += '<tr>';
-                    html += '<td><a href="#" class="btn btn-primary btn-xs">Edit</td>';
+                    html += '<td><a onclick="edituser('+ value.UserID +')" class="btn btn-primary btn-xs">Edit</td>';
                     html += '<td>' + value.Username + '</td>';
                     html += '<td>********</td>';
                     html += '<td>' + value.LastName + '</td>';
@@ -113,3 +131,23 @@ function loadusers() {
     });
 }
 
+function edituser(id) {
+    var data = $('#userhidden' + id).val();
+
+    //Visually disable passwords
+    $('#passwordtext').val('********');
+    $('#retypepasswordtext').val('********');
+    $('#passwordtext').prop('disabled', true);
+    $('#retypepasswordtext').prop('disabled', true);
+
+    var user = JSON.parse(data);
+    $('#usernametext').val(user.Username);
+    $('#lastnametext').val(user.LastName);
+    $('#firstnametext').val(user.FirstName);
+    $('#middlenametext').val(user.MI);
+    $('#roledropdown').val(user.RoleID);
+    $('#currentuserid').val(user.UserID);
+    $('#saveuserbutton').val('Update');
+    $('#saveuserbutton').html('Update');
+    $('#user-modal').modal({ keyboard: false });
+}

@@ -17,19 +17,23 @@
         <table class="table table-bordered" cellpadding="4">
             <tr>
                 <td>Role Name</td>
-                <td><span id="rolenamelabel"></span></td>
-                <td><input type="checkbox" id="canaddtransaction" /> Add Transaction</td>
-                <td><input type="checkbox" id="canedittransaction" /> Edit Transaction </td>
-                <td><input type="checkbox" id="canviewtransaction" /> View Transaction</td>
-                <td><input type="checkbox" id="candeletetransaction" /> Delete Transaction</td>
+                <td colspan="4"><span id="rolenamelabel"></span></td>
             </tr>
             <tr>
-                <td><input type="checkbox" id="canposttransaction" /> Post Transaction</td>
-                <td><input type="checkbox" id="canendorsetransaction" /> Endorse Transaction</td>
-                <td><input type="checkbox" id="canadduser" /> Add User</td>
-                <td><input type="checkbox" id="canedituser" /> Edit User</td>
-                <td><input type="checkbox" id="candeleteuser" /> Delete User</td>
-                <td><input type="checkbox" id="caneditperils" /> Edit Default Perils</td>
+                <td><%--<input type="checkbox" id="canaddtransaction" />--%><img id="canaddtransaction" alt="" /> Add Transaction</td>
+                <td><%--<input type="checkbox" id="canedittransaction" />--%><img id="canedittransaction" alt="" /> Edit Transaction </td>
+                <td><%--<input type="checkbox" id="canviewtransaction" />--%><img id="canviewtransaction" alt="" /> View Transaction</td>
+                <td><%--<input type="checkbox" id="candeletetransaction" />--%><img id="candeletetransaction" alt="" /> Delete Transaction</td>
+            </tr>
+            <tr>
+                <td><%--<input type="checkbox" id="canposttransaction" />--%><img id="canposttransaction" alt="" /> Post Transaction</td>
+                <td><%--<input type="checkbox" id="canendorsetransaction" />--%><img id="canendorsetransaction" alt="" /> Endorse Transaction</td>
+                <td><%--<input type="checkbox" id="canadduser" />--%><img id="canadduser" alt="" /> Add User</td>
+                <td><%--<input type="checkbox" id="canedituser" />--%><img id="canedituser" alt="" /> Edit User</td>
+            </tr>
+            <tr>
+                <td><%--<input type="checkbox" id="candeleteuser" />--%><img id="candeleteuser" alt="" /> Delete User</td>
+                <td colspan="3"><%--<input type="checkbox" id="caneditperils" />--%><img id="caneditperils" alt="" /> Edit Default Perils</td>
             </tr>
         </table>
       </div>
@@ -78,4 +82,5 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<input type="hidden" id="currentuserid" />
 </asp:Content>
