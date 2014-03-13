@@ -436,6 +436,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="maincontent" ContentPlaceHolderID="Content" runat="server">
+    <form id="transactionform" runat="server">
     <div>
         <table cellpadding="6">
             <tr>
@@ -782,18 +783,22 @@
                 </tr>
                 <tr>
                     <td>
-                        Authentication No.</td>
+                        Authentication No.
+                    </td>
                     <td>
                         <asp:TextBox ID="txtAuthenticationNo" ClientIDMode="Static" runat="server"></asp:TextBox>
-                        </td>
+                    </td>
                     <td>
-                        COC No.</td>
+                        COC No.
+                    </td>
                     <td>
-                        <asp:TextBox ID="txtCOCNo" ClientIDMode="Static" runat="server"></asp:TextBox></td>
+                        <asp:TextBox ID="txtCOCNo" ClientIDMode="Static" runat="server"></asp:TextBox>
+                    </td>
                 </tr>
                 <tr>
                     <td align="right" colspan="4">
-                        <asp:Button ID="SaveCarDetailsButton" class="btn btn-primary" ClientIDMode="Static" runat="server" Text="Save" />
+                        <asp:Button ID="SaveCarDetailsButton" class="btn btn-primary" ClientIDMode="Static"
+                            runat="server" Text="Save" />
                     </td>
                 </tr>
             </table>
@@ -887,15 +892,17 @@
             </tr>
             <tr>
                 <td class="label-text">
-                    <strong>Authentication No:</strong></td>
+                    <strong>Authentication No:</strong>
+                </td>
                 <td class="label-value">
                     <asp:Label ID="lblAuthenticationNo" runat="server" ClientIDMode="Static"></asp:Label>
-                    </td>
+                </td>
                 <td class="label-text">
-                    <strong>COC No:</strong></td>
+                    <strong>COC No:</strong>
+                </td>
                 <td class="label-value">
                     <asp:Label ID="lblCOCNo" runat="server" ClientIDMode="Static"></asp:Label>
-                    </td>
+                </td>
             </tr>
         </table>
         <br />
@@ -961,29 +968,36 @@
                 </tr>
             </table>
         </div>
-        <div id="endorsement-dialog" style="display:none;">
+        <div id="endorsement-dialog" style="display: none;">
             <table cellpadding="8" width="100%">
                 <tr>
                     <td>
-                        Type of Endorsement</td>
+                        Type of Endorsement
+                    </td>
                     <td>
                         <asp:DropDownList ID="EndorsementDropdown" ClientIDMode="Static" runat="server">
                             <asp:ListItem Value="0" Text="-- SELECT --"></asp:ListItem>
                         </asp:DropDownList>
-                        </td>
-                    <td><span class="required-field">*</span></td>
+                    </td>
+                    <td>
+                        <span class="required-field">*</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        Effectivity date</td>
+                        Effectivity date
+                    </td>
                     <td>
-                        <input id="effectivitydate" type="text" /></td>
-                    <td><span class="required-field">*</span></td>
+                        <input id="effectivitydate" type="text" />
+                    </td>
+                    <td>
+                        <span class="required-field">*</span>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <textarea id="endorsementtext" cols="60" 
-                            name="endorsementtext" rows="10"></textarea></td>
+                        <textarea id="endorsementtext" cols="60" name="endorsementtext" rows="10"></textarea>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -991,17 +1005,20 @@
                         </div>
                     </td>
                     <td>
-                        &nbsp;</td>
+                        &nbsp;
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;</td>
+                        &nbsp;
+                    </td>
                     <td>
                         <input id="endsavebutton" type="button" value="Save" />&nbsp;
                         <input id="endcancelbutton" type="button" value="Cancel" />
-                        </td>
+                    </td>
                     <td>
-                        &nbsp;</td>
+                        &nbsp;
+                    </td>
                 </tr>
             </table>
         </div>
@@ -1010,14 +1027,19 @@
             <tr>
                 <td>
                     <asp:Button ID="CancelButton" class="btn btn-default" runat="server" Text="Cancel" />
-                    <asp:Button ID="SaveButton" class="btn btn-primary" ClientIDMode="Static" runat="server" Text="Save" />
-                    <asp:Button ID="PrintButton" class="btn btn-success" ClientIDMode="Static" runat="server" Text="Print" />
-                    <asp:Button ID="PostButton" class="btn btn-default" ClientIDMode="Static" runat="server" Text="Post" />
-
-                    <% if (this.CurrentUser.UserRole.CanEndorse) { %>
-                       <input id="endorsebutton" type="button" class="btn btn-default" value="Endorse" />
+                    <asp:Button ID="SaveButton" class="btn btn-primary" ClientIDMode="Static" runat="server"
+                        Text="Save" />
+                    <asp:Button ID="PrintButton" class="btn btn-success" ClientIDMode="Static" runat="server"
+                        Text="Print" />
+                    <asp:Button ID="PostButton" class="btn btn-default" ClientIDMode="Static" runat="server"
+                        Text="Post" />
+                    <% if (this.CurrentUser.UserRole.CanEndorse)
+                       { %>
+                    <input id="endorsebutton" type="button" class="btn btn-default" value="Endorse" />
                     <% } %>
-                    <input id="printendorsement" type="button" class="btn btn-default" value="Print Endorsement" style="display:none;" /></td>
+                    <input id="printendorsement" type="button" class="btn btn-default" value="Print Endorsement"
+                        style="display: none;" />
+                </td>
             </tr>
         </table>
     </div>
@@ -1032,4 +1054,5 @@
         <h3 id="progress-message">
             Now Loading ...</h3>
     </div>
+    </form>
 </asp:Content>

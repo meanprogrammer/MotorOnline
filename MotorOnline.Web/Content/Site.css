@@ -787,9 +787,11 @@ adding: 3px;
     padding:10px;
 }
 
-.width-400{width:400px;}
+.width-400{width:400px !important;}
 
 .width-170 { width:170px !important; }
+.width-200 { width:200px !important; }
+.width-250 { width:250px !important; }
 .not-block { display:inline !important; }
  
 .remarks-text { padding:10px; width: 700px; }
@@ -814,10 +816,11 @@ adding: 3px;
 
 #perils-defaults { padding:10px;width:960px; }
 .header-right { margin-right:10px;margin-top:10px;float:right; }
-.search-result { margin-top: 10px; }
+.search-result { margin: 10px;overflow-x:scroll;overflow:auto; }
 .clickable { cursor: pointer; }
 #search-footer { height: 30px; }
 .search-footer-a { float: left;height: 30px; }
 .search-footer-b { float: left; margin-top: -20px; margin-left:10px;height: 30px; }
 .endorsement-history-container { width: 80%;} 
 .width-800 { width: 800px !important; }
+.help-block-inline { display:inline !important; width:10px; }

@@ -12,6 +12,19 @@ namespace MotorOnline.Web
 {
     public partial class Root : System.Web.UI.MasterPage
     {
+        private User _currentUser;
+        public User CurrentUser
+        {
+            get
+            {
+                return Session[string.Format("user_{0}", Session.SessionID)] as User;
+            }
+            set
+            {
+                this._currentUser = value;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //To avoid login for now
@@ -45,8 +58,9 @@ namespace MotorOnline.Web
                 if (user != null)
                 {
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "renderwelcome",
-                        string.Format("renderwelcome('{0}');", serializer.Serialize(user)), true);
+                    //Page.ClientScript.RegisterStartupScript(this.GetType(), "renderwelcome",
+                    //    string.Format("alert('{0}');", serializer.Serialize(user)), true);
+                    this.userhidden.Value = serializer.Serialize(user);
                 }
             }
         }

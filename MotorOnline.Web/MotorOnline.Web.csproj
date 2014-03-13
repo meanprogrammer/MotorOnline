@@ -68,10 +68,15 @@
     <Content Include="Content\Images\PlasticBlueHeader.jpg" />
     <Content Include="Content\Images\RedWineHeader.jpg" />
     <Content Include="Content\Site.css" />
+    <Content Include="css\bootstrapValidator.min.css" />
     <Content Include="EndorsementPrintOut.aspx" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="images\delete-icon.png" />
     <Content Include="images\tick-icon.png" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\bootstrapValidator.js" />
+    <Content Include="js\bootstrapValidator.min.js" />
+    <Content Include="js\dump.js" />
     <Content Include="js\users.js" />
     <Content Include="templates.htm" />
     <Content Include="TransactionDetailsView.aspx" />
@@ -274,6 +279,11 @@
       <Project>{2810C8D9-4FC9-418D-B151-8BF1A9550BA0}</Project>
       <Name>MotorOnline.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

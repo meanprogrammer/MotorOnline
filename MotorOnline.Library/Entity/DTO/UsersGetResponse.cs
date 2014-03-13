@@ -9,5 +9,6 @@ namespace MotorOnline.Library.Entity
     {
         public List<User> Users { get; set; }
         public List<DropDownListItem> Roles { get; set; }
+        public User CurrentUser { get; set; }
     }
 }

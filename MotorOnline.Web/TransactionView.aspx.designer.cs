@@ -13,6 +13,15 @@ namespace MotorOnline.Web {
     public partial class TransactionView {
         
         /// <summary>
+        /// transactionform control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm transactionform;
+        
+        /// <summary>
         /// ddlCreditingBranch control.
         /// </summary>
         /// <remarks>

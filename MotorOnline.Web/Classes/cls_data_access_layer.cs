@@ -1873,6 +1873,13 @@ namespace MotorOnline.Web
             go_dah.uf_set_stored_procedure_param("@UserID", user.UserID);
             return go_dah.uf_execute_non_query() > 0;
         }
+
+        public bool DeleteUser(int userId) 
+        {
+            go_dah.uf_set_stored_procedure("sp_deleteuser", ref go_sqlConnection);
+            go_dah.uf_set_stored_procedure_param("@UserID", userId);
+            return go_dah.uf_execute_non_query() > 0;
+        }
     }
 }
 

@@ -1,11 +1,98 @@
-﻿$(document).ready(function () {
+﻿var validatoroptions = {
+    message: 'This value is not valid',
+    live: 'submitted',
+    submitHandler: function(validator, form, submitButton) {
+        saveuser();
+    },
+    //        feedbackIcons: {
+    //            valid: 'glyphicon glyphicon-ok',
+    //            invalid: 'glyphicon glyphicon-remove',
+    //            validating: 'glyphicon glyphicon-refresh'
+    //        },
+    fields: {
+        username: {
+            message: 'The username is not valid',
+            validators: {
+                notEmpty: {
+                    message: 'The username is required.'
+                }
+            }
+        },
+        password: {
+            message: 'The password is not valid',
+            validators: {
+                notEmpty: {
+                    message: 'The password is required.'
+                }
+            }
+        },
+        retypepassword: {
+            message: 'The re-type password is not valid',
+            validators: {
+                notEmpty: {
+                    message: 'The re-type password is required.'
+                },
+                callback: {
+                    message: 'Password does not match.',
+                    callback: function (fieldValue, validator) {
+                        var password = $('#passwordtext').val();
+                        return password == fieldValue;
+                    }
+                }
+            }
+        },
+        lastname: {
+            message: 'The lastname is not valid',
+            validators: {
+                notEmpty: {
+                    message: 'The lastname is required.'
+                }
+            }
+        },
+        firstname: {
+            message: 'The firstname is not valid',
+            validators: {
+                notEmpty: {
+                    message: 'The firstname is required.'
+                }
+            }
+        },
+        roledropdown: {
+            message: 'Select a role.',
+            validators: {
+                callback: {
+                    message: 'Select a role.',
+                    callback: function(fieldValue, validator) {
+                        return $('#roledropdown').val() > 0;
+                    }
+                }
+            }
+        },
+    }
+};
+
+$(document).ready(function () {
     loadusers();
     $('#adduserbutton').click(function () {
         clearusermodal();
         $('#user-modal').modal({ keyboard: false });
     });
+    //    $('#saveuserbutton').click(function () {
+    //        saveuser();
+    //    });
+
+    //validator = $('#userform').bootstrapValidator();
+
     $('#saveuserbutton').click(function () {
-        saveuser();
+        //validator.bootstrapValidator('resetForm');
+        if($('#saveuserbutton').val() == 'Update') {
+            $('#passwordtext').prop('disabled', false);
+            $('#retypepasswordtext').prop('disabled', false);
+        }
+
+        $('#userform').bootstrapValidator(validatoroptions).bootstrapValidator('validate');
+        $('#passwordtext').prop('disabled', true);
+        $('#retypepasswordtext').prop('disabled', true);
     });
 });
 
@@ -77,6 +164,7 @@ function saveuser() {
            var obj = JSON.parse(result);
            if (obj.Result == 'true') {
                clearusermodal();
+               $('#userform').data('bootstrapValidator').resetForm(true);
                $('#user-modal').modal('hide');
                loadusers();
            }
@@ -95,6 +183,7 @@ function loadusers() {
             var obj = JSON.parse(result);
             var html = '<table class="table table-bordered"><tr>';
             html += '<th width="50"></th>';
+            html += '<th width="50"></th>';
             html += '<th>Username</th>';
             html += '<th>Password</th>';
             html += '<th>LastName</th>';
@@ -103,15 +192,19 @@ function loadusers() {
             html += '<th>Role</th>';
             html += '<th>Last Activity Date</th></tr>';
             if (obj != null) {
+                var currentuser = obj.CurrentUser;
+                var canedit = currentuser.UserRole.CanEditUser == true ? '' : 'disabled';
+                var candelete = currentuser.UserRole.CanDeleteUser == true ? '' : 'disabled';
                 $.each(obj.Users, function (key, value) {
                     html += '<tr>';
-                    html += '<td><a onclick="edituser('+ value.UserID +')" class="btn btn-primary btn-xs">Edit</td>';
+                    html += '<td><a onclick="edituser(' + value.UserID + ')" class="btn btn-primary btn-xs" ' + canedit + '>Edit</td>';
+                    html += '<td><a onclick="deleteuser(' + value.UserID + ')" class="btn btn-danger btn-xs" ' + candelete + '>Delete</td>';
                     html += '<td>' + value.Username + '</td>';
                     html += '<td>********</td>';
                     html += '<td>' + value.LastName + '</td>';
                     html += '<td>' + value.FirstName + '</td>';
                     html += '<td>' + value.MI + '</td>';
-                    html += '<td>' + value.UserRole.RoleName + '&nbsp;&nbsp;<a onclick="showuserroledetails('+ value.UserID +');" class="btn btn-primary btn-xs">View Details</a></td>';
+                    html += '<td>' + value.UserRole.RoleName + '&nbsp;&nbsp;<a onclick="showuserroledetails('+ value.UserID +');" class="btn btn-info btn-xs">View Details</a></td>';
                     html += '<td>' + value.FormattedLastActivityDate + '</td>';
                     html += "<input type='hidden' id='userhidden" + value.UserID + "' value='" + JSON.stringify(value) + "' />";
                     html += '</tr>';
@@ -150,4 +243,26 @@ function edituser(id) {
     $('#saveuserbutton').val('Update');
     $('#saveuserbutton').html('Update');
     $('#user-modal').modal({ keyboard: false });
+}
+
+function deleteuser(id) {
+    if(confirm('Are you sure to delete the user?')) {
+        $.ajax({
+            url: "ajax/TransactionAjax.aspx",
+            type: "post",
+            data: {
+                "action": "deleteuser",
+                "id": id
+            },
+            success: function (result) {
+                var obj = JSON.parse(result);
+                if (obj.Result == 'true') {
+                    clearusermodal();
+                    loadusers();
+                }
+            },
+            error: function () {
+            }
+        });
+    }
 }

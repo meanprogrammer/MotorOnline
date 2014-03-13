@@ -113,9 +113,31 @@ namespace MotorOnline.Web.ajax
                 case "updateuser":
                     HandleUpdateUser();
                     break;
+                case "deleteuser":
+                    HandleDeleteUser();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void HandleDeleteUser()
+        {
+            Dictionary<string, string> resultsTable = new Dictionary<string, string>();
+            var id = Request.Form["id"];
+
+            if (string.IsNullOrEmpty(id))
+            {
+                resultsTable.Add("Result", "false");
+            }
+            else 
+            {
+                bool result = data.DeleteUser(
+                            ChangeTypeHelper.SafeParseToInt32(id));
+                resultsTable.Add("Result", result.ToString().ToLower());
+            }
+            
+            Render<Dictionary<string, string>>(resultsTable);
         }
 
         private void HandleUpdateUser()
@@ -178,6 +200,7 @@ namespace MotorOnline.Web.ajax
             UsersGetResponse response = new UsersGetResponse();
             response.Users = data.GetAllUsers();
             response.Roles = data.GetRolesOptions();
+            response.CurrentUser = this.CurrentUser;
             Render<UsersGetResponse>(response);
         }
 
@@ -1120,6 +1143,19 @@ namespace MotorOnline.Web.ajax
         private int GetCarSeries(string text)
         {
             return Convert.ToInt32(text.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Last());
+        }
+
+        private User _currentUser;
+        public User CurrentUser
+        {
+            get
+            {
+                return Session[string.Format("user_{0}", Session.SessionID)] as User;
+            }
+            set
+            {
+                this._currentUser = value;
+            }
         }
     }
 }

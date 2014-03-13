@@ -126,14 +126,14 @@ function displayperils() {
                 });
 
             }
-            html += '<tr><td colspan="2"><input id="computebutton" type="button" value="Compute" /></td>';
+            html += '<tr><td colspan="2"><input id="computebutton" type="button" value="Compute" class="btn btn-default" /></td>';
             html += '<td align="right"><strong>Basic Premium Net:</strong></td><td><span id="basic-premiumnettext"></span></td>';
             html += '<td align="right"><strong>Basic Premium Gross:</strong></td><td><span id="basic-premiumgrosstext"></span></td></tr>';
             html += '</table>';
             html += '<br />';
 
             html += '<table cellpadding=4 WIDTH=70%>';
-            html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" /></td></tr>';
+            html += '<tr><td colspan="4"><input id="netcomputationbutton" type="button" value="Net Computation" class="btn btn-default" />&nbsp;<input id="grosscomputationbutton" type="button" value="Gross Computation" class="btn btn-default" /></td></tr>';
             html += '</table>';
 
             html += '<table>';

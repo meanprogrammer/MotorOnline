@@ -13,15 +13,6 @@ namespace MotorOnline.Web {
     public partial class Root {
         
         /// <summary>
-        /// Head1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
-        
-        /// <summary>
         /// head control.
         /// </summary>
         /// <remarks>
@@ -40,15 +31,6 @@ namespace MotorOnline.Web {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Body;
         
         /// <summary>
-        /// form1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
         /// Content control.
         /// </summary>
         /// <remarks>
@@ -56,5 +38,14 @@ namespace MotorOnline.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder Content;
+        
+        /// <summary>
+        /// userhidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden userhidden;
     }
 }

@@ -2,7 +2,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
+<head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="Content/Site.css" />
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -17,16 +17,15 @@
         $(document).ready(initialize);
 
         function initialize() {
-            $('#signoutbutton').click(
-            function () {
+            $('#signoutbutton').click(function () {
                 window.location.href = "SignoutView.aspx";
-                }
-            );
+            });
+            renderwelcome();
         }
 
-        function renderwelcome(json) {
-            var user = JSON.parse(json);
-            $('#welcomebutton').val('Welcome, ' + user.Username);
+        function renderwelcome() {
+            var user = JSON.parse($('#userhidden').val());
+            $('#welcomebutton').html('Welcome, ' + user.Username);
         }
     </script>
     <style>
@@ -38,18 +37,19 @@
     </style>
 </head>
 <body runat="server" id="Body">
-    <form id="form1" runat="server">
+<%--<form id="form1" runat="server">--%>
     <div id="container">
         <div class="mainheader headerPane">
             <div class="btn-group header-right">
-                <input id="welcomebutton" type="button" value="button" class="btn btn-default" />
-                <input id="signoutbutton" type="button" value="Sign Out" class="btn btn-success" />
+                <a id="welcomebutton" class="btn btn-default" ></a>
+                <a id="signoutbutton" class="btn btn-success" >Sign Out</a>
             </div>
         </div>
         <div id="navigation-container">
             <ul class="nav nav-pills">
                 <li><a href="DefaultView.aspx">Home</a></li>
-                <li><a href="TransactionView.aspx">Apply Online</a></li>
+                <% if (this.CurrentUser.UserRole.CanAddTransaction)
+                   {%> <li><a href="TransactionView.aspx">Apply Online</a></li><% } %>
                 <li><a href="AllTransactionsView.aspx">All Transactions</a></li>
                 <li><a href="#">FAQ</a></li>
                 <li><a href="#">Contact Us</a></li>
@@ -62,6 +62,7 @@
             </asp:ContentPlaceHolder>
         </div>
     </div>
-    </form>
+<%--</form>--%>
+<input id="userhidden" type="hidden" runat="server" />
 </body>
 </html>

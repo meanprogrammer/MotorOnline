@@ -234,6 +234,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="maincontent" ContentPlaceHolderID="Content" runat="server">
+    <form id="transactiondetailsview" runat="server">
     <div>
         <table cellpadding="6">
             <tr>
@@ -241,7 +242,8 @@
                     <strong>Crediting Branch:</strong>
                 </td>
                 <td>
-                    <span id="creditingbranchlabel"></span></td>
+                    <span id="creditingbranchlabel"></span>
+                </td>
                 <td>
                     <strong>Date Created:</strong>
                 </td>
@@ -258,12 +260,14 @@
                 </td>
                 <td>
                     <asp:Label ID="lblParNo" runat="server" Text="Label" ClientIDMode="Static"></asp:Label>
-                    &nbsp;</td>
+                    &nbsp;
+                </td>
                 <td>
                     <strong>Policy Period From:</strong>
                 </td>
                 <td colspan="2" valign="middle">
-                    <span id="policyperiodfrom"></span></td>
+                    <span id="policyperiodfrom"></span>
+                </td>
                 <td colspan="2" valign="middle">
                 </td>
             </tr>
@@ -296,7 +300,8 @@
                     <strong>Businesss Type</strong>
                 </td>
                 <td>
-                    <span id="businesstype"></span></td>
+                    <span id="businesstype"></span>
+                </td>
                 <td colspan="2">
                     <strong>Policy Status</strong>
                 </td>
@@ -312,14 +317,16 @@
                     <strong>SubLine:</strong>
                 </td>
                 <td>
-                    <span id="subline"></span></td>
+                    <span id="subline"></span>
+                </td>
             </tr>
             <tr>
                 <td>
                     <strong>Mortgagee:</strong>
                 </td>
                 <td>
-                    <span id="mortgagee"></span></td>
+                    <span id="mortgagee"></span>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -357,7 +364,8 @@
                     <strong>First Name:</strong>
                 </td>
                 <td>
-                    <span id="firstname"></span></td>
+                    <span id="firstname"></span>
+                </td>
                 <td>
                     <strong>M.I.:</strong>
                 </td>
@@ -370,22 +378,26 @@
                     <strong>Address:</strong>
                 </td>
                 <td>
-                    <span id="address"></span></td>
+                    <span id="address"></span>
+                </td>
                 <td>
                     <strong>Telephone:</strong>
                 </td>
                 <td>
-                    <span id="telephone"></span></td>
+                    <span id="telephone"></span>
+                </td>
                 <td>
                     <strong>Mobile No.:</strong>
                 </td>
                 <td>
-                    <span id="mobileno"></span></td>
+                    <span id="mobileno"></span>
+                </td>
                 <td>
                     <strong>Email Address:</strong>
                 </td>
                 <td>
-                    <span id="emailaddress"></span></td>
+                    <span id="emailaddress"></span>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -393,7 +405,8 @@
                         <asp:Label ID="CorporateMultipleLabel" ClientIDMode="Static" runat="server" Text="Label"></asp:Label></strong>
                 </td>
                 <td>
-                    <span id="corporatemultiple"></span></td>
+                    <span id="corporatemultiple"></span>
+                </td>
                 <td style="text-align: right">
                     &nbsp;
                 </td>
@@ -414,7 +427,6 @@
                 </td>
             </tr>
         </table>
- 
         <%--<div id="car-details">
             <table class="table-vertical-align-td" border="0">
                 <tr>
@@ -639,15 +651,17 @@
             </tr>
             <tr>
                 <td class="label-text">
-                    <strong>Authentication No:</strong></td>
+                    <strong>Authentication No:</strong>
+                </td>
                 <td class="label-value">
                     <asp:Label ID="lblAuthenticationNo" runat="server" ClientIDMode="Static"></asp:Label>
-                    </td>
+                </td>
                 <td class="label-text">
-                    <strong>COC No:</strong></td>
+                    <strong>COC No:</strong>
+                </td>
                 <td class="label-value">
                     <asp:Label ID="lblCOCNo" runat="server" ClientIDMode="Static"></asp:Label>
-                    </td>
+                </td>
             </tr>
         </table>
         <br />
@@ -713,29 +727,38 @@
                 </tr>
             </table>
         </div>
-         <div id="endorsement-dialog" style="display:none;">
+        <div id="endorsement-dialog" style="display: none;">
             <table cellpadding="8" width="100%">
                 <tr>
                     <td>
-                        Type of Endorsement</td>
+                        Type of Endorsement
+                    </td>
                     <td>
-                        <asp:DropDownList ID="EndorsementDropdown" ClientIDMode="Static" class="form-control" runat="server">
+                        <asp:DropDownList ID="EndorsementDropdown" ClientIDMode="Static" class="form-control"
+                            runat="server">
                             <asp:ListItem Value="0" Text="-- SELECT --"></asp:ListItem>
                         </asp:DropDownList>
-                        </td>
-                    <td><span class="required-field">*</span></td>
+                    </td>
+                    <td>
+                        <span class="required-field">*</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        Effectivity date</td>
+                        Effectivity date
+                    </td>
                     <td>
-                        <input id="effectivitydate" class="form-control input-sm" type="text" /></td>
-                    <td><span class="required-field">*</span></td>
+                        <input id="effectivitydate" class="form-control input-sm" type="text" />
+                    </td>
+                    <td>
+                        <span class="required-field">*</span>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <textarea id="endorsementtext" cols="60" 
-                            name="endorsementtext"class="form-control input-sm" rows="10"></textarea></td>
+                        <textarea id="endorsementtext" cols="60" name="endorsementtext" class="form-control input-sm"
+                            rows="10"></textarea>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -743,43 +766,50 @@
                         </div>
                     </td>
                     <td>
-                        &nbsp;</td>
+                        &nbsp;
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;</td>
+                        &nbsp;
+                    </td>
                     <td>
                         <input id="endsavebutton" type="button" class="btn btn-primary" value="Save" />&nbsp;
-                        <input id="endcancelbutton" type="button" value="Cancel"  class="btn btn-default"  />
-                        </td>
+                        <input id="endcancelbutton" type="button" value="Cancel" class="btn btn-default" />
+                    </td>
                     <td>
-                        &nbsp;</td>
+                        &nbsp;
+                    </td>
                 </tr>
             </table>
         </div>
         <div class="panel panel-primary endorsement-history-container">
-          <div class="panel-heading">Endorsement History</div>
-          <div id="endorsement-history" class="panel-body">
-          </div>
+            <div class="panel-heading">
+                Endorsement History</div>
+            <div id="endorsement-history" class="panel-body">
+            </div>
         </div>
         <hr />
         <table style="width: 500px">
             <tr>
                 <td>
                     <asp:Button ID="CancelButton" runat="server" Text="Cancel" class="btn btn-default" />
-                    <% if(this.CurrentUser.UserRole.CanEditTransaction) { %>
-                        <input id="editbutton" type="button" class="btn btn-primary" value="Edit" />
+                    <% if (this.CurrentUser.UserRole.CanEditTransaction)
+                       { %>
+                    <input id="editbutton" type="button" class="btn btn-primary" value="Edit" />
                     <% } %>
                     <asp:Button ID="PrintButton" ClientIDMode="Static" runat="server" Text="Print" class="btn btn-default" />
-                    <% if (this.CurrentUser.UserRole.CanPostTransaction) { %>
-                        <asp:Button ID="PostButton" runat="server" ClientIDMode="Static" Text="Post" class="btn btn-default" />
+                    <% if (this.CurrentUser.UserRole.CanPostTransaction)
+                       { %>
+                    <asp:Button ID="PostButton" runat="server" ClientIDMode="Static" Text="Post" class="btn btn-default" />
                     <% } %>
-                    <% if (this.CurrentUser.UserRole.CanEndorse) { %>
-                        <input id="endorsebutton" type="button" value="Endorse" class="btn btn-default" />
+                    <% if (this.CurrentUser.UserRole.CanEndorse)
+                       { %>
+                    <input id="endorsebutton" type="button" value="Endorse" class="btn btn-default" />
                     <% } %>
-                    <input id="printendorsement" type="button" class="btn btn-default" value="Print Endorsement" style="display:none;" />
+                    <input id="printendorsement" type="button" class="btn btn-default" value="Print Endorsement"
+                        style="display: none;" />
                 </td>
-                
             </tr>
         </table>
     </div>
@@ -799,4 +829,5 @@
         <h3 id="progress-message">
             Now Loading ...</h3>
     </div>
+    </form>
 </asp:Content>
