@@ -53,8 +53,14 @@
                 <li><a href="AllTransactionsView.aspx">All Transactions</a></li>
                 <li><a href="#">FAQ</a></li>
                 <li><a href="#">Contact Us</a></li>
+                <% if (this.CurrentUser.UserRole.CanEditPerils)
+                   { %>
                 <li><a href="PerilsDefaultsView.aspx">Perils Defaults</a></li>
+                <% } %>
+                <% if (this.CurrentUser.UserRole.CanAddUser || this.CurrentUser.UserRole.CanEditUser || this.CurrentUser.UserRole.CanDeleteUser)
+                   { %>
                 <li><a href="Users.aspx">Users</a></li>
+                <% } %>
             </ul>
         </div>
         <div id="maincontent">

@@ -23,8 +23,9 @@ namespace MotorOnline.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.CurrentUser.UserRole.CanAddTransaction) { 
-                //TODO
+            if (!this.CurrentUser.UserRole.CanAddTransaction ||
+                !this.CurrentUser.UserRole.CanEditTransaction) {
+                Response.Redirect("NotAllowed.aspx", true);
             }
 
             if (!Page.IsPostBack)

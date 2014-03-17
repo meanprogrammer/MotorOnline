@@ -25,7 +25,11 @@ namespace MotorOnline.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!this.CurrentUser.UserRole.CanAddUser &&
+                !this.CurrentUser.UserRole.CanEditUser &&
+                !this.CurrentUser.UserRole.CanDeleteUser) {
+                Response.Redirect("NotAllowed.aspx", true);
+            }
         }
     }
 }

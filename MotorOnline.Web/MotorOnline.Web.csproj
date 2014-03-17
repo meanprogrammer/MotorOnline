@@ -133,6 +133,7 @@
     <Content Include="LoginView.aspx" />
     <Content Include="PerilsDefaultsView.aspx" />
     <Content Include="Users.aspx" />
+    <Content Include="NotAllowed.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ajax\TransactionAjax.aspx.cs">
@@ -259,6 +260,13 @@
     </Compile>
     <Compile Include="Users.aspx.designer.cs">
       <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NotAllowed.aspx.cs">
+      <DependentUpon>NotAllowed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NotAllowed.aspx.designer.cs">
+      <DependentUpon>NotAllowed.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
