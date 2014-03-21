@@ -399,7 +399,6 @@
         * @return {BootstrapValidator}
         */
         updateStatus: function ($field, validatorName, status) {
-            console.log(this.options.fields);
             var that = this,
                 field = $field.attr('name'),
                 validator = this.options.fields[field].validators[validatorName],

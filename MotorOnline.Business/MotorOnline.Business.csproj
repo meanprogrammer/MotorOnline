@@ -40,7 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessFacade.cs" />
+    <Compile Include="CustomerInfoBusiness.cs" />
+    <Compile Include="DefaultPerilsBusiness.cs" />
+    <Compile Include="EndorsementBusiness.cs" />
+    <Compile Include="MiscBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransactionBusiness.cs" />
+    <Compile Include="UserBusiness.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MotorOnline.Data\MotorOnline.Data.csproj">
+      <Project>{4FB62129-E753-4E7D-BE63-8E0B77319088}</Project>
+      <Name>MotorOnline.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MotorOnline.Library\MotorOnline.Library.csproj">
+      <Project>{2810C8D9-4FC9-418D-B151-8BF1A9550BA0}</Project>
+      <Name>MotorOnline.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,6 +8,7 @@ using iTextSharp.text;
 using System.IO;
 using iTextSharp.text.pdf;
 using MotorOnline.Library.Entity;
+using MotorOnline.Business;
 
 namespace MotorOnline.Web
 {
@@ -15,6 +16,7 @@ namespace MotorOnline.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            TransactionBusiness transactionBL = new TransactionBusiness();
             var id = Request.QueryString["id"];
             int result;
             int.TryParse(id, out result);
@@ -23,7 +25,7 @@ namespace MotorOnline.Web
             }
 
             cls_data_access_layer dl = new cls_data_access_layer();
-            Transaction trans = dl.GetTransactionById(result);
+            Transaction trans = transactionBL.GetTransactionById(result);
 
             var document = new Document();
             document.SetPageSize(iTextSharp.text.PageSize.A4);

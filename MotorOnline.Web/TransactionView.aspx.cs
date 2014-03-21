@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
 using MotorOnline.Library.Entity;
+using MotorOnline.Business;
 
 namespace MotorOnline.Web
 {
@@ -133,7 +134,7 @@ namespace MotorOnline.Web
         public void PopuplateEndorsement()
         {
             cls_data_access_layer dl = new cls_data_access_layer();
-            List<Endorsement> endorsements = dl.GetAllEndorsement();
+            List<Endorsement> endorsements = BusinessFacade.Business.EndorsementBusiness.GetAllEndorsement();
             foreach (Endorsement e in endorsements)
             {
                 this.EndorsementDropdown.Items.Add(new ListItem(e.EndorsementTitle, e.EndorsementCode.ToString()));
@@ -142,7 +143,7 @@ namespace MotorOnline.Web
         }
 
         public void GetNamesAutocomplete() {
-            List<CustomerInfo> aps =  go_dal.GetNamesAutocomplete();
+            List<CustomerInfo> aps = BusinessFacade.Business.CustomerInfoBusiness.GetNamesAutocomplete();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             this.NamesAutocompleteHiddenField.Value = serializer.Serialize(aps);
         }

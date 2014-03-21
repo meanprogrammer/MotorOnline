@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MotorOnline.Library.Entity;
+using MotorOnline.Business;
 
 namespace MotorOnline.Web
 {
@@ -25,7 +26,7 @@ namespace MotorOnline.Web
         public static string GenerateValidParNo() {
             string generatedParNo = string.Empty;
             cls_data_access_layer dal = new cls_data_access_layer();
-            var lastparno = dal.GetLastParNo();
+            var lastparno = BusinessFacade.Business.MiscBusiness.GetLastParNo();
             return GenerateParNoWithFormat(lastparno);
         }
 
@@ -50,7 +51,7 @@ namespace MotorOnline.Web
         public static string GenerateValidPolicyNo() {
             string generatedPolicyNo = string.Empty;
             cls_data_access_layer dal = new cls_data_access_layer();
-            var lastpolicyno = dal.GetLastPolicyNo();
+            var lastpolicyno = BusinessFacade.Business.MiscBusiness.GetLastPolicyNo();
             return GeneratePolicyNoWithFormat(lastpolicyno);
         }
 

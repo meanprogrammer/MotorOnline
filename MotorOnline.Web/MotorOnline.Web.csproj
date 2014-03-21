@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Effortless.Net.Encryption">
-      <HintPath>..\Assemblies\Effortless.Net.Encryption.dll</HintPath>
-    </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\Assemblies\itextsharp-dll-core\itextsharp.dll</HintPath>
     </Reference>
@@ -279,6 +276,10 @@
     <Content Include="Root.Master" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MotorOnline.Business\MotorOnline.Business.csproj">
+      <Project>{28DC1639-3D45-4852-925C-7DD73FD548FB}</Project>
+      <Name>MotorOnline.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MotorOnline.Helpers\MotorOnline.Helpers.csproj">
       <Project>{6CF36386-3237-4AE2-839D-7787D6677A82}</Project>
       <Name>MotorOnline.Helpers</Name>

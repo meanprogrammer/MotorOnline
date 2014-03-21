@@ -10,6 +10,7 @@ using MotorOnline.Helpers;
 using System.Text;
 using System.Globalization;
 using MotorOnline.Library.Entity;
+using MotorOnline.Business;
 
 namespace MotorOnline.Web.ajax
 {
@@ -18,8 +19,9 @@ namespace MotorOnline.Web.ajax
         private cls_data_access_layer data = null;
         public TransactionAjax() {
             data = new cls_data_access_layer();
-        }
 
+        }
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             var action = Request.Form["action"];
@@ -132,7 +134,7 @@ namespace MotorOnline.Web.ajax
             }
             else 
             {
-                bool result = data.DeleteUser(
+                bool result = BusinessFacade.Business.UserBusiness.DeleteUser(
                             ChangeTypeHelper.SafeParseToInt32(id));
                 resultsTable.Add("Result", result.ToString().ToLower());
             }
@@ -164,7 +166,7 @@ namespace MotorOnline.Web.ajax
                 u.UserID = int.Parse(userid);
             }
 
-            bool result = data.UpdateUser(u);
+            bool result = BusinessFacade.Business.UserBusiness.UpdateUser(u);
             Dictionary<string, string> resultsTable = new Dictionary<string, string>();
             resultsTable.Add("Result", result.ToString().ToLower());
             Render<Dictionary<string, string>>(resultsTable);
@@ -189,7 +191,7 @@ namespace MotorOnline.Web.ajax
                 LastActivityDate = DateTime.Now,
             };
 
-            bool result = data.SaveUser(u);
+            bool result = BusinessFacade.Business.UserBusiness.SaveUser(u);
             Dictionary<string, string> resultsTable = new Dictionary<string, string>();
             resultsTable.Add("Result", result.ToString().ToLower());
             Render<Dictionary<string, string>>(resultsTable);
@@ -198,8 +200,8 @@ namespace MotorOnline.Web.ajax
         private void HandleGetAllUsers()
         {
             UsersGetResponse response = new UsersGetResponse();
-            response.Users = data.GetAllUsers();
-            response.Roles = data.GetRolesOptions();
+            response.Users = BusinessFacade.Business.UserBusiness.GetAllUsers();
+            response.Roles = BusinessFacade.Business.UserBusiness.GetRolesOptions();
             response.CurrentUser = this.CurrentUser;
             Render<UsersGetResponse>(response);
         }
@@ -217,7 +219,7 @@ namespace MotorOnline.Web.ajax
 
         private Dictionary<string, EndorsementHistory> GetEndorsementHistory(int transactionId)
         {
-            return data.GetEndorsementHistory(transactionId);
+            return BusinessFacade.Business.EndorsementBusiness.GetEndorsementHistory(transactionId);
         }
 
         private void HandleGetTransactionExtended()
@@ -277,7 +279,7 @@ namespace MotorOnline.Web.ajax
                 PerilID = ChangeTypeHelper.SafeParseToInt32(id)
             };
 
-            bool result = data.UpdatePerilDefault(pd);
+            bool result = BusinessFacade.Business.DefaultPerilsBusiness.UpdatePerilDefault(pd);
             Dictionary<string, string> rd = new Dictionary<string, string>();
             rd.Add("Result", result.ToString().ToLower());
 
@@ -297,7 +299,7 @@ namespace MotorOnline.Web.ajax
         private void HandlePostTransaction()
         {
             var id = Request.Form["transactionid"];
-            int result = data.PostTransaction(int.Parse(id));
+            int result = BusinessFacade.Business.TransactionBusiness.PostTransaction(int.Parse(id));
 
             Response.Write(result > 0 ? "1" : "0");
             Response.End();
@@ -305,7 +307,7 @@ namespace MotorOnline.Web.ajax
 
         private void HandleGetAllPerilsDefaults()
         {
-            List<PerilsDefault> defaults = data.GetAllPerilsDefaults();
+            List<PerilsDefault> defaults = BusinessFacade.Business.DefaultPerilsBusiness.GetAllPerilsDefaults();
             Render<PerilsDefault>(defaults);
         }
 
@@ -326,7 +328,7 @@ namespace MotorOnline.Web.ajax
             {
                 case "3":
                     var newCocNo = Request.Form["newcocno"];
-                    result = data.SaveTransactionWithUpdatedCOCNo(
+                    result = BusinessFacade.Business.EndorsementBusiness.SaveTransactionWithUpdatedCOCNo(
                         int.Parse(transactionId), 
                         PolicyNoHelper.GetEndorsementPolicyNo(endorsementPolNo), 
                         newCocNo,
@@ -336,29 +338,29 @@ namespace MotorOnline.Web.ajax
                     var newLastName = Request.Form["newlastname"];
                     var newFirstName = Request.Form["newfirstname"];
                     var newMI = Request.Form["newmi"];
-                    result = data.SaveTransactionWithUpdatedInsuredName(int.Parse(transactionId),
+                    result = BusinessFacade.Business.EndorsementBusiness.SaveTransactionWithUpdatedInsuredName(int.Parse(transactionId),
                         endorsementPolNo, int.Parse(customerId), out newId, newFirstName, newLastName, newMI);
                     break;
                 case "17":
                 case "19":
                     var newAddress = Request.Form["newaddress"];
-                    result = data.SaveTransactionWithUpdatedAddress(int.Parse(transactionId),
+                    result = BusinessFacade.Business.EndorsementBusiness.SaveTransactionWithUpdatedAddress(int.Parse(transactionId),
                         endorsementPolNo, int.Parse(customerId), out newId, newAddress);
                     break;
                 case "20":
                 case "22":
                     var newMortgagee = Request.Form["newmortgagee"];
-                    result = data.SaveTransactionWithUpdatedMortgagee(int.Parse(transactionId),
+                    result = BusinessFacade.Business.EndorsementBusiness.SaveTransactionWithUpdatedMortgagee(int.Parse(transactionId),
                         endorsementPolNo, out newId, newMortgagee);
                     break;
                 case "21":
-                    result = data.SaveTransactionWithDeleteMortgagee(int.Parse(transactionId),
+                    result = BusinessFacade.Business.EndorsementBusiness.SaveTransactionWithDeleteMortgagee(int.Parse(transactionId),
                         endorsementPolNo, out newId);
                     break;
                 case "25":
                     var periodfrom = Request.Form["periodfrom"];
                     var periodto = Request.Form["periodto"];
-                    result = data.SaveTransactionWithUpdatePolicyDate(
+                    result = BusinessFacade.Business.EndorsementBusiness.SaveTransactionWithUpdatePolicyDate(
                                 int.Parse(transactionId),
                                 endorsementPolNo,
                                 out newId,
@@ -369,7 +371,7 @@ namespace MotorOnline.Web.ajax
                     var carcompany = Request.Form["carcompany"];
                     var carmake = Request.Form["carmake"];
                     var engineseries = Request.Form["engineseries"];
-                    result = data.SaveTransactionWithUpdatedVehicleDescription(
+                    result = BusinessFacade.Business.EndorsementBusiness.SaveTransactionWithUpdatedVehicleDescription(
                                 int.Parse(transactionId),
                                 endorsementPolNo,
                                 out newId,
@@ -385,7 +387,7 @@ namespace MotorOnline.Web.ajax
                     var designation = Request.Form["designation"];
                     var multicorpname = Request.Form["multicorpname"];
                     var toi = Request.Form["toi"];
-                    result = data.SaveTransactionWithNewOwner(
+                    result = BusinessFacade.Business.EndorsementBusiness.SaveTransactionWithNewOwner(
                         int.Parse(transactionId),
                         endorsementPolNo,
                         out newId, int.Parse(toi),
@@ -400,7 +402,7 @@ namespace MotorOnline.Web.ajax
             { 
                 DateTime effectDate = DateTime.Parse(ChangeDateFormat(effectivityDate));
                 DateTime expDate = DateTime.Parse(ChangeDateFormatWithTime(expireDate));
-                data.SaveEndorsementDetails(int.Parse(transactionId), newId,
+                BusinessFacade.Business.EndorsementBusiness.SaveEndorsementDetails(int.Parse(transactionId), newId,
                         endorsementText, DateTime.Now, effectDate, expDate, int.Parse(type));
             }
 
@@ -422,13 +424,13 @@ namespace MotorOnline.Web.ajax
 
         private void HandleGetEndorsementByCode()
         {
-            Endorsement e = data.GetOneEndorsement(int.Parse(Request.Form["ecode"]));
+            Endorsement e = BusinessFacade.Business.EndorsementBusiness.GetOneEndorsement(int.Parse(Request.Form["ecode"]));
             Render<Endorsement>(e);
         }
 
         private void HandleLoadAllEndorsement()
         {
-            List<Endorsement> endorsements = data.GetAllEndorsement();
+            List<Endorsement> endorsements = BusinessFacade.Business.EndorsementBusiness.GetAllEndorsement();
             Render<List<Endorsement>>(endorsements);
         }
 
@@ -466,8 +468,8 @@ namespace MotorOnline.Web.ajax
                 policyperiodto, typeofcover, mortgagee, intermediary, carcompany, motortype, chassisno, engineno, firstname, lastname);
 
             int currentPage, totalPage = 0;
-            IEnumerable<TransactionSearchDTO> ts = 
-                PageSearchResult(data.SearchTransaction(whereClause), int.Parse(page),
+            IEnumerable<TransactionSearchDTO> ts =
+                PageSearchResult(BusinessFacade.Business.TransactionBusiness.SearchTransaction(whereClause), int.Parse(page),
                     int.Parse(rowcount), out totalPage, out currentPage);
             TransactionSearchResponseDTO response = new TransactionSearchResponseDTO();
             response.Data = ts;
@@ -641,7 +643,7 @@ namespace MotorOnline.Web.ajax
 
         private void HandleLoadSearchFilters()
         {
-            Dictionary<string, List<DropDownListItem>> filters = data.LoadAllSearchFilters();
+            Dictionary<string, List<DropDownListItem>> filters = BusinessFacade.Business.TransactionBusiness.LoadAllSearchFilters();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
 
             Response.Write(serializer.Serialize(filters));
@@ -668,9 +670,7 @@ namespace MotorOnline.Web.ajax
             transaction.Perils = perils;
 
             cls_data_access_layer dl = new cls_data_access_layer();
-            IDataReader reader = dl.GetComputationFactors();
-
-            ComputationFactor factor = ReaderToEntity.ConvertToComputationFactor(reader);
+            ComputationFactor factor = BusinessFacade.Business.MiscBusiness.GetComputationFactors();
             ComputationDetails netDetails = ComputationDetailsHelper.ComputeTransactionDetails(factor, netpremium, transaction.CarDetail.TypeOfCover);
 
             ComputationDetails grossDetails = ComputationDetailsHelper.ComputeTransactionDetails(factor, grosspremium, transaction.CarDetail.TypeOfCover);
@@ -678,7 +678,7 @@ namespace MotorOnline.Web.ajax
             transaction.Computations.NetComputationDetails = netDetails;
             transaction.Computations.GrossComputationDetails = grossDetails;
 
-            bool saveSuccess = dl.UpdateTransaction(transaction);
+            bool saveSuccess = BusinessFacade.Business.TransactionBusiness.UpdateTransaction(transaction);
 
             Response.Write(saveSuccess ? "1" : "0");
             Response.End();
@@ -699,7 +699,7 @@ namespace MotorOnline.Web.ajax
 
         private Transaction GetTransactionById(string id) {
             cls_data_access_layer dl = new cls_data_access_layer();
-            Transaction t = dl.GetTransactionById(ChangeTypeHelper.SafeParseToInt32(id));
+            Transaction t = BusinessFacade.Business.TransactionBusiness.GetTransactionById(ChangeTypeHelper.SafeParseToInt32(id));
 
             List<TransactionPeril> arrangedPerils = t.Perils;
             switch (t.CarDetail.TypeOfCover)
@@ -825,9 +825,8 @@ namespace MotorOnline.Web.ajax
             transaction.Perils = perils;
 
             cls_data_access_layer dl = new cls_data_access_layer();
-            IDataReader reader = dl.GetComputationFactors();
 
-            ComputationFactor factor = ReaderToEntity.ConvertToComputationFactor(reader);
+            ComputationFactor factor = BusinessFacade.Business.MiscBusiness.GetComputationFactors();
             ComputationDetails netDetails = ComputationDetailsHelper.ComputeTransactionDetails(factor, netpremium, transaction.CarDetail.TypeOfCover);
 
             ComputationDetails grossDetails = ComputationDetailsHelper.ComputeTransactionDetails(factor, grosspremium, transaction.CarDetail.TypeOfCover);
@@ -835,7 +834,7 @@ namespace MotorOnline.Web.ajax
             transaction.Computations.NetComputationDetails = netDetails;
             transaction.Computations.GrossComputationDetails = grossDetails;
             int newId = 0;
-            bool saveSuccess = dl.SaveTransaction(transaction, out newId);
+            bool saveSuccess = BusinessFacade.Business.TransactionBusiness.SaveTransaction(transaction, out newId);
 
             Dictionary<string, string> results = new Dictionary<string, string>();
             results.Add("SaveSuccess", saveSuccess ? "1" : "0");
@@ -851,10 +850,9 @@ namespace MotorOnline.Web.ajax
             double grosspremium = double.Parse(Request.Form["basicpremiumgross"]);
             var covertype = Request.Form["covertype"];
             cls_data_access_layer dl = new cls_data_access_layer();
-            IDataReader reader = dl.GetComputationFactors();
 
             TransactionComputation tc = new TransactionComputation();
-            ComputationFactor factor = ReaderToEntity.ConvertToComputationFactor(reader);
+            ComputationFactor factor = BusinessFacade.Business.MiscBusiness.GetComputationFactors();
 
             ComputationDetails netDetails = ComputationDetailsHelper.ComputeTransactionDetails(factor, netpremium, int.Parse(covertype));
             tc.NetComputationDetails = netDetails;
@@ -998,7 +996,7 @@ namespace MotorOnline.Web.ajax
             }
             //json encode
 
-            List<PerilsDefault> pDefaults = dl.GetPerilDefaults();
+            List<PerilsDefault> pDefaults = BusinessFacade.Business.DefaultPerilsBusiness.GetPerilDefaults();
             PerilsResponseDTO response = new PerilsResponseDTO();
             response.PerilDefaults = pDefaults;
             response.Perils = arrangedPerils;

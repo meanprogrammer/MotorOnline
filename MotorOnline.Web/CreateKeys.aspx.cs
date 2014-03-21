@@ -33,7 +33,7 @@ namespace MotorOnline.Web
             u.LastActivityDate = DateTime.Now;
 
             cls_data_access_layer da = new cls_data_access_layer();
-            da.SaveUser(u);
+            //da.SaveUser(u);
         }
     }
 }

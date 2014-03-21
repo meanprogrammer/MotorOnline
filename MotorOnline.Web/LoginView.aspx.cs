@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MotorOnline.Library.Entity;
+using MotorOnline.Business;
 
 namespace MotorOnline.Web
 {
@@ -17,8 +18,8 @@ namespace MotorOnline.Web
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            cls_data_access_layer da = new cls_data_access_layer();
-            User user = da.AuthenticateUser(this.UserName.Text.Trim(), this.Password.Text);
+            UserBusiness userBusiness = new UserBusiness();
+            User user = userBusiness.AuthenticateUser(this.UserName.Text.Trim(), this.Password.Text);
             if (user != null)
             {
                 Session.Add(string.Format("user_{0}", Session.SessionID), user);
